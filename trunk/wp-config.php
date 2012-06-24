@@ -70,6 +70,7 @@ $table_prefix  = 'dev_';
  * language support.
  */
 define('WPLANG', '');
+define('WP_ALLOW_REPAIR', true);
 
 /**
  * For developers: WordPress debugging mode.
