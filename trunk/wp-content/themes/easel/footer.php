@@ -14,5 +14,10 @@
 <div id="page-foot"><?php do_action('easel-page-foot'); ?></div>
 
 <?php wp_footer(); ?>
+<br />
+<div class='copy-right'>
+Copyright © 2012 Công Ty Cổ Phần TM - DV Tiếp Vận Toàn Cầu A&amp;A. All rights reserved
+</div>
+<br /><br />
 </body>
 </html>
