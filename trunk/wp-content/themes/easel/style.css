@@ -182,7 +182,7 @@ h4, h4 a {
 #page-wrap {}
 
 #page {
-	width: 980px;
+	width: 1100px;
 	margin: 0 auto;
 }
 
@@ -414,7 +414,7 @@ body.wide #column {
 }
 
 .narrowcolumn {
-	width: 550px;
+	width: 612px;
 }
 
 body.layout-2cl .narrowcolumn, body.layout-2cr .narrowcolumn {
@@ -747,7 +747,7 @@ textarea#comment {
 
 #sidebar-left {
 	float: left;
-	width: 210px;
+	width: 270px;
 	padding: 1px;
 }
 

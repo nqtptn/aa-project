@@ -79,7 +79,7 @@ body {
 }
 
 #submit, .type-post, .type-forum, .type-reply, .type-topic, .type-page, .type-comic, .type-showcase, .type-music, .type-attachment, .type-casts, #wp-paginav, .sidebar h2, #comment-wrapper, .default-nav, .submit, .feature {
-	padding: 4px 10px 20px 10px;
+	padding: 3px 10px 20px 10px;
 	-khtml-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;

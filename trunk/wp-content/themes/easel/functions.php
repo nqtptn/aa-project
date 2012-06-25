@@ -149,9 +149,9 @@ if (!function_exists('easel_register_sidebars')) {
 						'name'=> $sidebartitle,
 						'id' => 'sidebar-'.sanitize_title($sidebartitle),
 						'before_widget' => "<div id=\"".'%1$s'."\" class=\"widget ".'%2$s'."\">\r\n<div class=\"widget-head\"></div>\r\n<div class=\"widget-content\">\r\n",
-						'after_widget'  => "</div>\r\n<div class=\"clear\"></div>\r\n<div class=\"widget-foot\"></div>\r\n</div>\r\n",
+						'after_widget'  => "</div>\r\n<div class=\"clear\"></div>\r\n<div class=\"widget-foot\"></div>\r\n</div>\r\n</h2>\r\n",
 						'before_title'  => "<h2 class=\"widgettitle\">",
-						'after_title'   => "</h2>\r\n"
+						'after_title'   => ""
 						));
 		}
 	}

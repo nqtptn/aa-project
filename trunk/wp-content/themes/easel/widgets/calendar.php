@@ -253,7 +253,7 @@ class easel_calendar_widget extends WP_Widget {
 		global $post, $wp_query;
 		extract($args, EXTR_SKIP);
 
-		echo $before_widget;
+		//echo $before_widget;
 
 		if (!empty($instance)) { extract($instance); } ?>
 			<div id="wp-calendar-head"></div>
