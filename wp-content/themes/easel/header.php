@@ -61,6 +61,12 @@
 			<?php easel_get_sidebar('header'); ?>
 			<div class="clear"></div>
 		</div>
+		
+		 <MARQUEE style="margin-left:5px;COLOR: #ff0" onmouseover=this.stop() 
+                  onmouseout=this.start() width=610 scrollAmount=2 
+                  scrollDelay=50><A style="COLOR: #ff0"  title="AA-EXPRESS đồng hành cùng bạn mọi lúc mọi nơi" 
+                  href ="http://localhost/aaexpress/"><SPAN 
+                  class=style4>AA-EXPRESS đồng hành cùng bạn mọi lúc mọi nơi</SPAN> </A>&nbsp; &nbsp; &nbsp;</MARQUEE>
 
 <?php 
 if (easel_themeinfo('enable_breadcrumbs')) easel_breadcrumbs();
