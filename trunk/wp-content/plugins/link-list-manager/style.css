@@ -1,0 +1,51 @@
+.clear {
+clear:both;
+}
+
+.logo {
+float:left;
+margin-right:5px;
+}
+
+.llmmenu {
+border:1px #21759B dotted;
+padding:15px;
+width:250px;
+float:left;
+margin-right:15px;
+}
+.llmcontent {
+border:1px #21759B dotted;
+padding:15px;
+width:350px;
+float:left;
+}
+.llmresult {
+width:50%;
+border:1px #21759B dotted;
+padding:15px;
+margin:10px 0 10px 0;
+}
+.llmmenu  .inputtext {
+width:220px;
+}
+
+.ablock {
+color:#fff;
+padding:5px;
+background:#4581c6;
+text-decoration:none;
+margin-right:5px;
+}
+.ablock:hover {
+color:#fff;
+background:#529bee;
+}
+
+.llmradius {
+-moz-border-radius: 8px; 
+-webkit-border-radius: 8px; 
+-khtml-border-radius: 8px; 
+border-radius: 8px; 
+behavior: url(border-radius.htc);
+}
