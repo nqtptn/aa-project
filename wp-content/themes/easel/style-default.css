@@ -4,6 +4,11 @@ body {
 	background: url('images/background-tile.jpg') repeat;
 }
 
+h2 {
+font-size: 1.5em;
+font-weight: normal;
+}
+
 #page-wrap {
 	background: url('images/background-overlay.png') top center repeat-x;
 }
@@ -36,22 +41,12 @@ body {
 
 
 #menubar-wrapper {
-	margin-bottom: 10px;
-	padding: 3px 0;
-	-moz-border-radius: 6px;
-	-khtml-border-radius: 6px;
-	-webkit-border-radius: 6px;
-	border-radius: 6px;
-	text-shadow: 0 -1px 1px #111;
-	background: #111;
-	-moz-box-shadow: 1px 2px 10px #000;
-	-webkit-box-shadow: 1px 2px 10px #000;
-	-khtml-box-shadow: 1px 2px 10px #000;
-	box-shadow: 1px 2px 10px #000;
-	background: -moz-linear-gradient(100% 100% 90deg,#0b0b0b, #333, #444 100%); /* IE8 uses -ms-filter for whatever reason... */
-	background: -o-linear-gradient(rgb(68,68,68),rgb(0,0,0));
-	-ms-filter: progid:DXImageTransform.Microsoft.gradient(gradientType=1, startColor=0, endColoStr=#FFFFFF);
-	background: #111 url('images/background-lines.png') repeat;
+	width: 1093px;
+	margin: 0px 4px 4px 4px;
+	padding: 3px 0px 3px 0;
+	color: black;
+	background-color: #FFF;
+	background: url(images/banner-menu.jpg) left repeat;
 }
 
 #breadcrumb-wrapper { color: #ccc; }
@@ -59,15 +54,10 @@ body {
 #breadcrumb-wrapper a:hover { color: #f00; }
 
 #content-wrapper {
-	background: #111 url('images/background-lines.png') repeat;
-	-moz-border-radius: 10px;
-	-khtml-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
-	-moz-box-shadow: 1px 2px 10px #000;
-	-webkit-box-shadow: 1px 2px 10px #000;
-	-khtml-box-shadow: 1px 2px 10px #000;
-	box-shadow: 1px 2px 10px #000;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
 }
 
 #comic-wrap {
@@ -79,12 +69,11 @@ body {
 }
 
 #submit, .type-post, .type-forum, .type-reply, .type-topic, .type-page, .type-comic, .type-showcase, .type-music, .type-attachment, .type-casts, #wp-paginav, .sidebar h2, #comment-wrapper, .default-nav, .submit, .feature {
-	padding: 3px 10px 20px 10px;
-	-khtml-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
-	background: url('images/background-lines-banner.png') top center repeat-x;
-	background-color: #AAF845;
+	padding: 10px 10px 25px 10px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	background-color: #FFF;
 }
 
 .blognav {
@@ -117,20 +106,17 @@ body {
 .type-post, .type-page, .type-forum, .type-reply, .type-topic, .type-comic, .type-showcase, .type-music, #comment-wrapper, .type-attachment, .type-casts, .feature {
 	border: solid 1px #000;
 	margin-bottom: 3px;
+	background: url(images/banner-menu-body.jpg) top left no-repeat;
+	background-color: #E5F8F1;		
 }
 
 
-.menu a, .menunav a, #header h1 {
-	text-shadow: 1px 1px 1px #000;
-	-moz-text-shadow: 1px 1px 1px #000;
-	-khtml-text-shadow: 1px 1px 1px #000;
-	-webkit-text-shadow: 1px 1px 1px #000;
-}
+
 
 h2.page-title, h2.post-title {
-	border-bottom: solid 1px #B4E972;
+	border-bottom: solid 1px #1B34EC;
 	margin-bottom: 3px;
-	color: #3C5C0D;
+	color: #1B34EC;
 	-moz-text-shadow: 1px 1px 1px #555;
 	-khtml-text-shadow: 1px 1px 1px #555;
 	-webkit-text-shadow: 1px 1px 1px #555;
@@ -250,12 +236,15 @@ body.signup #column {
 
 .sidebar h2 {
 	border: solid 1px #000;
-	margin-bottom: 5px;
-	color: #3C5C0D;
+	margin-bottom: 3px;
+	color: #1B34EC;
+	font-size: 17px;
+	background: url(images/banner-widget.jpg) top left repeat-y;
+	background-color: #FFF;
 }
 
 .sidebar h2 a {
-	color: #000;
+	color: #1B34EC;
 }
 
 .sidebar h2 a:hover {
@@ -271,39 +260,16 @@ body.signup #column {
 }
 
 /* Menu stuff */
-
-.menunav-prev a:hover, .menunav-next a:hover, .menunav-rss:hover, .menu ul li a:hover {
-	color: #fcff00;
-	background: -o-linear-gradient(rgb(0,0,0),rgb(68,68,68));
-	background: -moz-linear-gradient(100% 100% 90deg, #303030, #444, #000 100%);
-	background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(17, 17, 17, 1.0)),to(rgba(56, 56, 56, 3.0)));
-	-moz-border-radius: 10px;
-	-khtml-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
-}
-
-.menu ul li a.selected {
-	color: #fcff00;
-	background: -o-linear-gradient(rgb(0,0,0),rgb(68,68,68));
-	background: -moz-linear-gradient(100% 100% 90deg, #303030, #444, #000 100%);
-	background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(17, 17, 17, 1.0)),to(rgba(56, 56, 56, 3.0)));
-	-moz-border-radius: 10px;
-	-khtml-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
-}
-
-.menu ul li ul li a:hover, .menu ul li ul li a.selected {
-	-moz-border-radius: 0;
-	-khtml-border-radius: 0;
-	-webkit-border-radius: 0;
-	border-radius: 0;
-	background: #111;
+.menu ul li a, .footmenu ul li a {
+	display: block;
+	padding: 5px 7px 4px 7px;
+	text-decoration: none;
 }
 
 .menu .current_page_item a {
-    font-weight: 700;
+    color: #1B34EC;
+	background-color: #C2EBF3;
+	border: solid 1px #A4DB93;
 }
 
 .menu-item-home {
@@ -311,7 +277,7 @@ body.signup #column {
 }
 
 .menu ul li a:hover, .menu ul li ul li a:hover {
-	color: yellow;
+	color: #B00;
 }
 
 /* footer */
@@ -414,11 +380,6 @@ body.signup #column {
 
 .sfuseravatar a {
 	margin-left: 3px;
-}
-
-.page-forum .post-info {
-	padding: 0;
-	margin: 0;
 }
 
 .page-forum .entry {
