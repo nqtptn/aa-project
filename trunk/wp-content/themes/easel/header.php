@@ -50,9 +50,30 @@
 <div id="page-head"><?php do_action('easel-page-head'); ?></div>
 <div id="page-wrap">
 	<div id="page">
-	<br>
+		<br>
 		<?php if (!easel_themeinfo('disable_default_menubar') && function_exists('easel_menubar')) easel_menubar();?>
 		<?php easel_get_sidebar('above-header'); ?>
+		<table border="0" cellpadding="0" cellspacing="0" width="1095px" height="180px" 
+			style="background-color: #FFF; background: url(<?php echo get_template_directory_uri(); ?>/images/banner1.jpg) left repeat;
+					margin: 0px 0px 1px 3px; border: solid 1px black;">
+			<tr>
+				<td width="230px" style="padding: 0px 0px 0px 20px; >
+					<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" height="110" width="180"> 
+						<param name="movie" value="<?php echo get_template_directory_uri(); ?>/images/banner.swf"> 
+						<param name="quality" value="high"> 
+						<embed src="<?php echo get_template_directory_uri(); ?>/images/banner.swf" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" height="110" width="180"> 
+					</object>
+				</td> 
+				<td>
+					<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" height="110" width="350"> 
+						<param name="movie" value="<?php echo get_template_directory_uri(); ?>/images/banneradv.swf"> 
+						<param name="quality" value="high"> 
+						<embed src="<?php echo get_template_directory_uri(); ?>/images/banneradv.swf" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" height="110" width="350"> 
+					</object>						  
+				</td> 
+			</tr>
+		</table>
+		<!--
 		<div id="header">
 			<div class="header-info">
 				<h1><a href="<?php echo home_url(); ?>"><?php bloginfo('name') ?></a></h1>
@@ -61,13 +82,12 @@
 			<?php easel_get_sidebar('header'); ?>
 			<div class="clear"></div>
 		</div>
-		
-		 <MARQUEE style="margin-left:5px;COLOR: #ff0" onmouseover=this.stop() 
-                  onmouseout=this.start() width=610 scrollAmount=2 
-                  scrollDelay=50><A style="COLOR: #ff0"  title="AA-EXPRESS đồng hành cùng bạn mọi lúc mọi nơi" 
-                  href ="http://localhost/aaexpress/"><SPAN 
-                  class=style4>AA-EXPRESS đồng hành cùng bạn mọi lúc mọi nơi</SPAN> </A>&nbsp; &nbsp; &nbsp;</MARQUEE>
-
+		<MARQUEE style="margin-left:5px;COLOR: #ff0" onmouseover=this.stop() 
+				  onmouseout=this.start() width=610 scrollAmount=2 
+				  scrollDelay=50><A style="COLOR: #ff0"  title="AA-EXPRESS đồng hành cùng bạn mọi lúc mọi nơi" 
+				  href ="http://localhost/aaexpress/"><SPAN 
+				  class=style4>AA-EXPRESS đồng hành cùng bạn mọi lúc mọi nơi</SPAN> </A>&nbsp; &nbsp; &nbsp;</MARQUEE>
+		-->
 <?php 
 if (easel_themeinfo('enable_breadcrumbs')) easel_breadcrumbs();
 easel_get_sidebar('menubar');
