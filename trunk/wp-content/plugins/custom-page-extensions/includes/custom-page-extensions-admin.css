@@ -1,0 +1,89 @@
+@charset "UTF-8";
+/**
+ * custom-page-extensions-admin.css - Stylesheet for the settings page.
+ *
+ * @package Custom Page Extensions
+ * @subpackage templates
+ * @author GrandSlambert
+ * @copyright 2009-2011
+ * @access public
+ * @since 0.6
+*/
+
+label.primary {
+     text-align: right;
+     width: 200px;
+     display: block;
+     float: left;
+     font-weight: bold;
+     color: #666;
+}
+
+label.custom-page-extensions-post-type {
+     width: 125px;
+     float: left;
+     font-size: 12px;
+}
+label.custom-page-extensions-hide-word {
+     width: 100px;
+     float: left;
+}
+
+ul#custom_page_extensions_tabs {
+     border-bottom:1px solid #A2B6CB;
+     font-family:Verdana,Arial;
+     font-size:12px;
+     font-weight:bold;
+     list-style-type:none;
+     margin-bottom:12px;
+     padding-bottom:28px;
+     z-index:1;
+}
+
+#custom_page_extensions_tabs li {
+     background-color: #EBEBEB;
+     border: 1px solid #A2B6CB;
+     float: left;
+     height: 25px;
+     margin: 2px 0px 0px 5px;
+}
+
+#custom_page_extensions_tabs li a {
+     color: #666;
+     display: block;
+     float: right;
+     padding: 5px;
+     text-decoration: none;
+}
+
+
+
+#custom_page_extensions_tabs li.save-tab {
+     background-color: #666666;
+     font-weight: bold;
+}
+
+#custom_page_extensions_tabs li.save-tab a {
+     color: #FFFFFF;
+}
+
+#custom_page_extensions_tabs li.custom-page-extensions-selected {
+     background-color: #A2B6CB;
+}
+
+#custom_page_extensions_tabs li.custom-page-extensions-selected a{
+     color: #fff;
+}
+
+.custom-page-extensions-settings-table {
+     min-height: 350px;
+}
+
+#custom_page_extensions_footer {
+     clear: both;
+     margin-top: 15px;
+}
+
+#custom_page_extensions_footer div.postbox {
+     min-height: 150px;
+}
