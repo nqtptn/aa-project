@@ -1,0 +1,424 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: link-list-manager\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-21 10:37+0600\n"
+"PO-Revision-Date: 2011-11-21 15:39+0600\n"
+"Last-Translator: ZetRider <zetrider@bk.ru>\n"
+"Language-Team: TTWeb <zetrider@bk.ru>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: Z:\\xampp\\htdocs\\5900.ru\\www\\wp-content\\plugins\\link-list-manager\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: Z:\\xampp\\htdocs\\5900.ru\\www\\wp-content\\plugins\\link-list-manager\n"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:81
+msgid "Studio TTWeb"
+msgstr "Студия TTWeb"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:82
+msgid "Creation, website promotion"
+msgstr "Создание и продвижение сайтов"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:83
+msgid "Development of site design, logos, business cards, etc."
+msgstr "Разработка дизайна сайтов, логотипов, визиток, и пр."
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:84
+msgid "Development and translation of plugins"
+msgstr "Разработка и перевод плагинов"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:95
+msgid "We need a new version of the plugin? thanked the author"
+msgstr "Хотите новую версию плагина? Отблагодарите автора"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:96
+msgid "Any ideas? Send me an email: "
+msgstr "Есть идеи? Напиши мне письмо: "
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:101
+msgid "Instruction"
+msgstr "Инструкция"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:107
+msgid "Add a new category +"
+msgstr "Добавить новую категорию + "
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:153
+msgid "Images uploaded"
+msgstr "Изображение загружено"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:169
+msgid "File successfully scaled down to fit the width of the"
+msgstr "Файл успешно изменен по ширине "
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:170
+msgid "If the image has not changed in size, so it is cached by your browser. Please refresh the page."
+msgstr "Если изображение не изменилось по размеру, значит оно закешировано браузером. Обновите страницу."
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:175
+msgid "Record updated successfully."
+msgstr "Запись успешно обновлена."
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:179
+msgid "Record was successfully added to the database."
+msgstr "Запись успешно добавлена в базу данных."
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:189
+msgid "Category"
+msgstr "Категория"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:204
+msgid "Add a new entry:"
+msgstr "Добавить новую запись:"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:207
+msgid "Name of reference (Anchor):"
+msgstr "Название ссылки (Анкор):"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:208
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:254
+msgid "Description of the link:"
+msgstr "Описание ссылки:"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:209
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:255
+msgid "URL:"
+msgstr "URL:"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:210
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:256
+msgid "Behavior:"
+msgstr "Поведение:"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:211
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:261
+msgid "In this window"
+msgstr "В этом окне"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:212
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:262
+msgid "In a new window"
+msgstr "В новом окне"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:213
+msgid "Image"
+msgstr "Изображение"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:214
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:275
+msgid "The location of the image of the text:"
+msgstr "Расположение изображения от текста:"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:215
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:280
+msgid "Left"
+msgstr "Слева"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:216
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:281
+msgid "Right"
+msgstr "Справа"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:217
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:282
+msgid "Poprotsionalno reduce the width of the image (numbers indicate size in PX, if you do not need to leave blank):"
+msgstr "Пропорционально уменьшить изображение по ширине (указывать цифрами в PX, если не нужно оставьте пустым):"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:218
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:283
+msgid "Sort order:"
+msgstr "Порядок сортировки:"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:219
+msgid "Add"
+msgstr "Добавить"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:230
+msgid "You have not added any entries in the category"
+msgstr "Вы еще не добавили ни одной записи в категорию"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:242
+msgid "Image removed."
+msgstr "Изображение удалено."
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:246
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:298
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:302
+msgid "Back to the list of links"
+msgstr "Вернуться к списку ссылок"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:253
+msgid "Name of reference:"
+msgstr "Акнор"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:265
+msgid "Loaded image:"
+msgstr "Загруженное изображение:"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:268
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:305
+msgid "Remove"
+msgstr "Удалить"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:273
+msgid "Upload a new picture"
+msgstr "Загрузить новое изображение"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:284
+msgid "Update"
+msgstr "Обновить"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:297
+msgid "Record with an ID"
+msgstr "Запись с ID"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:297
+msgid "removed"
+msgstr "удалена"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:305
+msgid "Edit"
+msgstr "Редактировать"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:305
+msgid "Preview:"
+msgstr "Предпросмотр:"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:384
+msgid "Title"
+msgstr "Заголовок"
+
+#: Z:\xampp\htdocs\5900.ru\www\wp-content\plugins\link-list-manager/llm.php:389
+msgid "Category (ID)"
+msgstr "Категория (ID)"
+
+#~ msgid "The location of the image from the text:"
+#~ msgstr "Расположение изображения от текста:"
+
+#~ msgid "Formula is empty"
+#~ msgstr "Формула пуста"
+
+#~ msgid "Calculate"
+#~ msgstr "Рассчитать"
+
+#~ msgid "Your transmitted data:"
+#~ msgstr "Передаваемые данные:"
+
+#~ msgid "To display the transmitted data:"
+#~ msgstr "Для отображения передаваемых данных:"
+
+#~ msgid "Create a calculator"
+#~ msgstr "Создать калькулятор"
+
+#~ msgid "There are ideas for the calculator? Write me a letter: "
+#~ msgstr "Есть идеи для калькулятора? Напиши мне письмо:"
+
+#~ msgid "To do:"
+#~ msgstr "В планах:"
+
+#~ msgid "Make it easy to use interface"
+#~ msgstr "Упростить интерфейс, сделать более удобным"
+
+#~ msgid "Adding new functions calculator"
+#~ msgstr "Добавить новые функции рассчета"
+
+#~ msgid ""
+#~ "Remember the result of the calculation to be able to pass a value in "
+#~ "another calculator."
+#~ msgstr ""
+#~ "Запоминать результат калькулятора, для возможности передавать цифру в "
+#~ "другой калькулятор."
+
+#~ msgid "Create +"
+#~ msgstr "Создать +"
+
+#~ msgid "Type - Text Block"
+#~ msgstr "Тип - Текстовой блок"
+
+#~ msgid "Text Block"
+#~ msgstr "Текстовой блок"
+
+#~ msgid "Type - A drop-down list"
+#~ msgstr "Тип - Выпадающий список"
+
+#~ msgid "A drop-down list"
+#~ msgstr "Выпадающий список"
+
+#~ msgid "Type - Checkbox"
+#~ msgstr "Тип - Чекбокс"
+
+#~ msgid "Checkbox"
+#~ msgstr "Чекбокс"
+
+#~ msgid "Type - Radio Buttons"
+#~ msgstr "Тип - Радио кнопки"
+
+#~ msgid "Radio Buttons"
+#~ msgstr "Радио кнопки"
+
+#~ msgid "Type - The entered field"
+#~ msgstr "Тип - вводимое поле"
+
+#~ msgid "The entered field"
+#~ msgstr "Вводимое поле"
+
+#~ msgid "Type - Hidden field"
+#~ msgstr "Тип - Скрытое поле"
+
+#~ msgid "Hidden field"
+#~ msgstr "Скрытое поле"
+
+#~ msgid "Settings"
+#~ msgstr "Настройки"
+
+#~ msgid "Create a text block"
+#~ msgstr "Создать текстовой блок"
+
+#~ msgid "Text to display"
+#~ msgstr "Отображаемый текст"
+
+#~ msgid "possible html"
+#~ msgstr "html разрешен"
+
+#~ msgid "Order:"
+#~ msgstr "Порядок"
+
+#~ msgid "class in the field, an example: myclass"
+#~ msgstr "Класс поля, пример: myclass"
+
+#~ msgid "Run"
+#~ msgstr "Создать"
+
+#~ msgid "Create drop-down list"
+#~ msgstr "Создать выпадающий список"
+
+#~ msgid "The field name"
+#~ msgstr "Название поля"
+
+#~ msgid "is displayed next to the form"
+#~ msgstr "Отображаемый текст рядом с полем"
+
+#~ msgid "To the field:"
+#~ msgstr "До"
+
+#~ msgid "action before the field"
+#~ msgstr "Дествие перед полем"
+
+#~ msgid "After the field:"
+#~ msgstr "После "
+
+#~ msgid "action after the field"
+#~ msgstr "Действие после поля"
+
+#~ msgid "Of the list"
+#~ msgstr "Значения списка"
+
+#~ msgid "[price]:name;[500]:Installation of windows;"
+#~ msgstr "[цена]:имя;[500]:Монтаж окон;"
+
+#~ msgid "Create a list of checkboxes"
+#~ msgstr "Создать чекбокс лист"
+
+#~ msgid "Action"
+#~ msgstr "Действие"
+
+#~ msgid "between the selected checkboxes in this field"
+#~ msgstr "между выбранными чекбоксами в этом поле"
+
+#~ msgid "Create a list of radio buttons"
+#~ msgstr "Создать радио кнопки"
+
+#~ msgid "Create a text field"
+#~ msgstr "Создать текстовое поле"
+
+#~ msgid "Introduced with effect on the price"
+#~ msgstr "На эту цену произойдет действие с введенными данными"
+
+#~ msgid "with the data entered"
+#~ msgstr "С введенными данными"
+
+#~ msgid "Creating an invisible field"
+#~ msgstr "Создать невидимое поле"
+
+#~ msgid "price of the hidden field"
+#~ msgstr "Цена скрытого поля"
+
+#~ msgid "Options calculator"
+#~ msgstr "Настройки калькулятора"
+
+#~ msgid "Example: Calculate"
+#~ msgstr "Пример: Рассчитать"
+
+#~ msgid "Text before sum of:"
+#~ msgstr "Текст до суммы"
+
+#~ msgid "the text before the final sum"
+#~ msgstr "Текст отображается перед итоговой суммой"
+
+#~ msgid "The text after the final amount:"
+#~ msgstr "Текст после суммы"
+
+#~ msgid "appears after the final amount"
+#~ msgstr "Отображается после суммы, к примеру: Руб."
+
+#~ msgid "full web address to the CSS file"
+#~ msgstr "Полный web адрес до вашего Css файла"
+
+#~ msgid "Remove copyright:"
+#~ msgstr "Убрать копирайт"
+
+#~ msgid "I'm not a good man"
+#~ msgstr "я не хороший человек"
+
+#~ msgid "Save"
+#~ msgstr "Сохранить"
+
+#~ msgid "Formula"
+#~ msgstr "Формула"
+
+#~ msgid "The sort order"
+#~ msgstr "Порядок сортировки"
+
+#~ msgid "Contents"
+#~ msgstr "Содержание"
+
+#~ msgid "Value to"
+#~ msgstr "Значение до"
+
+#~ msgid "Value after"
+#~ msgstr "Значение после"
+
+#~ msgid "[Price]:Name;"
+#~ msgstr "[цена]:Имя;"
+
+#~ msgid "Action with the data entered"
+#~ msgstr "Действие с введенными данными"
+
+#~ msgid "Type - The text box"
+#~ msgstr "Тип - Текстовой блок"
+
+#~ msgid "Price field"
+#~ msgstr "Цена поля"
+
+#~ msgid "Type - A hidden field"
+#~ msgstr "Тип - Скрытое поле"
+
+#~ msgid "The formula in text form"
+#~ msgstr "Формула в виде текста"
+
+#~ msgid "Preview calculator:"
+#~ msgstr "Предпросмотр калькулятора:"
+
+#~ msgid "The code for the template:"
+#~ msgstr "Код для шаблона:"
+
+#~ msgid "Short code in the page's content:"
+#~ msgstr "Шорткод для страниц и записей:"
+
+#~ msgid "The ability to create more than 1 calculator"
+#~ msgstr "Создавать более 1 калькулятора на сайте"
