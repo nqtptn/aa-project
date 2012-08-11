@@ -166,7 +166,7 @@ if ( isset($plugin_page) ) {
 		else
 			include(WP_PLUGIN_DIR . "/$plugin_page");
 	}
-
+	if ( !isset($_GET['nofooter']))
 	include(ABSPATH . 'wp-admin/admin-footer.php');
 
 	exit();
