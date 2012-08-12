@@ -15,6 +15,7 @@ if ( !defined('ABSPATH') )
 <div class="clear"></div></div><!-- wpbody -->
 <div class="clear"></div></div><!-- wpcontent -->
 
+<!-- Nha
 <div id="footer">
 <?php do_action( 'in_admin_footer' ); ?>
 <p id="footer-left" class="alignleft"><?php
@@ -28,6 +29,7 @@ unset( $footer_text );
 <p id="footer-upgrade" class="alignright"><?php echo $upgrade; ?></p>
 <div class="clear"></div>
 </div>
+-->
 <?php
 do_action('admin_footer', '');
 do_action('admin_print_footer_scripts');
