@@ -19,6 +19,10 @@ function ql_bill2() {
 		include ("xml.php");
 	}elseif($_GET['action']=="update_record"){
 		include ("update2.php");
+	}elseif($_GET['action']=="load_cuoc_phi"){
+		include ("load_cuoc_phi.php");
+	}elseif($_GET['action']=="load_tinh_tp"){
+		include ("load_tinh_tp.php");
 	}else{
 		include ("show_form.php");
 	}

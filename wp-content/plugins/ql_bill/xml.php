@@ -26,9 +26,11 @@ if(!isset($_GET['f']) || empty($_GET['f'])){
 	$form=$_GET['f'];
 }
 if($form==1){
-	$grid->addColumn('ngay', 'Ngày', 'date', NULL,true);
+	$grid->addColumn('stt', 'Stt', 'string', NULL,true);
+	$grid->addColumn('ngay', 'Ngày', 'string', NULL,true);
 	$grid->addColumn('ma_dich_vu', 'Dịch vụ', 'string',  fetch_pairs($mysqli,'select ma_dich_vu,ten_dich_vu from  gia_dich_vu where la_dich_vu_cong_them=0'),true);
 	$grid->addColumn('ma_tinh_den', 'Tỉnh đến', 'string' , fetch_pairs($mysqli,'SELECT ma_tinh as ma_tinh_den, ten_tinh FROM gia_tinh_thanh_pho'),true);
+	$grid->addColumn('khoi_luong', 'Trọng lượng', 'integer (tấn)', NULL,true);
 	$grid->addColumn('cuoc_phi', 'Giá cước', 'integer', NULL,true);
 	$grid->addColumn('phu_thu', 'Phụ phí', 'integer', NULL,true);
 	$grid->addColumn('tong', 'Tổng', 'integer', NULL,false);
@@ -37,14 +39,18 @@ if($form==1){
 	$query="
 				SELECT
 				ma_van_chuyen as id, 
-				date_format(ngay, \"%d/%m/%Y\") as ngay,
+				@curRank := @curRank + 1 AS stt,
+				date_format(ngay, \"%d\") as ngay,
 				ma_dich_vu,
 				ma_tinh_den,
+				khoi_luong,
 				cuoc_phi,
 				phu_thu,
 				tong,
 				ghi_chu
-				from gia_van_chuyen_dn";
+				from gia_van_chuyen_dn, (SELECT @curRank := 0) r
+				where date_format(ngay, \"%Y-%m\") = '2012-08'
+				order by ngay";
 	$result = $mysqli->query($query);
 	$mysqli->close();
 	$grid->renderXML($result,$total_record,$total_page,$curent_page);
