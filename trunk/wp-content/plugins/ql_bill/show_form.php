@@ -11,7 +11,7 @@ function DatabaseGrid(XML_link,field_id,filter_id,update_url)
 {
 	editableGrid = new EditableGrid(field_id, {
 		enableSort: true,
-		pageSize: 10,
+		pageSize: 1000,
 		tableLoaded: function() {
 			this.setCellRenderer("action", new CellRenderer({
 				render: function(cell, value) {
@@ -43,7 +43,8 @@ function post_data(xml_link){
 	input_value['cuoc_phi'] = $("#cuoc_phi").val();
 	input_value['phu_thu'] = $("#phu_thu").val();
 	input_value['ghi_chu'] = $("#ghi_chu").val();
-	input_value['tong'] = input_value['cuoc_phi'] + input_value['phu_thu'];
+	input_value['khoi_luong'] = $("#khoi_luong").val();
+	input_value['tong'] = parseInt(input_value['cuoc_phi']) + parseInt(input_value['phu_thu']);
 	$.ajax({
 		url: xml_link,
 		type: 'POST',
@@ -55,14 +56,21 @@ function post_data(xml_link){
 			cuoc_phi : input_value['cuoc_phi'],
 			phu_thu : input_value['phu_thu'],
 			ghi_chu : input_value['ghi_chu'],
-			tong : input_value['cuoc_phi'] + input_value['phu_thu'],
+			khoi_luong : input_value['khoi_luong'],
+			tong : parseInt(input_value['cuoc_phi']) + parseInt(input_value['phu_thu']),
 			action: "add_record",
 		},
 		success: function (response)
 		{
+
 			if(response!="false"){
 				input_value['id']=response;
 				editableGrid.insert(0,response,input_value);
+				$("#cuoc_phi").val("");
+				$("#phu_thu").val("");
+				$("#ghi_chu").val("");
+				$("#khoi_luong").val("");
+				$("#khoi_luong").focus();
 			}
 		},
 		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
@@ -75,6 +83,7 @@ function post_data(xml_link){
  */
 function updateCellValue(editableGrid, rowIndex, columnIndex, oldValue, newValue, row,sys_url,onResponse)
 {
+	
 	var total=editableGrid.getValueAt(rowIndex, 5);
 	$.ajax({
 		url: sys_url,
@@ -89,13 +98,18 @@ function updateCellValue(editableGrid, rowIndex, columnIndex, oldValue, newValue
 		},
 		success: function (response)
 		{
+			
 			// reset old value if failed then highlight row
 			var success = onResponse ? onResponse(response) : (response == "ok" || !isNaN(parseInt(response))); // by default, a sucessfull reponse can be "ok" or a database id
 			if (!success) editableGrid.setValueAt(rowIndex, columnIndex, oldValue)
 			else{
 				if(editableGrid.getColumnName(columnIndex)=="phu_thu" || editableGrid.getColumnName(columnIndex)=="cuoc_phi"){
-					total = editableGrid.getValueAt(rowIndex, 4) + editableGrid.getValueAt(rowIndex, 3);
-					editableGrid.setValueAt(rowIndex, 5, total);
+					total = editableGrid.getValueAt(rowIndex, 4) + editableGrid.getValueAt(rowIndex, 5);
+					editableGrid.setValueAt(rowIndex, 6, total);
+				}else if(editableGrid.getColumnName(columnIndex)=="khoi_luong"){
+					editableGrid.setValueAt(rowIndex, 4, response);
+					total = editableGrid.getValueAt(rowIndex, 4) + editableGrid.getValueAt(rowIndex, 5);
+					editableGrid.setValueAt(rowIndex, 6, total);
 				}
 			}
 		    highlight(row.id, success ? "ok" : "error");
@@ -126,68 +140,144 @@ function delete_record(editableGrid, rowIndex,sys_url,onResponse)
 		async: true
 	});
 }
+function load_cuoc_phi()
+{
+	$.ajax({
+		url: "<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&action=load_cuoc_phi&noheader=1&nofooter=1&f=1",
+		type: 'POST',
+		dataType: "html",
+		data: {
+			ma_dich_vu : $("#ma_dich_vu").val(),
+			ma_tinh_den : $("#ma_tinh_den").val(),
+			khoi_luong : $("#khoi_luong").val()
+		},
+		success: function (response)
+		{
+			// reset old value if failed then highlight row
+			$("#cuoc_phi").val(response);
+			load_cuoc_phi();
+		},
+		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
+		async: true
+	});
+}
+function load_tinh_tp()
+{
+	$.ajax({
+		url: "<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&action=load_tinh_tp&noheader=1&nofooter=1&f=1",
+		type: 'POST',
+		dataType: "html",
+		data: {
+			ma_dich_vu : $("#ma_dich_vu").val()
+		},
+		success: function (response)
+		{
+			// reset old value if failed then highlight row
+			$("#ma_tinh_den").html(response);
+		},
+		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
+		async: true
+	});
+}
 var update_url="<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&action=update_record&noheader=1&nofooter=1&f=1";
 var xml_link='<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&noheader=1&nofooter=1&action=XML&f=1';
 DatabaseGrid(xml_link,"tablecontent","filter",update_url);
 </script>
-<label for="filter">Lọc :</label>
-<input type="text" id="filter"/>
-<label for="pagesize">Số dòng trên trang: </label>
-<select id="pagesize" name="pagesize">
-	<option value="10">10</option>
-	<option value="15">15</option>
-	<option value="20">20</option>
-	<option value="25">25</option>
-	<option value="30">30</option>
-	<option value="40">40</option>
-	<option value="50">50</option>
+<br/>
+<label for="thang">Khách hàng</label>
+<select id='khach_hang'>
+	<option value='nnn' selected>CTy AAAA</option>
 </select>
+<label for="thang">Tháng</label>
+<select id='thang'>
+	<?
+		for ($i=1;$i<=12;$i++){
+			if($i<10){
+				$d_value="0".$i;
+			}else{
+				$d_value=$i;
+			}
+			if($i==date("n",time())){
+				echo "<option value='$d_value' selected>$d_value</option>";
+			}else{
+				echo "<option value='$d_value'>$d_value</option>";
+			}
+		}
+	?>
+</select>
+<label for="nam">Năm</label>
+<select id='nam'>
+	<?
+		for ($i=date("Y",time());$i>=(date("Y",time())-5);$i--){
+			if($i==date("Y",time())){
+				echo "<option value='$i' selected>$i</option>";
+			}else{
+				echo "<option value='$i'>$i</option>";
+			}
+		}
+	?>
+</select>
+<label for="pagesize">Số dòng trên trang</label>
+<select id="pagesize" name="pagesize">
+	<option value="1000">Tất cả</option>
+	<option value="10">10</option>
+	<option value="20">20</option>
+	<option value="30">30</option>
+	<option value="50">50</option>
+	<option value="70">70</option>
+	<option value="100">100</option>
+</select>
+<label for="filter">Tìm kiếm</label>
+<input type="text" id="filter"/>
+
 <div id="tablecontent"></div>
 <div id="paginator"></div>
 <div id='posting'>
 	<form name="post_form" method="post" onsubmit='return post_data(update_url)'>
+		<table>
+			<tr>
+				<td>
+				</td>
+			</tr>
+		</table>
 		<label for="ngay">Ngày</label>
 		<select id='ngay'>
 			<?
 				for ($i=1;$i<=31;$i++){
-					echo "<option value='$i'>$i</option>";
+					if($i<10){
+						$d_value="0".$i;
+					}else{
+						$d_value=$i;
+					}
+					if($i==date("j",time())){
+						echo "<option value='$d_value' selected>$d_value</option>";
+					}else{
+						echo "<option value='$d_value'>$d_value</option>";
+					}
 				}
 			?>
 		</select>
-		<label for="thang">Tháng</label>
-		<select id='thang'>
-			<?
-				for ($i=1;$i<=12;$i++){
-					echo "<option value='$i'>$i</option>";
-				}
-			?>
-		</select>
-		<label for="nam">Năm</label>
-		<select id='nam'>
-			<?
-				for ($i=date("Y",time());$i>=(date("Y",time())-5);$i--){
-					echo "<option value='$i'>$i</option>";
-				}
-			?>
-		</select>
-		<br />
 		<label for="ma_dich_vu">Dịch vụ</label>
-		<select id='ma_dich_vu'>
+		<select id='ma_dich_vu'  onchange="load_tinh_tp();">
 			<?
 				global $wpdb;
 				$temp=$wpdb->get_results("select ma_dich_vu,ten_dich_vu from  gia_dich_vu where la_dich_vu_cong_them=0");
 				foreach($temp as $temp2){
 					if(!empty($temp2->ma_dich_vu)){
-						echo "<option value='".$temp2->ma_dich_vu."'>".$temp2->ten_dich_vu."</option>";
+						if($temp2->ma_dich_vu == 'chuyen_phat_nhanh'){
+							echo "<option selected='selected' value='".$temp2->ma_dich_vu."'>".$temp2->ten_dich_vu."</option>";
+						}else{
+							echo "<option value='".$temp2->ma_dich_vu."'>".$temp2->ten_dich_vu."</option>";
+						}
 					}
 				}
 			?>
 		</select>
-		<label for="ma_tinh_den">Mã tỉnh</label>
-		<select id="ma_tinh_den">
+		<label for="ma_tinh_den">Tỉnh đến</label>
+		<select id="ma_tinh_den" onchange="load_cuoc_phi();">
 		<?
 			global $wpdb;
-			$province = $wpdb->get_results("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho");
+			$province = $wpdb->get_results("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho WHERE ma_tinh in (select ma_tinh_den from gia_dich_vu_tinh_thanh_pho where ma_tinh_di='tp_hcm' and ma_dich_vu='chuyen_phat_nhanh')");
 			//echo $wpdb->get_var( $wpdb->prepare("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho", $comment_author, $comment_date) );
 			foreach($province as $province2){
 				if(!empty($province2->ma_tinh)){
@@ -196,12 +286,15 @@ DatabaseGrid(xml_link,"tablecontent","filter",update_url);
 			}
 		?>
 		</select>
-		
+		<label for="so_bill">Số bill</label>
+		<input type='text' size='8' id='so_bill' value=''  />		
+		<label for="khoi_luong">Trọng lượng</label>
+		<input type='text' size='8' id='khoi_luong' value=''  onblur="load_cuoc_phi();" />
 		<label for="cuoc_phi">Cước phí</label>
-		<input type='text' id='cuoc_phi' value='' />
-
+		<input type='text' size='12' id='cuoc_phi' value='' />
+		
 		<label for="phu_thu">Phụ thu</label>
-		<input type='text' id='phu_thu' value='' />
+		<input type='text' size='12' id='phu_thu' value='' />
 		<label for="ghi_chu">Ghi chú</label>
 		<input type='text' id='ghi_chu' value='' />
 		<input type='submit' value='Save' />

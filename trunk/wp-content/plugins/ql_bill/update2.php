@@ -1,4 +1,5 @@
 <?
+global $wpdb;
 $mysqli = mysqli_init();
 $mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 5);
 if(!$mysqli->real_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME)){
@@ -12,17 +13,7 @@ if($form==1){
 		$id = $mysqli->real_escape_string(strip_tags($_POST['id']));
 		$coltype = $mysqli->real_escape_string(strip_tags($_POST['coltype']));
 		$value = $mysqli->real_escape_string(strip_tags($_POST['newvalue']));
-														
-		// Here, this is a little tips to manage date format before update the table
-		if ($coltype == 'date') {
-			if ($value === "") 
-				$value = NULL;
-			else {
-				$date_info = date_parse_from_format('d/m/Y H:i:S', $value);
-				$value = $date_info['year']."/".$date_info['month']."/".$date_info['day']." 00:00:00";
-		   }
-		}                      
-
+		
 		// This very generic. So this script can be used to update several tables.
 		$return=false;
 		if($colname=="id"){
@@ -30,10 +21,24 @@ if($form==1){
 		}else{
 			$field=$colname;
 		}
-		$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET $field = '$value' WHERE ma_van_chuyen = '$id'");
-		$result2 = $mysqli->query("UPDATE gia_van_chuyen_dn SET tong = cuoc_phi + phu_thu WHERE ma_van_chuyen = '$id'");
-		echo $result ? "ok" : "error $result";
+		if($colname=="khoi_luong" || $colname=="cuoc_phi" || $colname=="phu_thu"){
+			if($colname=="cuoc_phi" || $colname=="phu_thu"){
+				$result2 = $mysqli->query("UPDATE gia_van_chuyen_dn SET tong = cuoc_phi + phu_thu WHERE ma_van_chuyen = '$id'");
+			}else{
+				//Neu cot khoi luong dc cap nhat, tinh lai cuoc phi
+				$temp1 = $wpdb->get_row("SELECT ma_dich_vu,ma_tinh_den FROM gia_van_chuyen_dn where ma_van_chuyen = '$id'");
+				$temp2 = $wpdb->get_row("select fn_tinh_gia('".$temp1->ma_dich_vu."','tp_hcm','".$temp1->ma_tinh_den."',".$value.",0) as returnvalue");
+				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET khoi_luong = '$value', cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
+			}
+		}else if ($colname=="ngay"){
+			$temp1 = $wpdb->get_row("SELECT date_format(ngay, \"%Y-%m-\") as ngay FROM gia_van_chuyen_dn where ma_van_chuyen = '$id'");
+			$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET ngay = '".$temp1->ngay.$value."' WHERE ma_van_chuyen = '$id'");
+		}else{
+			$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET $field = '$value' WHERE ma_van_chuyen = '$id'");
+		}
+		echo $result ? ($colname=="khoi_luong" ? $temp2->returnvalue : "ok") : "error";
 		$mysqli->close();
+		
 	}elseif($action=="delete"){
 		$id = $mysqli->real_escape_string(strip_tags($_POST['id']));
 		$result = $mysqli->query("DELETE from gia_van_chuyen_dn WHERE ma_van_chuyen = '$id'");
@@ -41,16 +46,20 @@ if($form==1){
 		echo $result ? "ok" : "error";
 	}elseif($action=="add_record"){
 		$ngay = $mysqli->real_escape_string(strip_tags($_POST['ngay']));
+		$temp = explode("/",$ngay);
+		$ngay = $temp[2]."/".$temp[1]."/".$temp[0]. " 00:00:00";
 		$ma_dich_vu = $mysqli->real_escape_string(strip_tags($_POST['ma_dich_vu']));
 		$ma_tinh_den = $mysqli->real_escape_string(strip_tags($_POST['ma_tinh_den']));
 		$cuoc_phi = $mysqli->real_escape_string(strip_tags($_POST['cuoc_phi']));
 		$phu_thu = $mysqli->real_escape_string(strip_tags($_POST['phu_thu']));
 		$tong = $mysqli->real_escape_string(strip_tags($_POST['tong']));
 		$ghi_chu = $mysqli->real_escape_string(strip_tags($_POST['ghi_chu']));
+		$khoi_luong = $mysqli->real_escape_string(strip_tags($_POST['khoi_luong']));
 		$result =  $mysqli->query("INSERT INTO gia_van_chuyen_dn 
-			(ngay,ma_dich_vu,ma_tinh_den,ma_tinh_di,cuoc_phi,phu_thu,tong,ghi_chu) value 
-			('$ngay','$ma_dich_vu','$ma_tinh_den','tp_hcm','$cuoc_phi','$phu_thu','$tong','$ghi_chu')");
+			(ngay,ma_dich_vu,ma_tinh_den,ma_tinh_di,cuoc_phi,phu_thu,tong,ghi_chu,khoi_luong) value 
+			('$ngay','$ma_dich_vu','$ma_tinh_den','tp_hcm','$cuoc_phi','$phu_thu','$tong','$ghi_chu','$khoi_luong')");
 		echo $result ? $mysqli->insert_id : "false";
+		echo $result ;
 		$mysqli->close();
 	}
 }
