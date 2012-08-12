@@ -292,9 +292,9 @@ if ( is_multisite() ) {
 
 if ( current_user_can( 'create_users') ) {
 	if ( $do_both )
-		echo '<h3 id="create-new-user">' . __( 'Add New User' ) . '</h3>';
+		echo '<h3 id="create-new-user">' . __( 'Thêm mới' ) . '</h3>';
 ?>
-<p><?php _e('Create a brand new user and add it to this site.'); ?></p>
+<p><?php _e('Tạo thông tin khách hàng.'); ?></p>
 <form action="" method="post" name="createuser" id="createuser" class="add:users: validate"<?php do_action('user_new_form_tag');?>>
 <input name="action" type="hidden" value="createuser" />
 <?php wp_nonce_field( 'create-user', '_wpnonce_create-user' ) ?>
@@ -314,7 +314,7 @@ foreach ( array( 'user_login' => 'login', 'first_name' => 'firstname', 'last_nam
 ?>
 <table class="form-table">
 	<tr class="form-field form-required">
-		<th scope="row"><label for="user_login"><?php _e('Username'); ?> <span class="description"><?php _e('(required)'); ?></span></label></th>
+		<th scope="row"><label for="user_login"><?php _e('Mã khách hàng'); ?> <span class="description"><?php _e('(required)'); ?></span></label></th>
 		<td><input name="user_login" type="text" id="user_login" value="<?php echo esc_attr($new_user_login); ?>" aria-required="true" /></td>
 	</tr>
 	<tr class="form-field form-required">
@@ -323,11 +323,11 @@ foreach ( array( 'user_login' => 'login', 'first_name' => 'firstname', 'last_nam
 	</tr>
 <?php if ( !is_multisite() ) { ?>
 	<tr class="form-field">
-		<th scope="row"><label for="first_name"><?php _e('First Name') ?> </label></th>
+		<th scope="row"><label for="first_name"><?php _e('Tên liên hệ') ?> </label></th>
 		<td><input name="first_name" type="text" id="first_name" value="<?php echo esc_attr($new_user_firstname); ?>" /></td>
 	</tr>
 	<tr class="form-field">
-		<th scope="row"><label for="last_name"><?php _e('Last Name') ?> </label></th>
+		<th scope="row"><label for="last_name"><?php _e('Tên công ty') ?> </label></th>
 		<td><input name="last_name" type="text" id="last_name" value="<?php echo esc_attr($new_user_lastname); ?>" /></td>
 	</tr>
 	<tr class="form-field">
@@ -341,18 +341,18 @@ foreach ( array( 'user_login' => 'login', 'first_name' => 'firstname', 'last_nam
 		<br />
 		<input name="pass2" type="password" id="pass2" autocomplete="off" />
 		<br />
-		<div id="pass-strength-result"><?php _e('Strength indicator'); ?></div>
-		<p class="description indicator-hint"><?php _e('Hint: The password should be at least seven characters long. To make it stronger, use upper and lower case letters, numbers and symbols like ! " ? $ % ^ &amp; ).'); ?></p>
+		<div id="pass-strength-result"><?php _e('Mức độ bảo mật'); ?></div>
+		<p class="description indicator-hint"><?php _e('Password nên có ít nhất 7 ký tự. Nên có ký tự viết HOA, thường, số và ký tự đặc biệt ! " ? $ % ^ &amp; ).'); ?></p>
 		</td>
 	</tr>
 	<tr>
-		<th scope="row"><label for="send_password"><?php _e('Send Password?') ?></label></th>
-		<td><label for="send_password"><input type="checkbox" name="send_password" id="send_password" <?php checked( $new_user_send_password ); ?> /> <?php _e('Send this password to the new user by email.'); ?></label></td>
+		<th scope="row"><label for="send_password"><?php _e('Gửi Password?') ?></label></th>
+		<td><label for="send_password"><input type="checkbox" name="send_password" id="send_password" <?php checked( $new_user_send_password ); ?> /> <?php _e('Gửi password này cho khách hàng bằng email.'); ?></label></td>
 	</tr>
 <?php endif; ?>
 <?php } // !is_multisite ?>
 	<tr class="form-field">
-		<th scope="row"><label for="role"><?php _e('Role'); ?></label></th>
+		<th scope="row"><label for="role"><?php _e('Phân quyền'); ?></label></th>
 		<td><select name="role" id="role">
 			<?php
 			if ( !$new_user_role )
@@ -364,13 +364,13 @@ foreach ( array( 'user_login' => 'login', 'first_name' => 'firstname', 'last_nam
 	</tr>
 	<?php if ( is_multisite() && is_super_admin() ) { ?>
 	<tr>
-		<th scope="row"><label for="noconfirmation"><?php _e('Skip Confirmation Email') ?></label></th>
+		<th scope="row"><label for="noconfirmation"><?php _e('Không cần xác nhận bằng E-Mail') ?></label></th>
 		<td><label for="noconfirmation"><input type="checkbox" name="noconfirmation" id="noconfirmation" value="1" <?php checked( $new_user_ignore_pass ); ?> /> <?php _e( 'Add the user without sending them a confirmation email.' ); ?></label></td>
 	</tr>
 	<?php } ?>
 </table>
 
-<?php submit_button( __( 'Add New User '), 'primary', 'createuser', true, array( 'id' => 'createusersub' ) ); ?>
+<?php submit_button( __( 'Thêm mới '), 'primary', 'createuser', true, array( 'id' => 'createusersub' ) ); ?>
 
 </form>
 <?php } // current_user_can('create_users') ?>
