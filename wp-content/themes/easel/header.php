@@ -53,23 +53,37 @@
 		<br>
 		<?php if (!easel_themeinfo('disable_default_menubar') && function_exists('easel_menubar')) easel_menubar();?>
 		<?php easel_get_sidebar('above-header'); ?>
+		
 		<table border="0" cellpadding="0" cellspacing="0" width="1095px" height="180px" 
-			style="background-color: #FFF; background: url(<?php echo get_template_directory_uri(); ?>/images/banner1.jpg) left repeat;
-					margin: 0px 0px 1px 3px; border: solid 1px black;">
+			style="background-color: #FFF; margin: 0px 0px 1px 3px; border: solid 1px black;">
 			<tr>
-				<td width="230px" style="padding: 0px 0px 0px 20px; >
-					<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" height="110" width="180"> 
-						<param name="movie" value="<?php echo get_template_directory_uri(); ?>/images/banner.swf"> 
-						<param name="quality" value="high"> 
-						<embed src="<?php echo get_template_directory_uri(); ?>/images/banner.swf" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" height="110" width="180"> 
-					</object>
-				</td> 
-				<td>
-					<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" height="110" width="350"> 
-						<param name="movie" value="<?php echo get_template_directory_uri(); ?>/images/banneradv.swf"> 
-						<param name="quality" value="high"> 
-						<embed src="<?php echo get_template_directory_uri(); ?>/images/banneradv.swf" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" height="110" width="350"> 
-					</object>						  
+				<td width="100%">
+					 <object
+						classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+						codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,42,0"
+						id="banner"
+						width="1092" height="340"
+					  >
+						<param name="movie" value="banner.swf">
+						<param name="bgcolor" value="#FFFFFF">
+						<param name="quality" value="high">
+						<param name="seamlesstabbing" value="false">
+						<param name="allowscriptaccess" value="samedomain">
+						<embed
+						  type="application/x-shockwave-flash"
+						  pluginspage="http://www.adobe.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash"
+						  name="banner"
+						  width="1092" height="340"
+						  src="<?php echo get_template_directory_uri(); ?>/images/Banner2.swf"
+						  bgcolor="#FFFFFF"
+						  quality="high"
+						  seamlesstabbing="false"
+						  allowscriptaccess="samedomain"
+						>
+						  <noembed>
+						  </noembed>
+						</embed>
+					  </object>
 				</td> 
 			</tr>
 		</table>

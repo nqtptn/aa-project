@@ -43,7 +43,7 @@ font-weight: normal;
 #menubar-wrapper {
 	width: 1093px;
 	margin: 0px 4px 4px 4px;
-	padding: 3px 0px 3px 0;
+	padding: 5px 0px 5px 0;
 	color: black;
 	background-color: #FFF;
 	background: url(images/banner-menu.jpg) left repeat;
@@ -69,7 +69,7 @@ font-weight: normal;
 }
 
 #submit, .type-post, .type-forum, .type-reply, .type-topic, .type-page, .type-comic, .type-showcase, .type-music, .type-attachment, .type-casts, #wp-paginav, .sidebar h2, #comment-wrapper, .default-nav, .submit, .feature {
-	padding: 10px 10px 25px 10px;
+	padding: 15px 10px 25px 10px;
 	-khtml-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
