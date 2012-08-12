@@ -1,12 +1,4 @@
 <?php
-/**
- * Edit user administration panel.
- *
- * @package WordPress
- * @subpackage Administration
- */
-
-/** WordPress Administration Bootstrap */
 require_once('./admin.php');
 
 wp_reset_vars(array('action', 'redirect', 'profile', 'user_id', 'wp_http_referer'));
@@ -44,14 +36,12 @@ $profile_help = '<p>' . __('Your profile contains information about you (your &#
 
 get_current_screen()->add_help_tab( array(
 	'id'      => 'overview',
-	'title'   => __('Overview'),
+	'title'   => __('Hướng dẫn'),
 	'content' => $profile_help,
 ) );
 
 get_current_screen()->set_help_sidebar(
-    '<p><strong>' . __('For more information:') . '</strong></p>' .
-    '<p>' . __('<a href="http://codex.wordpress.org/Users_Your_Profile_Screen" target="_blank">Documentation on User Profiles</a>') . '</p>' .
-    '<p>' . __('<a href="http://wordpress.org/support/" target="_blank">Support Forums</a>') . '</p>'
+    ''
 );
 
 $wp_http_referer = remove_query_arg(array('update', 'delete_count'), stripslashes($wp_http_referer));
@@ -76,7 +66,7 @@ function use_ssl_preference($user) {
 
 // Only allow super admins on multisite to edit every user.
 if ( is_multisite() && ! current_user_can( 'manage_network_users' ) && $user_id != $current_user->ID && ! apply_filters( 'enable_edit_any_user_configuration', true ) )
-	wp_die( __( 'You do not have permission to edit this user.' ) );
+	wp_die( __( 'Bạn không có quyền cập nhật thông tin khách hàng này.' ) );
 
 // Execute confirmed email change. See send_confirmation_on_profile_email().
 if ( is_multisite() && IS_PROFILE_PAGE && isset( $_GET[ 'newuseremail' ] ) && $current_user->ID ) {
@@ -103,7 +93,7 @@ case 'update':
 check_admin_referer('update-user_' . $user_id);
 
 if ( !current_user_can('edit_user', $user_id) )
-	wp_die(__('You do not have permission to edit this user.'));
+	wp_die(__('Bạn không có quyền cập nhật thông tin khách hàng này.'));
 
 if ( IS_PROFILE_PAGE )
 	do_action('personal_options_update', $user_id);
@@ -150,7 +140,7 @@ default:
 $profileuser = get_user_to_edit($user_id);
 
 if ( !current_user_can('edit_user', $user_id) )
-	wp_die(__('You do not have permission to edit this user.'));
+	wp_die(__('Bạn không có quyền cập nhật thông tin cho khách hàng này.'));
 
 include (ABSPATH . 'wp-admin/admin-header.php');
 ?>
@@ -161,12 +151,12 @@ include (ABSPATH . 'wp-admin/admin-header.php');
 <?php if ( isset($_GET['updated']) ) : ?>
 <div id="message" class="updated">
 	<?php if ( IS_PROFILE_PAGE ) : ?>
-	<p><strong><?php _e('Profile updated.') ?></strong></p>
+	<p><strong><?php _e('Thực hiện thành công.') ?></strong></p>
 	<?php else: ?>
-	<p><strong><?php _e('User updated.') ?></strong></p>
+	<p><strong><?php _e('Thực hiện thành công.') ?></strong></p>
 	<?php endif; ?>
 	<?php if ( $wp_http_referer && !IS_PROFILE_PAGE ) : ?>
-	<p><a href="<?php echo esc_url( $wp_http_referer ); ?>"><?php _e('&larr; Back to Users'); ?></a></p>
+	<p><a href="<?php echo esc_url( $wp_http_referer ); ?>"><?php _e('&larr; Trở về'); ?></a></p>
 	<?php endif; ?>
 </div>
 <?php endif; ?>
@@ -181,7 +171,7 @@ include (ABSPATH . 'wp-admin/admin-header.php');
 echo esc_html( $title );
 if ( ! IS_PROFILE_PAGE ) {
 	if ( current_user_can( 'create_users' ) ) { ?>
-		<a href="user-new.php" class="add-new-h2"><?php echo esc_html_x( 'Add New', 'user' ); ?></a>
+		<a href="user-new.php" class="add-new-h2"><?php echo esc_html_x( 'Thêm mới', 'user' ); ?></a>
 	<?php } elseif ( is_multisite() && current_user_can( 'promote_users' ) ) { ?>
 		<a href="user-new.php" class="add-new-h2"><?php echo esc_html_x( 'Add Existing', 'user' ); ?></a>
 	<?php }
@@ -198,34 +188,34 @@ if ( ! IS_PROFILE_PAGE ) {
 <input type="hidden" name="checkuser_id" value="<?php echo $user_ID ?>" />
 </p>
 
-<h3><?php _e('Personal Options'); ?></h3>
+<h3><?php _e('Lựa chọn hiển thị'); ?></h3>
 
 <table class="form-table">
 <?php if ( rich_edit_exists() && !( IS_PROFILE_PAGE && !$user_can_edit ) ) : // don't bother showing the option if the editor has been removed ?>
 	<tr>
-		<th scope="row"><?php _e('Visual Editor')?></th>
-		<td><label for="rich_editing"><input name="rich_editing" type="checkbox" id="rich_editing" value="false" <?php checked('false', $profileuser->rich_editing); ?> /> <?php _e('Disable the visual editor when writing'); ?></label></td>
+		<th scope="row"><?php _e('Soạn văn bản')?></th>
+		<td><label for="rich_editing"><input name="rich_editing" type="checkbox" id="rich_editing" value="false" <?php checked('false', $profileuser->rich_editing); ?> /> <?php _e('Không hiển thị giao diện mở rộng'); ?></label></td>
 	</tr>
 <?php endif; ?>
 <?php if ( count($_wp_admin_css_colors) > 1 && has_action('admin_color_scheme_picker') ) : ?>
 <tr>
-<th scope="row"><?php _e('Admin Color Scheme')?></th>
+<th scope="row"><?php _e('Màu chủ đạo trang quản trị')?></th>
 <td><?php do_action( 'admin_color_scheme_picker' ); ?></td>
 </tr>
 <?php
 endif; // $_wp_admin_css_colors
 if ( !( IS_PROFILE_PAGE && !$user_can_edit ) ) : ?>
 <tr>
-<th scope="row"><?php _e( 'Keyboard Shortcuts' ); ?></th>
-<td><label for="comment_shortcuts"><input type="checkbox" name="comment_shortcuts" id="comment_shortcuts" value="true" <?php if ( !empty($profileuser->comment_shortcuts) ) checked('true', $profileuser->comment_shortcuts); ?> /> <?php _e('Enable keyboard shortcuts for comment moderation.'); ?></label> <?php _e('<a href="http://codex.wordpress.org/Keyboard_Shortcuts" target="_blank">More information</a>'); ?></td>
+<th scope="row"><?php _e( 'Bàn phím' ); ?></th>
+<td><label for="comment_shortcuts"><input type="checkbox" name="comment_shortcuts" id="comment_shortcuts" value="true" <?php if ( !empty($profileuser->comment_shortcuts) ) checked('true', $profileuser->comment_shortcuts); ?> /> <?php _e('Hiện bàn phím khi đang viết ghi chú.'); ?></label></td>
 </tr>
 <?php endif; ?>
 <tr class="show-admin-bar">
-<th scope="row"><?php _e('Toolbar')?></th>
-<td><fieldset><legend class="screen-reader-text"><span><?php _e('Toolbar') ?></span></legend>
+<th scope="row"><?php _e('Thanh công cụ')?></th>
+<td><fieldset><legend class="screen-reader-text"><span><?php _e('Thanh công cụ') ?></span></legend>
 <label for="admin_bar_front">
 <input name="admin_bar_front" type="checkbox" id="admin_bar_front" value="1"<?php checked( _get_admin_bar_pref( 'front', $profileuser->ID ) ); ?> />
-<?php _e( 'Show Toolbar when viewing site' ); ?></label><br />
+<?php _e( 'Hiện thanh công cụ khi đang truy cập' ); ?></label><br />
 </fieldset>
 </td>
 </tr>
@@ -236,16 +226,16 @@ if ( !( IS_PROFILE_PAGE && !$user_can_edit ) ) : ?>
 		do_action('profile_personal_options', $profileuser);
 ?>
 
-<h3><?php _e('Name') ?></h3>
+<h3><?php _e('Thông tin khách hàng') ?></h3>
 
 <table class="form-table">
 	<tr>
-		<th><label for="user_login"><?php _e('Username'); ?></label></th>
-		<td><input type="text" name="user_login" id="user_login" value="<?php echo esc_attr($profileuser->user_login); ?>" disabled="disabled" class="regular-text" /> <span class="description"><?php _e('Usernames cannot be changed.'); ?></span></td>
+		<th><label for="user_login"><?php _e('Mã khách hàng'); ?></label></th>
+		<td><input type="text" name="user_login" id="user_login" value="<?php echo esc_attr($profileuser->user_login); ?>" disabled="disabled" class="regular-text" /> <span class="description"><?php _e('Không được phép thay đổi.'); ?></span></td>
 	</tr>
 
 <?php if ( !IS_PROFILE_PAGE && !is_network_admin() ) : ?>
-<tr><th><label for="role"><?php _e('Role:') ?></label></th>
+<tr><th><label for="role"><?php _e('Phân quyền:') ?></label></th>
 <td><select name="role" id="role">
 <?php
 // Get the highest/primary role for this user
@@ -277,22 +267,22 @@ if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_c
 <?php } ?>
 
 <tr>
-	<th><label for="first_name"><?php _e('First Name') ?></label></th>
+	<th><label for="first_name"><?php _e('Họ tên') ?></label></th>
 	<td><input type="text" name="first_name" id="first_name" value="<?php echo esc_attr($profileuser->first_name) ?>" class="regular-text" /></td>
 </tr>
 
 <tr>
-	<th><label for="last_name"><?php _e('Last Name') ?></label></th>
+	<th><label for="last_name"><?php _e('Tên công ty') ?></label></th>
 	<td><input type="text" name="last_name" id="last_name" value="<?php echo esc_attr($profileuser->last_name) ?>" class="regular-text" /></td>
 </tr>
 
 <tr>
-	<th><label for="nickname"><?php _e('Nickname'); ?> <span class="description"><?php _e('(required)'); ?></span></label></th>
+	<th><label for="nickname"><?php _e('Điện thoại'); ?></label></th>
 	<td><input type="text" name="nickname" id="nickname" value="<?php echo esc_attr($profileuser->nickname) ?>" class="regular-text" /></td>
 </tr>
 
 <tr>
-	<th><label for="display_name"><?php _e('Display name publicly as') ?></label></th>
+	<th><label for="display_name"><?php _e('Tên hiển thị mong muốn') ?></label></th>
 	<td>
 		<select name="display_name" id="display_name">
 		<?php
@@ -328,7 +318,7 @@ if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_c
 </tr>
 </table>
 
-<h3><?php _e('Contact Info') ?></h3>
+<h3><?php _e('Thông tin liên hệ') ?></h3>
 
 <table class="form-table">
 <tr>
@@ -361,13 +351,12 @@ if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_c
 ?>
 </table>
 
-<h3><?php IS_PROFILE_PAGE ? _e('About Yourself') : _e('About the user'); ?></h3>
+<h3><?php IS_PROFILE_PAGE ? _e('About Yourself') : _e('Về khách hàng'); ?></h3>
 
 <table class="form-table">
 <tr>
-	<th><label for="description"><?php _e('Biographical Info'); ?></label></th>
+	<th><label for="description"><?php _e('Thông tin khác'); ?></label></th>
 	<td><textarea name="description" id="description" rows="5" cols="30"><?php echo $profileuser->description; // textarea_escaped ?></textarea><br />
-	<span class="description"><?php _e('Share a little biographical information to fill out your profile. This may be shown publicly.'); ?></span></td>
 </tr>
 
 <?php
@@ -376,10 +365,10 @@ if ( $show_password_fields ) :
 ?>
 <tr id="password">
 	<th><label for="pass1"><?php _e('New Password'); ?></label></th>
-	<td><input type="password" name="pass1" id="pass1" size="16" value="" autocomplete="off" /> <span class="description"><?php _e("If you would like to change the password type a new one. Otherwise leave this blank."); ?></span><br />
-		<input type="password" name="pass2" id="pass2" size="16" value="" autocomplete="off" /> <span class="description"><?php _e("Type your new password again."); ?></span><br />
-		<div id="pass-strength-result"><?php _e('Strength indicator'); ?></div>
-		<p class="description indicator-hint"><?php _e('Hint: The password should be at least seven characters long. To make it stronger, use upper and lower case letters, numbers and symbols like ! " ? $ % ^ &amp; ).'); ?></p>
+	<td><input type="password" name="pass1" id="pass1" size="16" value="" autocomplete="off" /> <span class="description"><?php _e("Nhập password mới nếu bạn muốn thay đổi."); ?></span><br />
+		<input type="password" name="pass2" id="pass2" size="16" value="" autocomplete="off" /> <span class="description"><?php _e("Nhập lại password mới."); ?></span><br />
+		<div id="pass-strength-result"><?php _e('Mức độ bảo mật'); ?></div>
+		<p class="description indicator-hint"><?php _e('Password nên có ít nhất 7 ký tự. Nên có ký tự viết HOA, thường, số và ký tự đặc biệt ! " ? $ % ^ &amp; ).'); ?></p>
 	</td>
 </tr>
 <?php endif; ?>
@@ -415,7 +404,7 @@ if ( $show_password_fields ) :
 <input type="hidden" name="action" value="update" />
 <input type="hidden" name="user_id" id="user_id" value="<?php echo esc_attr($user_id); ?>" />
 
-<?php submit_button( IS_PROFILE_PAGE ? __('Update Profile') : __('Update User') ); ?>
+<?php submit_button( IS_PROFILE_PAGE ? __('Cập nhật') : __('Cập nhật') ); ?>
 
 </form>
 </div>
