@@ -29,7 +29,7 @@ get_current_screen()->add_help_tab( array(
 
 get_current_screen()->add_help_tab( array(
 	'id'      => 'screen-display',
-	'title'   => __('Screen Display'),
+	'title'   => __('Chọn lựa hiển thị'),
 	'content' => '<p>' . __('You can customize the display of this screen in a number of ways:') . '</p>' .
 					'<ul>' .
 					'<li>' . __('You can hide/display columns based on your needs and decide how many users to list per screen using the Screen Options tab.') . '</li>' .
@@ -401,7 +401,7 @@ if ( ! empty($messages) ) {
 <?php
 echo esc_html( $title );
 if ( current_user_can( 'create_users' ) ) { ?>
-	<a href="user-new.php" class="add-new-h2"><?php echo esc_html_x( 'Add New', 'user' ); ?></a>
+	<a href="user-new.php" class="add-new-h2"><?php echo esc_html_x( 'Thêm mới', 'user' ); ?></a>
 <?php } elseif ( is_multisite() && current_user_can( 'promote_users' ) ) { ?>
 	<a href="user-new.php" class="add-new-h2"><?php echo esc_html_x( 'Add Existing', 'user' ); ?></a>
 <?php }
@@ -414,7 +414,7 @@ if ( $usersearch )
 
 <form action="" method="get">
 
-<?php $wp_list_table->search_box( __( 'Search Users' ), 'user' ); ?>
+<?php $wp_list_table->search_box( __( 'Tìm thông tin' ), 'user' ); ?>
 
 <?php $wp_list_table->display(); ?>
 </form>
