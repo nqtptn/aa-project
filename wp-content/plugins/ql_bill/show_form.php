@@ -236,7 +236,7 @@ function load_content()
 	$("#tablecontent").html("Loading...");
 	var xml_link=get_xml_link();
 	DatabaseGrid(xml_link,"tablecontent","filter",update_url);
-	$("#report").html("<a href='" + get_report_link() +"' target=_blank><img src='<? echo plugins_url('/images/icon_16.gif', __FILE__)?>' border='0' style='vertical-align: middle' />Xuất Báo Cáo</a>");
+	$("#report").html("<img src='<? echo plugins_url('/images/icon_16.gif', __FILE__)?>' border='0' style='vertical-align: middle' /> <a href='" + get_report_link() +"' target=_blank>Xuất Báo Cáo</a>");
 }
 var update_url="<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&action=update_record&noheader=1&nofooter=1&f=1";
 </script>
@@ -298,7 +298,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&acti
 <div id='report'></div>
 
 <div id='posting' style='margin-top:10px;border: 1px solid #ccc;-moz-border-radius: 5px;-webkit-border-radius: 5px;padding:10px'>
-	<div style='border-bottom:1px dotted #999;color:#588eaf;font-size:12pt'><b>Thêm mới</b></div>
+	<div style='border-bottom:1px dotted #999;color:#588eaf'><b>Thêm mới</b></div>
 	<form name="post_form" method="post" onsubmit='return post_data(update_url)'>
 		<table>
 			<tr>
