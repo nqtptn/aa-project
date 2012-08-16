@@ -23,8 +23,14 @@ if($form==1){
 		}
 		if($colname=="ma_dich_vu" || $colname=="ma_tinh_den" || $colname=="khoi_luong" || $colname=="cuoc_phi" || $colname=="phu_thu"){
 			if($colname=="cuoc_phi"){
+				if(empty($value)){
+					$value=0;
+				}
 				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET cuoc_phi='$value',tong = $value + phu_thu WHERE ma_van_chuyen = '$id'");
 			}elseif($colname=="phu_thu"){
+				if(empty($value)){
+					$value=0;
+				}
 				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET phu_thu='$value',tong = $value + cuoc_phi WHERE ma_van_chuyen = '$id'");
 			}elseif($colname=="ma_dich_vu"){
 				$temp1 = $wpdb->get_row("SELECT ma_tinh_den,khoi_luong FROM gia_van_chuyen_dn where ma_van_chuyen = '$id'");
@@ -36,6 +42,9 @@ if($form==1){
 				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET ma_tinh_den = '$value', cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
 			}else{
 				//Neu cot khoi luong dc cap nhat, tinh lai cuoc phi
+				if(empty($value)){
+					$value=0;
+				}
 				$temp1 = $wpdb->get_row("SELECT ma_dich_vu,ma_tinh_den FROM gia_van_chuyen_dn where ma_van_chuyen = '$id'");
 				$temp2 = $wpdb->get_row("select fn_tinh_gia('".$temp1->ma_dich_vu."','tp_hcm','".$temp1->ma_tinh_den."',".$value.",0) as returnvalue");
 				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET khoi_luong = '$value', cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
