@@ -297,7 +297,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&acti
 <div id="paginator"></div>
 <div id='report'></div>
 
-<div id='posting' style='margin-top:15px;border: 1px solid #ccc;-moz-border-radius: 5px;-webkit-border-radius: 5px;padding:10px'>
+<div id='posting' style='margin-top:10px;border: 1px solid #ccc;-moz-border-radius: 5px;-webkit-border-radius: 5px;padding:10px'>
 	<div style='border-bottom:1px dotted #999;color:#588eaf;font-size:12pt'><b>Thêm mới</b></div>
 	<form name="post_form" method="post" onsubmit='return post_data(update_url)'>
 		<table>
