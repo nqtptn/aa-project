@@ -15,6 +15,7 @@ function ql_bill() {
 	
 	add_submenu_page('ql_bill/ql_bill.php','Quản lý dịch vụ', 'Quản lý dịch vụ', 'administrator','ql_bill/ql_dv.php');
 	add_submenu_page('ql_bill/ql_bill.php','Quản lý tỉnh thành', 'Quản lý tỉnh thành', 'administrator','ql_bill/ql_tt.php');
+	add_submenu_page('ql_bill/ql_bill.php','Quản lý bảng giá', 'Quản lý bảng giá', 'administrator','ql_bill/ql_bg.php');
 	
 }
 function ql_bill2() {
