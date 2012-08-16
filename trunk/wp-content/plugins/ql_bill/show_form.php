@@ -11,7 +11,7 @@ function DatabaseGrid(XML_link,field_id,filter_id,update_url)
 {
 	editableGrid = new EditableGrid(field_id, {
 		enableSort: true,
-		pageSize: 1000,
+		pageSize: $("#pagesize").val(),
 		tableLoaded: function() {
 			this.setCellRenderer("action", new CellRenderer({
 				render: function(cell, value) {
@@ -67,13 +67,17 @@ function post_data(xml_link){
 		success: function (response)
 		{
 			if(response!="false"){
-				input_value['id']=response;
-				editableGrid.insert(editableGrid.getRowId(editableGrid.getRowCount() - 1),response,input_value);
-				$("#cuoc_phi").val("");
-				$("#phu_thu").val("");
-				$("#ghi_chu").val("");
-				$("#khoi_luong").val("");
-				$("#khoi_luong").focus();
+				if(editableGrid.getRowCount()==0){
+					load_content();
+				}else{
+					input_value['id']=response;
+					editableGrid.insert(editableGrid.getRowId(editableGrid.getRowCount() - 1),response,input_value);
+					$("#cuoc_phi").val("");
+					$("#phu_thu").val("");
+					$("#ghi_chu").val("");
+					$("#khoi_luong").val("");
+					$("#khoi_luong").focus();
+				}
 			}
 		},
 		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
