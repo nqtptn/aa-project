@@ -23,6 +23,8 @@ function ql_bill2() {
 		include ("load_cuoc_phi.php");
 	}elseif($_GET['action']=="load_tinh_tp"){
 		include ("load_tinh_tp.php");
+	}elseif($_GET['action']=="xuat_html"){
+		include ("xuat_html.php");
 	}else{
 		include ("show_form.php");
 	}

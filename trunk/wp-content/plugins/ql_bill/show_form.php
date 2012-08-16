@@ -37,7 +37,7 @@ function DatabaseGrid(XML_link,field_id,filter_id,update_url)
 }
 function post_data(xml_link){
 	var input_value=new Array();
-	input_value['ngay'] = $("#ngay").val() + "/" + $("#thang").val() + "/" + $("#nam").val();
+	input_value['ngay'] = $("#ngay").val();
 	input_value['ma_dich_vu'] = $("#ma_dich_vu").val();
 	input_value['ma_tinh_den'] = $("#ma_tinh_den").val();
 	input_value['cuoc_phi'] = $("#cuoc_phi").val();
@@ -45,27 +45,30 @@ function post_data(xml_link){
 	input_value['ghi_chu'] = $("#ghi_chu").val();
 	input_value['khoi_luong'] = $("#khoi_luong").val();
 	input_value['tong'] = parseInt(input_value['cuoc_phi']) + parseInt(input_value['phu_thu']);
+	input_value['stt'] = editableGrid.getRowCount() + 1;
+	input_value['so_bill'] = $("#so_bill").val();
 	$.ajax({
 		url: xml_link,
 		type: 'POST',
 		dataType: "html",
 		data: {
-			ngay : input_value['ngay'],
+			ngay : $("#ngay").val() + "/" + $("#thang").val() + "/" + $("#nam").val(),
 			ma_dich_vu : input_value['ma_dich_vu'],
 			ma_tinh_den : input_value['ma_tinh_den'],
 			cuoc_phi : input_value['cuoc_phi'],
 			phu_thu : input_value['phu_thu'],
 			ghi_chu : input_value['ghi_chu'],
 			khoi_luong : input_value['khoi_luong'],
+			khach_hang : $("#khach_hang").val(),
+			so_bill : $("#so_bill").val(),
 			tong : parseInt(input_value['cuoc_phi']) + parseInt(input_value['phu_thu']),
 			action: "add_record",
 		},
 		success: function (response)
 		{
-
 			if(response!="false"){
 				input_value['id']=response;
-				editableGrid.insert(0,response,input_value);
+				editableGrid.insert(editableGrid.getRowId(editableGrid.getRowCount() - 1),response,input_value);
 				$("#cuoc_phi").val("");
 				$("#phu_thu").val("");
 				$("#ghi_chu").val("");
@@ -83,7 +86,6 @@ function post_data(xml_link){
  */
 function updateCellValue(editableGrid, rowIndex, columnIndex, oldValue, newValue, row,sys_url,onResponse)
 {
-	
 	var total=editableGrid.getValueAt(rowIndex, 5);
 	$.ajax({
 		url: sys_url,
@@ -98,18 +100,28 @@ function updateCellValue(editableGrid, rowIndex, columnIndex, oldValue, newValue
 		},
 		success: function (response)
 		{
-			
 			// reset old value if failed then highlight row
 			var success = onResponse ? onResponse(response) : (response == "ok" || !isNaN(parseInt(response))); // by default, a sucessfull reponse can be "ok" or a database id
 			if (!success) editableGrid.setValueAt(rowIndex, columnIndex, oldValue)
 			else{
+				var cot_cuoc_phi=6;
+				var cot_phu_thu=7;
+				var cot_tong=8;
 				if(editableGrid.getColumnName(columnIndex)=="phu_thu" || editableGrid.getColumnName(columnIndex)=="cuoc_phi"){
-					total = editableGrid.getValueAt(rowIndex, 4) + editableGrid.getValueAt(rowIndex, 5);
-					editableGrid.setValueAt(rowIndex, 6, total);
+					total = editableGrid.getValueAt(rowIndex, cot_cuoc_phi) + editableGrid.getValueAt(rowIndex, cot_phu_thu);
+					editableGrid.setValueAt(rowIndex, cot_tong, total);
 				}else if(editableGrid.getColumnName(columnIndex)=="khoi_luong"){
-					editableGrid.setValueAt(rowIndex, 4, response);
-					total = editableGrid.getValueAt(rowIndex, 4) + editableGrid.getValueAt(rowIndex, 5);
-					editableGrid.setValueAt(rowIndex, 6, total);
+					editableGrid.setValueAt(rowIndex, cot_cuoc_phi, response);
+					total = editableGrid.getValueAt(rowIndex, cot_cuoc_phi) + editableGrid.getValueAt(rowIndex, cot_phu_thu);
+					editableGrid.setValueAt(rowIndex, cot_tong, total);
+				}else if(editableGrid.getColumnName(columnIndex)=="ma_tinh_den"){
+					editableGrid.setValueAt(rowIndex, cot_cuoc_phi, response);
+					total = editableGrid.getValueAt(rowIndex, cot_cuoc_phi) + editableGrid.getValueAt(rowIndex, cot_phu_thu);
+					editableGrid.setValueAt(rowIndex, cot_tong, total);
+				}else if(editableGrid.getColumnName(columnIndex)=="ma_dich_vu"){
+					editableGrid.setValueAt(rowIndex, cot_cuoc_phi, response);
+					total = editableGrid.getValueAt(rowIndex, cot_cuoc_phi) + editableGrid.getValueAt(rowIndex, cot_phu_thu);
+					editableGrid.setValueAt(rowIndex, cot_tong, total);
 				}
 			}
 		    highlight(row.id, success ? "ok" : "error");
@@ -179,17 +191,45 @@ function load_tinh_tp()
 		async: true
 	});
 }
+function get_xml_link()
+{
+	var link='<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&noheader=1&nofooter=1&action=XML&f=1';
+	link = link + "&khach_hang=" + $("#khach_hang").val();
+	link = link + "&thang=" + $("#thang").val();
+	link = link + "&nam=" + $("#nam").val();
+	return link;
+}
+function get_report_link()
+{
+	var link='<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&noheader=1&nofooter=1&action=xuat_html&f=1';
+	link = link + "&khach_hang=" + $("#khach_hang").val();
+	link = link + "&thang=" + $("#thang").val();
+	link = link + "&nam=" + $("#nam").val();
+	return link;
+}
+function load_content()
+{
+	$("#tablecontent").html("Loading...");
+	var xml_link=get_xml_link();
+	DatabaseGrid(xml_link,"tablecontent","filter",update_url);
+	$("#report").html("<a href='" + get_report_link() +"' target=_blank>Xuất Báo Cáo</a>");
+}
 var update_url="<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&action=update_record&noheader=1&nofooter=1&f=1";
-var xml_link='<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&noheader=1&nofooter=1&action=XML&f=1';
-DatabaseGrid(xml_link,"tablecontent","filter",update_url);
 </script>
 <br/>
-<label for="thang">Khách hàng</label>
-<select id='khach_hang'>
-	<option value='nnn' selected>CTy AAAA</option>
+<label for="khach_hang">Khách hàng</label>
+<select id='khach_hang' onchange="load_content()">
+<?
+	global $wpdb;
+	$province = $wpdb->get_results("select user_login as ma_khach_hang, user_nicename as ten_khach_hang from dev_users");
+	//echo $wpdb->get_var( $wpdb->prepare("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho", $comment_author, $comment_date) );
+	foreach($province as $province2){
+		echo "<option value='".$province2->ma_khach_hang."'>".$province2->ten_khach_hang."</option>";
+	}
+?>
 </select>
 <label for="thang">Tháng</label>
-<select id='thang'>
+<select id='thang' onchange="load_content()">
 	<?
 		for ($i=1;$i<=12;$i++){
 			if($i<10){
@@ -206,7 +246,7 @@ DatabaseGrid(xml_link,"tablecontent","filter",update_url);
 	?>
 </select>
 <label for="nam">Năm</label>
-<select id='nam'>
+<select id='nam' onchange="load_content()">
 	<?
 		for ($i=date("Y",time());$i>=(date("Y",time())-5);$i--){
 			if($i==date("Y",time())){
@@ -232,6 +272,7 @@ DatabaseGrid(xml_link,"tablecontent","filter",update_url);
 
 <div id="tablecontent"></div>
 <div id="paginator"></div>
+<div id='report'></div>
 <div id='posting'>
 	<form name="post_form" method="post" onsubmit='return post_data(update_url)'>
 		<table>
@@ -300,6 +341,9 @@ DatabaseGrid(xml_link,"tablecontent","filter",update_url);
 		<input type='submit' value='Save' />
 	</form>
 </div>
+<script type='text/javascript'>
+load_content();
+</script>
 <?
 }
 ?>
