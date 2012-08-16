@@ -263,7 +263,6 @@ var update_url="<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&acti
 </select>
 <label for="pagesize">Số dòng trên trang</label>
 <select id="pagesize" name="pagesize">
-	<option value="1000">Tất cả</option>
 	<option value="10">10</option>
 	<option value="20">20</option>
 	<option value="30">30</option>
