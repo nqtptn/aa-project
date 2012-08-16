@@ -76,12 +76,11 @@ class EditableGrid {
 		$xml.= "</row>\n";
 		return $xml;
 	}
-	public function renderXML($rows,$total_record,$total_page,$curent_page,$customRowAttributes=array(), $encodeCustomAttributes=false)
+	public function renderXML($rows,$customRowAttributes=array(), $encodeCustomAttributes=false)
 	{
 		header('Content-Type: text/xml');
 		echo '<?xml version="1.0" encoding="'. $this->encoding . '" ?>';
 		echo '<table>';
-		echo '<pagedata total_record="'.$total_record.'" total_page="'.$total_page.'" curent_page="'.$curent_page.'"></pagedata>';
 		echo $this->getXML($rows, $customRowAttributes, $encodeCustomAttributes);
 		echo '</table>';
 	}

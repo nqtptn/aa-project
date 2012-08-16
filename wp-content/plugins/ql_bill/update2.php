@@ -21,9 +21,19 @@ if($form==1){
 		}else{
 			$field=$colname;
 		}
-		if($colname=="khoi_luong" || $colname=="cuoc_phi" || $colname=="phu_thu"){
-			if($colname=="cuoc_phi" || $colname=="phu_thu"){
-				$result2 = $mysqli->query("UPDATE gia_van_chuyen_dn SET tong = cuoc_phi + phu_thu WHERE ma_van_chuyen = '$id'");
+		if($colname=="ma_dich_vu" || $colname=="ma_tinh_den" || $colname=="khoi_luong" || $colname=="cuoc_phi" || $colname=="phu_thu"){
+			if($colname=="cuoc_phi"){
+				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET cuoc_phi='$value',tong = $value + phu_thu WHERE ma_van_chuyen = '$id'");
+			}elseif($colname=="phu_thu"){
+				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET phu_thu='$value',tong = $value + cuoc_phi WHERE ma_van_chuyen = '$id'");
+			}elseif($colname=="ma_dich_vu"){
+				$temp1 = $wpdb->get_row("SELECT ma_tinh_den,khoi_luong FROM gia_van_chuyen_dn where ma_van_chuyen = '$id'");
+				$temp2 = $wpdb->get_row("select fn_tinh_gia('".$value."','tp_hcm','".$temp1->ma_tinh_den."',".$temp1->khoi_luong.",0) as returnvalue");
+				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET ma_dich_vu = '$value', cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
+			}elseif($colname=="ma_tinh_den"){
+				$temp1 = $wpdb->get_row("SELECT ma_dich_vu,khoi_luong FROM gia_van_chuyen_dn where ma_van_chuyen = '$id'");
+				$temp2 = $wpdb->get_row("select fn_tinh_gia('".$temp1->ma_dich_vu."','tp_hcm','".$value."',".$temp1->khoi_luong.",0) as returnvalue");
+				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET ma_tinh_den = '$value', cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
 			}else{
 				//Neu cot khoi luong dc cap nhat, tinh lai cuoc phi
 				$temp1 = $wpdb->get_row("SELECT ma_dich_vu,ma_tinh_den FROM gia_van_chuyen_dn where ma_van_chuyen = '$id'");
@@ -36,7 +46,7 @@ if($form==1){
 		}else{
 			$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET $field = '$value' WHERE ma_van_chuyen = '$id'");
 		}
-		echo $result ? ($colname=="khoi_luong" ? $temp2->returnvalue : "ok") : "error";
+		echo $result ? (($colname=="ma_dich_vu" || $colname=="khoi_luong" || $colname=="ma_tinh_den") ? ($temp2->returnvalue > 0 ? $temp2->returnvalue : 0) : "ok") : "error";
 		$mysqli->close();
 		
 	}elseif($action=="delete"){
@@ -55,9 +65,11 @@ if($form==1){
 		$tong = $mysqli->real_escape_string(strip_tags($_POST['tong']));
 		$ghi_chu = $mysqli->real_escape_string(strip_tags($_POST['ghi_chu']));
 		$khoi_luong = $mysqli->real_escape_string(strip_tags($_POST['khoi_luong']));
+		$khach_hang = $mysqli->real_escape_string(strip_tags($_POST['khach_hang']));
+		$so_bill = $mysqli->real_escape_string(strip_tags($_POST['so_bill']));
 		$result =  $mysqli->query("INSERT INTO gia_van_chuyen_dn 
-			(ngay,ma_dich_vu,ma_tinh_den,ma_tinh_di,cuoc_phi,phu_thu,tong,ghi_chu,khoi_luong) value 
-			('$ngay','$ma_dich_vu','$ma_tinh_den','tp_hcm','$cuoc_phi','$phu_thu','$tong','$ghi_chu','$khoi_luong')");
+			(ngay,ma_dich_vu,ma_tinh_den,ma_tinh_di,cuoc_phi,phu_thu,tong,ghi_chu,khoi_luong,ma_khach_hang,so_bill) value 
+			('$ngay','$ma_dich_vu','$ma_tinh_den','tp_hcm','$cuoc_phi','$phu_thu','$tong','$ghi_chu','$khoi_luong','$khach_hang','$so_bill')");
 		echo $result ? $mysqli->insert_id : "false";
 		echo $result ;
 		$mysqli->close();

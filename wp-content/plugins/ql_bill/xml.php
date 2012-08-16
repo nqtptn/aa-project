@@ -26,8 +26,12 @@ if(!isset($_GET['f']) || empty($_GET['f'])){
 	$form=$_GET['f'];
 }
 if($form==1){
+	$khach_hang = $mysqli->real_escape_string(strip_tags($_GET['khach_hang']));
+	$thang = $mysqli->real_escape_string(strip_tags($_GET['thang']));
+	$nam = $mysqli->real_escape_string(strip_tags($_GET['nam']));
 	$grid->addColumn('stt', 'Stt', 'string', NULL,true);
 	$grid->addColumn('ngay', 'Ngày', 'string', NULL,true);
+	$grid->addColumn('so_bill', 'Số Bill', 'string', NULL,true);
 	$grid->addColumn('ma_dich_vu', 'Dịch vụ', 'string',  fetch_pairs($mysqli,'select ma_dich_vu,ten_dich_vu from  gia_dich_vu where la_dich_vu_cong_them=0'),true);
 	$grid->addColumn('ma_tinh_den', 'Tỉnh đến', 'string' , fetch_pairs($mysqli,'SELECT ma_tinh as ma_tinh_den, ten_tinh FROM gia_tinh_thanh_pho'),true);
 	$grid->addColumn('khoi_luong', 'Trọng lượng', 'integer (tấn)', NULL,true);
@@ -47,11 +51,12 @@ if($form==1){
 				cuoc_phi,
 				phu_thu,
 				tong,
-				ghi_chu
+				ghi_chu,
+				so_bill
 				from gia_van_chuyen_dn, (SELECT @curRank := 0) r
-				where date_format(ngay, \"%Y-%m\") = '2012-08'
+				where date_format(ngay, \"%Y-%m\") = '$nam-$thang' and ma_khach_hang = '$khach_hang'
 				order by ngay";
 	$result = $mysqli->query($query);
 	$mysqli->close();
-	$grid->renderXML($result,$total_record,$total_page,$curent_page);
+	$grid->renderXML($result);
 }
