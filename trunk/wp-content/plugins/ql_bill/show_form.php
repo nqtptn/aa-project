@@ -26,6 +26,7 @@ function DatabaseGrid(XML_link,field_id,filter_id,update_url)
 			$("#pagesize").change(function() {
 				editableGrid.setPageSize($("#pagesize").val()); 
 			});
+			editableGrid.setPageSize($("#pagesize").val());
 		},
 		modelChanged: function(rowIndex, columnIndex, oldValue, newValue, row) {
 			updateCellValue(this, rowIndex, columnIndex, oldValue, newValue, row,update_url);
@@ -41,48 +42,68 @@ function post_data(xml_link){
 	input_value['ma_dich_vu'] = $("#ma_dich_vu").val();
 	input_value['ma_tinh_den'] = $("#ma_tinh_den").val();
 	input_value['cuoc_phi'] = $("#cuoc_phi").val();
+	if(input_value['cuoc_phi']==""){
+		input_value['cuoc_phi']=0;
+	}
 	input_value['phu_thu'] = $("#phu_thu").val();
+	if(input_value['phu_thu']==""){
+		input_value['phu_thu']=0;
+	}
 	input_value['ghi_chu'] = $("#ghi_chu").val();
 	input_value['khoi_luong'] = $("#khoi_luong").val();
 	input_value['tong'] = parseInt(input_value['cuoc_phi']) + parseInt(input_value['phu_thu']);
 	input_value['stt'] = editableGrid.getRowCount() + 1;
 	input_value['so_bill'] = $("#so_bill").val();
-	$.ajax({
-		url: xml_link,
-		type: 'POST',
-		dataType: "html",
-		data: {
-			ngay : $("#ngay").val() + "/" + $("#thang").val() + "/" + $("#nam").val(),
-			ma_dich_vu : input_value['ma_dich_vu'],
-			ma_tinh_den : input_value['ma_tinh_den'],
-			cuoc_phi : input_value['cuoc_phi'],
-			phu_thu : input_value['phu_thu'],
-			ghi_chu : input_value['ghi_chu'],
-			khoi_luong : input_value['khoi_luong'],
-			khach_hang : $("#khach_hang").val(),
-			so_bill : $("#so_bill").val(),
-			tong : parseInt(input_value['cuoc_phi']) + parseInt(input_value['phu_thu']),
-			action: "add_record",
-		},
-		success: function (response)
-		{
-			if(response!="false"){
-				if(editableGrid.getRowCount()==0){
-					load_content();
+	if(isNaN(input_value['cuoc_phi'])){
+		alert("Cước phí phải là số!");
+		$("#cuoc_phi").focus();
+	}else if(isNaN(input_value['phu_thu'])){
+		alert("Phụ thu phải là số!");
+		$("#phu_thu").focus();
+	}else if(isNaN(input_value['khoi_luong'])){
+		alert("Khối lượng phải là số!");
+		$("#khoi_luong").focus();
+	}else{
+		$.ajax({
+			url: xml_link,
+			type: 'POST',
+			dataType: "html",
+			data: {
+				ngay : $("#ngay").val() + "/" + $("#thang").val() + "/" + $("#nam").val(),
+				ma_dich_vu : input_value['ma_dich_vu'],
+				ma_tinh_den : input_value['ma_tinh_den'],
+				cuoc_phi : input_value['cuoc_phi'],
+				phu_thu : input_value['phu_thu'],
+				ghi_chu : input_value['ghi_chu'],
+				khoi_luong : input_value['khoi_luong'],
+				khach_hang : $("#khach_hang").val(),
+				so_bill : $("#so_bill").val(),
+				tong : parseInt(input_value['cuoc_phi']) + parseInt(input_value['phu_thu']),
+				action: "add_record",
+			},
+			success: function (response)
+			{
+				if(response!="false"){
+					if(editableGrid.getRowCount()==0){
+						load_content();
+					}else{
+						input_value['id']=response;
+						editableGrid.insert(editableGrid.getRowId(editableGrid.getRowCount() - 1),response,input_value);
+						$("#cuoc_phi").val("");
+						$("#phu_thu").val("");
+						$("#ghi_chu").val("");
+						$("#khoi_luong").val("");
+						$("#so_bill").val("");
+						$("#so_bill").focus();
+					}
 				}else{
-					input_value['id']=response;
-					editableGrid.insert(editableGrid.getRowId(editableGrid.getRowCount() - 1),response,input_value);
-					$("#cuoc_phi").val("");
-					$("#phu_thu").val("");
-					$("#ghi_chu").val("");
-					$("#khoi_luong").val("");
-					$("#khoi_luong").focus();
+					alert("Thêm mới không thành công!");
 				}
-			}
-		},
-		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
-		async: true
-	});
+			},
+			error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
+			async: true
+		});
+	}
 	return false;
 }
 /**
@@ -171,7 +192,6 @@ function load_cuoc_phi()
 		{
 			// reset old value if failed then highlight row
 			$("#cuoc_phi").val(response);
-			load_cuoc_phi();
 		},
 		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
 		async: true
@@ -216,12 +236,12 @@ function load_content()
 	$("#tablecontent").html("Loading...");
 	var xml_link=get_xml_link();
 	DatabaseGrid(xml_link,"tablecontent","filter",update_url);
-	$("#report").html("<a href='" + get_report_link() +"' target=_blank>Xuất Báo Cáo</a>");
+	$("#report").html("<a href='" + get_report_link() +"' target=_blank><img src='<? echo plugins_url('/images/icon_16.gif', __FILE__)?>' border='0' style='vertical-align: middle' />Xuất Báo Cáo</a>");
 }
 var update_url="<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&action=update_record&noheader=1&nofooter=1&f=1";
 </script>
 <br/>
-<label for="khach_hang">Khách hàng</label>
+<label for="khach_hang">Khách hàng:</label>
 <select id='khach_hang' onchange="load_content()">
 <?
 	global $wpdb;
@@ -232,7 +252,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&acti
 	}
 ?>
 </select>
-<label for="thang">Tháng</label>
+<label for="thang">Tháng:</label>
 <select id='thang' onchange="load_content()">
 	<?
 		for ($i=1;$i<=12;$i++){
@@ -249,7 +269,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&acti
 		}
 	?>
 </select>
-<label for="nam">Năm</label>
+<label for="nam">Năm:</label>
 <select id='nam' onchange="load_content()">
 	<?
 		for ($i=date("Y",time());$i>=(date("Y",time())-5);$i--){
@@ -261,7 +281,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&acti
 		}
 	?>
 </select>
-<label for="pagesize">Số dòng trên trang</label>
+<label for="pagesize">Số dòng trên trang:</label>
 <select id="pagesize" name="pagesize">
 	<option value="10">10</option>
 	<option value="20">20</option>
@@ -270,13 +290,15 @@ var update_url="<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&acti
 	<option value="70">70</option>
 	<option value="100">100</option>
 </select>
-<label for="filter">Tìm kiếm</label>
+<label for="filter">Tìm kiếm:</label>
 <input type="text" id="filter"/>
 
 <div id="tablecontent"></div>
 <div id="paginator"></div>
 <div id='report'></div>
-<div id='posting'>
+
+<div id='posting' style='margin-top:30px;border: 1px solid #ccc;-moz-border-radius: 5px;-webkit-border-radius: 5px;padding:10px'>
+	<div style='border-bottom:1px dotted #999;color:#588eaf;font-size:12pt'><b>Thêm mới</b></div>
 	<form name="post_form" method="post" onsubmit='return post_data(update_url)'>
 		<table>
 			<tr>
@@ -284,7 +306,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&acti
 				</td>
 			</tr>
 		</table>
-		<label for="ngay">Ngày</label>
+		<label for="ngay">Ngày:</label>
 		<select id='ngay'>
 			<?
 				for ($i=1;$i<=31;$i++){
@@ -301,7 +323,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&acti
 				}
 			?>
 		</select>
-		<label for="ma_dich_vu">Dịch vụ</label>
+		<label for="ma_dich_vu">Dịch vụ:</label>
 		<select id='ma_dich_vu'  onchange="load_tinh_tp();">
 			<?
 				global $wpdb;
@@ -317,7 +339,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&acti
 				}
 			?>
 		</select>
-		<label for="ma_tinh_den">Tỉnh đến</label>
+		<label for="ma_tinh_den">Tỉnh đến:</label>
 		<select id="ma_tinh_den" onchange="load_cuoc_phi();">
 		<?
 			global $wpdb;
@@ -330,18 +352,20 @@ var update_url="<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&acti
 			}
 		?>
 		</select>
-		<label for="so_bill">Số bill</label>
+		<br />
+		<label for="so_bill">Số bill:</label>
 		<input type='text' size='8' id='so_bill' value=''  />		
-		<label for="khoi_luong">Trọng lượng</label>
-		<input type='text' size='8' id='khoi_luong' value=''  onblur="load_cuoc_phi();" />
-		<label for="cuoc_phi">Cước phí</label>
+		<label for="khoi_luong">Trọng lượng:</label>
+		<input type='text' size='8' id='khoi_luong' value=''  onchange="load_cuoc_phi();" />
+		<label for="cuoc_phi">Cước phí:</label>
 		<input type='text' size='12' id='cuoc_phi' value='' />
 		
-		<label for="phu_thu">Phụ thu</label>
+		<label for="phu_thu">Phụ thu:</label>
 		<input type='text' size='12' id='phu_thu' value='' />
-		<label for="ghi_chu">Ghi chú</label>
+		<label for="ghi_chu">Ghi chú:</label>
 		<input type='text' id='ghi_chu' value='' />
-		<input type='submit' value='Save' />
+		<br />
+		<input type='submit' value='    Save    ' />
 	</form>
 </div>
 <script type='text/javascript'>
