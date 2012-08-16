@@ -11,8 +11,11 @@ License: GPL
 //http://localhost/aaexpress/wp-admin/admin.php?page=ql_bill/ql_bill.php&noheader=1&nofooter=1&action=XML
 add_action( 'admin_menu', 'ql_bill' );
 function ql_bill() {
-	//add_menu_page('Yahoo Slide Settings', 'Yahoo Slide', 'administrator', __FILE__, 'yahooslide_settings_page',plugins_url('/images/icon.png', __FILE__));
-	add_menu_page('Quản lý hóa đơn', 'Quản lý hóa đơn', 'administrator', __FILE__, 'ql_bill2',plugins_url('/59.gif', __FILE__));
+	add_menu_page('Quản lý hóa đơn', 'Quản lý hóa đơn', 'administrator','ql_bill/ql_bill.php', 'ql_bill2',plugins_url('/menu-vs.png', __FILE__));
+	
+	add_submenu_page('ql_bill/ql_bill.php','Quản lý dịch vụ', 'Quản lý dịch vụ', 'administrator','ql_bill/ql_dv.php');
+	add_submenu_page('ql_bill/ql_bill.php','Quản lý tỉnh thành', 'Quản lý tỉnh thành', 'administrator','ql_bill/ql_tt.php');
+	
 }
 function ql_bill2() {
 	if($_GET['action']=="XML"){
@@ -28,6 +31,9 @@ function ql_bill2() {
 	}else{
 		include ("show_form.php");
 	}
+}
+function ql_bill3() {
+	echo "hello";
 }
 add_action('admin_head','add_header');
 function add_header() {
