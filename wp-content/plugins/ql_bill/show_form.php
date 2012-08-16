@@ -297,75 +297,106 @@ var update_url="<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&acti
 <div id="paginator"></div>
 <div id='report'></div>
 
-<div id='posting' style='margin-top:30px;border: 1px solid #ccc;-moz-border-radius: 5px;-webkit-border-radius: 5px;padding:10px'>
+<div id='posting' style='margin-top:15px;border: 1px solid #ccc;-moz-border-radius: 5px;-webkit-border-radius: 5px;padding:10px'>
 	<div style='border-bottom:1px dotted #999;color:#588eaf;font-size:12pt'><b>Thêm mới</b></div>
 	<form name="post_form" method="post" onsubmit='return post_data(update_url)'>
 		<table>
 			<tr>
 				<td>
+					<label for="ngay">Ngày</label>
+				</td>
+				<td>
+					<label for="so_bill">Số Bill</label>
+				</td>				
+				<td>
+					<label for="ma_dich_vu">Dịch vụ</label>
+				</td>
+				<td>
+					<label for="ma_tinh_den">Tỉnh đến</label>
+				</td>
+
+				<td>
+					<label for="khoi_luong">Trọng lượng</label>
+				</td>
+				<td>
+					<label for="cuoc_phi">Cước phí</label>
+				</td>
+				<td>
+					<label for="phu_thu">Phụ thu</label>
+				</td>
+				<td>
+					<label for="ghi_chu">Ghi chú:</label>
 				</td>
 			</tr>
-		</table>
-		<label for="ngay">Ngày:</label>
-		<select id='ngay'>
-			<?
-				for ($i=1;$i<=31;$i++){
-					if($i<10){
-						$d_value="0".$i;
-					}else{
-						$d_value=$i;
-					}
-					if($i==date("j",time())){
-						echo "<option value='$d_value' selected>$d_value</option>";
-					}else{
-						echo "<option value='$d_value'>$d_value</option>";
-					}
-				}
-			?>
-		</select>
-		<label for="ma_dich_vu">Dịch vụ:</label>
-		<select id='ma_dich_vu'  onchange="load_tinh_tp();">
-			<?
-				global $wpdb;
-				$temp=$wpdb->get_results("select ma_dich_vu,ten_dich_vu from  gia_dich_vu where la_dich_vu_cong_them=0");
-				foreach($temp as $temp2){
-					if(!empty($temp2->ma_dich_vu)){
-						if($temp2->ma_dich_vu == 'chuyen_phat_nhanh'){
-							echo "<option selected='selected' value='".$temp2->ma_dich_vu."'>".$temp2->ten_dich_vu."</option>";
-						}else{
-							echo "<option value='".$temp2->ma_dich_vu."'>".$temp2->ten_dich_vu."</option>";
+			<tr>
+				<td>
+					<select id='ngay'>
+						<?
+							for ($i=1;$i<=31;$i++){
+								if($i<10){
+									$d_value="0".$i;
+								}else{
+									$d_value=$i;
+								}
+								if($i==date("j",time())){
+									echo "<option value='$d_value' selected>$d_value</option>";
+								}else{
+									echo "<option value='$d_value'>$d_value</option>";
+								}
+							}
+						?>
+					</select>				
+				</td>
+				<td>
+					<input type='text' size='10' id='so_bill' value=''  />
+				</td>				
+				<td>
+					<select id='ma_dich_vu'  onchange="load_tinh_tp();">
+						<?
+							global $wpdb;
+							$temp=$wpdb->get_results("select ma_dich_vu,ten_dich_vu from  gia_dich_vu where la_dich_vu_cong_them=0");
+							foreach($temp as $temp2){
+								if(!empty($temp2->ma_dich_vu)){
+									if($temp2->ma_dich_vu == 'chuyen_phat_nhanh'){
+										echo "<option selected='selected' value='".$temp2->ma_dich_vu."'>".$temp2->ten_dich_vu."</option>";
+									}else{
+										echo "<option value='".$temp2->ma_dich_vu."'>".$temp2->ten_dich_vu."</option>";
+									}
+								}
+							}
+						?>
+					</select>
+				</td>
+				<td>
+					<select id="ma_tinh_den" onchange="load_cuoc_phi();">
+					<?
+						global $wpdb;
+						$province = $wpdb->get_results("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho WHERE ma_tinh in (select ma_tinh_den from gia_dich_vu_tinh_thanh_pho where ma_tinh_di='tp_hcm' and ma_dich_vu='chuyen_phat_nhanh')");
+						//echo $wpdb->get_var( $wpdb->prepare("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho", $comment_author, $comment_date) );
+						foreach($province as $province2){
+							if(!empty($province2->ma_tinh)){
+								echo "<option value='".$province2->ma_tinh."'>".$province2->ten_tinh."</option>";
+							}
 						}
-					}
-				}
-			?>
-		</select>
-		<label for="ma_tinh_den">Tỉnh đến:</label>
-		<select id="ma_tinh_den" onchange="load_cuoc_phi();">
-		<?
-			global $wpdb;
-			$province = $wpdb->get_results("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho WHERE ma_tinh in (select ma_tinh_den from gia_dich_vu_tinh_thanh_pho where ma_tinh_di='tp_hcm' and ma_dich_vu='chuyen_phat_nhanh')");
-			//echo $wpdb->get_var( $wpdb->prepare("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho", $comment_author, $comment_date) );
-			foreach($province as $province2){
-				if(!empty($province2->ma_tinh)){
-					echo "<option value='".$province2->ma_tinh."'>".$province2->ten_tinh."</option>";
-				}
-			}
-		?>
-		</select>
-		<br />
-		<label for="so_bill">Số bill:</label>
-		<input type='text' size='8' id='so_bill' value=''  />		
-		<label for="khoi_luong">Trọng lượng:</label>
-		<input type='text' size='8' id='khoi_luong' value=''  onchange="load_cuoc_phi();" />
-		<label for="cuoc_phi">Cước phí:</label>
-		<input type='text' size='12' id='cuoc_phi' value='' />
+					?>
+					</select>				
+				</td>
+				<td>
+					<input type='text' size='8' id='khoi_luong' value=''  onchange="load_cuoc_phi();" />
+				</td>
+				<td>
+					<input type='text' size='12' id='cuoc_phi' value='' />
+				</td>
+				<td>
+					<input type='text' size='12' id='phu_thu' value='' />
+				</td>
+				<td>
+					<input type='text' id='ghi_chu' value='' />
+					<input type='submit' value='    Save    ' />
+				</td>
+			</tr>			
+		</table>
 		
-		<label for="phu_thu">Phụ thu:</label>
-		<input type='text' size='12' id='phu_thu' value='' />
-		<label for="ghi_chu">Ghi chú:</label>
-		<input type='text' id='ghi_chu' value='' />
-		<br />
-		<input type='submit' value='    Save    ' />
 	</form>
 </div>
 <script type='text/javascript'>
