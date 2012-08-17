@@ -11,12 +11,19 @@ License: GPL
 //http://localhost/aaexpress/wp-admin/admin.php?page=ql_bill/ql_bill.php&noheader=1&nofooter=1&action=XML
 add_action( 'admin_menu', 'ql_bill' );
 function ql_bill() {
+<<<<<<< .mine
+	add_menu_page('Quản lý hóa đơn', 'Quản lý hóa đơn', 'administrator','ql_bill/ql_bill.php', 'ql_bill2',plugins_url('/59.gif', __FILE__));
+	
+	add_submenu_page('ql_bill/ql_bill.php','Quản lý dịch vụ', 'Quản lý dịch vụ', 'administrator','ql_bill/ql_dv.php');
+	add_submenu_page('ql_bill/ql_bill.php','Quản lý tỉnh thành', 'Quản lý tỉnh thành', 'administrator','ql_bill/ql_tt.php');
+	
+=======
 	add_menu_page('Quản lý hóa đơn', 'Quản lý hóa đơn', 'administrator','ql_bill/ql_bill.php', 'ql_bill2',plugins_url('/menu-vs.png', __FILE__));
 	
 	add_submenu_page('ql_bill/ql_bill.php','Quản lý dịch vụ', 'Quản lý dịch vụ', 'administrator','ql_bill/ql_dv.php');
 	add_submenu_page('ql_bill/ql_bill.php','Quản lý tỉnh thành', 'Quản lý tỉnh thành', 'administrator','ql_bill/ql_tt.php');
-	add_submenu_page('ql_bill/ql_bill.php','Quản lý bảng giá', 'Quản lý bảng giá', 'administrator','ql_bill/ql_bg.php');
 	
+>>>>>>> .r47
 }
 function ql_bill2() {
 	if($_GET['action']=="XML"){
