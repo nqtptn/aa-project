@@ -20,9 +20,15 @@ $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
 			$field=$colname;
 		}
 		if($colname=="id"){
-			$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET khoi_luong = '$value', cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
+			$result2 = $mysqli->query("SELECT ma_dich_vu FROM gia_dich_vu  WHERE ma_dich_vu = '$id'");
+			$num=mysql_num_rows($result2);
+			if($num>0){
+				$result = $mysqli->query("UPDATE gia_dich_vu SET ma_dich_vu = '$value' WHERE ma_dich_vu = '$id'");
+			}else{
+				$result="";
+			}
 		}else{
-			$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET $field = '$value' WHERE ma_van_chuyen = '$id'");
+			$result = $mysqli->query("UPDATE gia_dich_vu SET $field = '$value' WHERE ma_dich_vu = '$id'");
 		}
 		echo $result ? "ok" : "error";
 		$mysqli->close();
