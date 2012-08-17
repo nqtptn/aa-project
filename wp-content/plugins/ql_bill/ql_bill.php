@@ -11,9 +11,12 @@ License: GPL
 add_action( 'admin_menu', 'ql_bill' );
 function ql_bill() {
 	add_menu_page('Quản lý hóa đơn', 'Quản lý hóa đơn', 'administrator','quan_ly_hoa_don', 'ql_bill2',plugins_url('/images/menu-vs.png', __FILE__));
-	add_submenu_page('quan_ly_hoa_don','Quản lý dịch vụ', 'Quản lý dịch vụ', 'administrator','quan_ly_dich_vu','ql_dv');
-	add_submenu_page('quan_ly_hoa_don','Quản lý tỉnh thành', 'Quản lý tỉnh thành', 'administrator','quan_ly_thinh_thanh','ql_tt');
+	add_submenu_page('quan_ly_hoa_don','Dịch vụ', 'Dịch vụ', 'administrator','quan_ly_dich_vu','ql_dv');
+	add_submenu_page('quan_ly_hoa_don','Tỉnh thành', 'Tỉnh thành', 'administrator','quan_ly_tinh_thanh','ql_tt');
+	add_submenu_page('quan_ly_hoa_don','Dịch vụ Tỉnh thành', 'Dịch vụ Tỉnh thành', 'administrator','dich_vu_tinh_thanh','dv_tt');
+	add_submenu_page('quan_ly_hoa_don','Quản lý bảng giá', 'Quản lý bảng giá', 'administrator','quan_ly_bang_gia','ql_bg');
 }
+//Quan ly hoa don
 function ql_bill2() {
 	if($_GET['action']=="XML"){
 		require_once('EditableGrid.php');
@@ -31,6 +34,8 @@ function ql_bill2() {
 		require_once("quan_ly_hoa_don/show_form.php");
 	}
 }
+
+//Quan ly dich vu
 function ql_dv() {
 	if($_GET['action']=="XML"){
 		require_once('EditableGrid.php');
@@ -41,9 +46,29 @@ function ql_dv() {
 		require_once("quan_ly_dich_vu/show_form.php");
 	}
 }
+
+//Quan ly tinh thanh
 function ql_tt() {
+	if($_GET['action']=="XML"){
+		require_once('EditableGrid.php');
+		require_once("quan_ly_tinh_thanh/xml.php");
+	}elseif($_GET['action']=="update_record"){
+		require_once("quan_ly_tinh_thanh/update2.php");
+	}else{
+		require_once("quan_ly_tinh_thanh/show_form.php");
+	}
+}
+
+//Quan ly quan he dich vu & tinh thanh
+function dv_tt() {
 	echo "hello";
 }
+
+//Quan ly bang gia
+function ql_bg() {
+	echo "hello";
+}
+
 add_action('admin_head','add_header');
 function add_header() {
 ?>
