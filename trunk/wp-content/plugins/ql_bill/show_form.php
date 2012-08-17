@@ -180,7 +180,7 @@ function delete_record(editableGrid, rowIndex,sys_url,onResponse)
 function load_cuoc_phi()
 {
 	$.ajax({
-		url: "<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&action=load_cuoc_phi&noheader=1&nofooter=1&f=1",
+		url: "<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=load_cuoc_phi&noheader=1&nofooter=1&f=1",
 		type: 'POST',
 		dataType: "html",
 		data: {
@@ -200,7 +200,7 @@ function load_cuoc_phi()
 function load_tinh_tp()
 {
 	$.ajax({
-		url: "<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&action=load_tinh_tp&noheader=1&nofooter=1&f=1",
+		url: "<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=load_tinh_tp&noheader=1&nofooter=1&f=1",
 		type: 'POST',
 		dataType: "html",
 		data: {
@@ -217,7 +217,7 @@ function load_tinh_tp()
 }
 function get_xml_link()
 {
-	var link='<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&noheader=1&nofooter=1&action=XML&f=1';
+	var link='<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&noheader=1&nofooter=1&action=XML&f=1';
 	link = link + "&khach_hang=" + $("#khach_hang").val();
 	link = link + "&thang=" + $("#thang").val();
 	link = link + "&nam=" + $("#nam").val();
@@ -225,7 +225,7 @@ function get_xml_link()
 }
 function get_report_link()
 {
-	var link='<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&noheader=1&nofooter=1&action=xuat_html&f=1';
+	var link='<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&noheader=1&nofooter=1&action=xuat_html&f=1';
 	link = link + "&khach_hang=" + $("#khach_hang").val();
 	link = link + "&thang=" + $("#thang").val();
 	link = link + "&nam=" + $("#nam").val();
@@ -238,7 +238,7 @@ function load_content()
 	DatabaseGrid(xml_link,"tablecontent","filter",update_url);
 	$("#report").html("<img src='<? echo plugins_url('/images/icon_16.gif', __FILE__)?>' border='0' style='vertical-align: middle' /> <a href='" + get_report_link() +"' target=_blank>Xuất Báo Cáo</a>");
 }
-var update_url="<? echo get_admin_url()?>admin.php?page=ql_bill/ql_bill.php&action=update_record&noheader=1&nofooter=1&f=1";
+var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=update_record&noheader=1&nofooter=1&f=1";
 </script>
 <br/>
 <label for="khach_hang">Khách hàng:</label>
