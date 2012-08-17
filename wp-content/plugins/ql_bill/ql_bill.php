@@ -8,22 +8,11 @@ Author: LLN Group
 Author URI: http://vnestore.com
 License: GPL
 */
-//http://localhost/aaexpress/wp-admin/admin.php?page=ql_bill/ql_bill.php&noheader=1&nofooter=1&action=XML
 add_action( 'admin_menu', 'ql_bill' );
 function ql_bill() {
-<<<<<<< .mine
-	add_menu_page('Quản lý hóa đơn', 'Quản lý hóa đơn', 'administrator','ql_bill/ql_bill.php', 'ql_bill2',plugins_url('/59.gif', __FILE__));
-	
-	add_submenu_page('ql_bill/ql_bill.php','Quản lý dịch vụ', 'Quản lý dịch vụ', 'administrator','ql_bill/ql_dv.php');
-	add_submenu_page('ql_bill/ql_bill.php','Quản lý tỉnh thành', 'Quản lý tỉnh thành', 'administrator','ql_bill/ql_tt.php');
-	
-=======
-	add_menu_page('Quản lý hóa đơn', 'Quản lý hóa đơn', 'administrator','ql_bill/ql_bill.php', 'ql_bill2',plugins_url('/menu-vs.png', __FILE__));
-	
-	add_submenu_page('ql_bill/ql_bill.php','Quản lý dịch vụ', 'Quản lý dịch vụ', 'administrator','ql_bill/ql_dv.php');
-	add_submenu_page('ql_bill/ql_bill.php','Quản lý tỉnh thành', 'Quản lý tỉnh thành', 'administrator','ql_bill/ql_tt.php');
-	
->>>>>>> .r47
+	add_menu_page('Quản lý hóa đơn', 'Quản lý hóa đơn', 'administrator','quan_ly_hoa_don', 'ql_bill2',plugins_url('/images/menu-vs.png', __FILE__));
+	add_submenu_page('quan_ly_hoa_don','Quản lý dịch vụ', 'Quản lý dịch vụ', 'administrator','quan_ly_dich_vu','ql_dv');
+	add_submenu_page('quan_ly_hoa_don','Quản lý tỉnh thành', 'Quản lý tỉnh thành', 'administrator','quan_ly_thinh_thanh','ql_tt');
 }
 function ql_bill2() {
 	if($_GET['action']=="XML"){
@@ -40,7 +29,10 @@ function ql_bill2() {
 		include ("show_form.php");
 	}
 }
-function ql_bill3() {
+function ql_dv() {
+	echo "hello";
+}
+function ql_tt() {
 	echo "hello";
 }
 add_action('admin_head','add_header');
