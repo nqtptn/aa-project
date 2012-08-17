@@ -128,27 +128,6 @@ function updateCellValue(editableGrid, rowIndex, columnIndex, oldValue, newValue
 			// reset old value if failed then highlight row
 			var success = onResponse ? onResponse(response) : (response == "ok" || !isNaN(parseInt(response))); // by default, a sucessfull reponse can be "ok" or a database id
 			if (!success) editableGrid.setValueAt(rowIndex, columnIndex, oldValue)
-			else{
-				var cot_cuoc_phi=6;
-				var cot_phu_thu=7;
-				var cot_tong=8;
-				if(editableGrid.getColumnName(columnIndex)=="phu_thu" || editableGrid.getColumnName(columnIndex)=="cuoc_phi"){
-					total = editableGrid.getValueAt(rowIndex, cot_cuoc_phi) + editableGrid.getValueAt(rowIndex, cot_phu_thu);
-					editableGrid.setValueAt(rowIndex, cot_tong, total);
-				}else if(editableGrid.getColumnName(columnIndex)=="khoi_luong"){
-					editableGrid.setValueAt(rowIndex, cot_cuoc_phi, response);
-					total = editableGrid.getValueAt(rowIndex, cot_cuoc_phi) + editableGrid.getValueAt(rowIndex, cot_phu_thu);
-					editableGrid.setValueAt(rowIndex, cot_tong, total);
-				}else if(editableGrid.getColumnName(columnIndex)=="ma_tinh_den"){
-					editableGrid.setValueAt(rowIndex, cot_cuoc_phi, response);
-					total = editableGrid.getValueAt(rowIndex, cot_cuoc_phi) + editableGrid.getValueAt(rowIndex, cot_phu_thu);
-					editableGrid.setValueAt(rowIndex, cot_tong, total);
-				}else if(editableGrid.getColumnName(columnIndex)=="ma_dich_vu"){
-					editableGrid.setValueAt(rowIndex, cot_cuoc_phi, response);
-					total = editableGrid.getValueAt(rowIndex, cot_cuoc_phi) + editableGrid.getValueAt(rowIndex, cot_phu_thu);
-					editableGrid.setValueAt(rowIndex, cot_tong, total);
-				}
-			}
 		    highlight(row.id, success ? "ok" : "error");
 		},
 		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },

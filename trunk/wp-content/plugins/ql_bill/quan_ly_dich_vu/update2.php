@@ -15,50 +15,21 @@ $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
 		// This very generic. So this script can be used to update several tables.
 		$return=false;
 		if($colname=="id"){
-			$field="ma_van_chuyen";
+			$field="ma_dich_vu";
 		}else{
 			$field=$colname;
 		}
-		if($colname=="ma_dich_vu" || $colname=="ma_tinh_den" || $colname=="khoi_luong" || $colname=="cuoc_phi" || $colname=="phu_thu"){
-			if($colname=="cuoc_phi"){
-				if(empty($value)){
-					$value=0;
-				}
-				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET cuoc_phi='$value',tong = $value + phu_thu WHERE ma_van_chuyen = '$id'");
-			}elseif($colname=="phu_thu"){
-				if(empty($value)){
-					$value=0;
-				}
-				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET phu_thu='$value',tong = $value + cuoc_phi WHERE ma_van_chuyen = '$id'");
-			}elseif($colname=="ma_dich_vu"){
-				$temp1 = $wpdb->get_row("SELECT ma_tinh_den,khoi_luong FROM gia_van_chuyen_dn where ma_van_chuyen = '$id'");
-				$temp2 = $wpdb->get_row("select fn_tinh_gia('".$value."','tp_hcm','".$temp1->ma_tinh_den."',".$temp1->khoi_luong.",0) as returnvalue");
-				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET ma_dich_vu = '$value', cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
-			}elseif($colname=="ma_tinh_den"){
-				$temp1 = $wpdb->get_row("SELECT ma_dich_vu,khoi_luong FROM gia_van_chuyen_dn where ma_van_chuyen = '$id'");
-				$temp2 = $wpdb->get_row("select fn_tinh_gia('".$temp1->ma_dich_vu."','tp_hcm','".$value."',".$temp1->khoi_luong.",0) as returnvalue");
-				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET ma_tinh_den = '$value', cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
-			}else{
-				//Neu cot khoi luong dc cap nhat, tinh lai cuoc phi
-				if(empty($value)){
-					$value=0;
-				}
-				$temp1 = $wpdb->get_row("SELECT ma_dich_vu,ma_tinh_den FROM gia_van_chuyen_dn where ma_van_chuyen = '$id'");
-				$temp2 = $wpdb->get_row("select fn_tinh_gia('".$temp1->ma_dich_vu."','tp_hcm','".$temp1->ma_tinh_den."',".$value.",0) as returnvalue");
-				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET khoi_luong = '$value', cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
-			}
-		}else if ($colname=="ngay"){
-			$temp1 = $wpdb->get_row("SELECT date_format(ngay, \"%Y-%m-\") as ngay FROM gia_van_chuyen_dn where ma_van_chuyen = '$id'");
-			$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET ngay = '".$temp1->ngay.$value."' WHERE ma_van_chuyen = '$id'");
+		if($colname=="id"){
+			$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET khoi_luong = '$value', cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
 		}else{
 			$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET $field = '$value' WHERE ma_van_chuyen = '$id'");
 		}
-		echo $result ? (($colname=="ma_dich_vu" || $colname=="khoi_luong" || $colname=="ma_tinh_den") ? ($temp2->returnvalue > 0 ? $temp2->returnvalue : 0) : "ok") : "error";
+		echo $result ? "ok" : "error";
 		$mysqli->close();
 		
 	}elseif($action=="delete"){
 		$id = $mysqli->real_escape_string(strip_tags($_POST['id']));
-		$result = $mysqli->query("DELETE from gia_van_chuyen_dn WHERE ma_van_chuyen = '$id'");
+		$result = $mysqli->query("DELETE from gia_dich_vu WHERE ma_dich_vu = '$id'");
 		$mysqli->close();
 		echo $result ? "ok" : "error";
 	}elseif($action=="add_record"){
