@@ -1,10 +1,4 @@
 <?php
-if(!isset($_GET['f']) || empty($_GET['f'])){
-	$form=1;
-}else{
-	$form=$_GET['f'];
-}
-if($form==1){
 	global $wpdb;
 	$khach_hang = $_GET['khach_hang'];
 	$thang = $_GET['thang'];
@@ -70,7 +64,6 @@ if($form==1){
 		<b>Trần Châu Long</b>
 		</div>
 		";
-	require_once('pdf/html2pdf.class.php');
 	$html_content = '<page style="font-family: freeserif"><br />'.$html_content.'</page>';
 	try
     {
@@ -84,4 +77,3 @@ if($form==1){
         exit;
     }
 	header("Location: ../report/".$_GET['khach_hang']."_".$nam."_".$thang.".pdf");
-}

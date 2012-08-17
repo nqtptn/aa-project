@@ -6,8 +6,6 @@ if(!$mysqli->real_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME)){
 	echo "Die";
 }
 $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
-$form=$_GET['f'];
-if($form==1){
 	if($action=="update"){
 		$colname = $mysqli->real_escape_string(strip_tags($_POST['colname']));
 		$id = $mysqli->real_escape_string(strip_tags($_POST['id']));
@@ -83,5 +81,4 @@ if($form==1){
 		echo $result ;
 		$mysqli->close();
 	}
-}
 ?>

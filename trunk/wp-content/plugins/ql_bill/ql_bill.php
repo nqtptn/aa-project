@@ -16,21 +16,30 @@ function ql_bill() {
 }
 function ql_bill2() {
 	if($_GET['action']=="XML"){
-		include ("xml.php");
+		require_once('EditableGrid.php');
+		require_once("quan_ly_hoa_don/xml.php");
 	}elseif($_GET['action']=="update_record"){
-		include ("update2.php");
+		require_once("quan_ly_hoa_don/update2.php");
 	}elseif($_GET['action']=="load_cuoc_phi"){
-		include ("load_cuoc_phi.php");
+		require_once("quan_ly_hoa_don/load_cuoc_phi.php");
 	}elseif($_GET['action']=="load_tinh_tp"){
-		include ("load_tinh_tp.php");
+		require_once("quan_ly_hoa_don/load_tinh_tp.php");
 	}elseif($_GET['action']=="xuat_html"){
-		include ("xuat_html.php");
+		require_once('pdf/html2pdf.class.php');
+		require_once("quan_ly_hoa_don/xuat_html.php");
 	}else{
-		include ("show_form.php");
+		require_once("quan_ly_hoa_don/show_form.php");
 	}
 }
 function ql_dv() {
-	echo "hello";
+	if($_GET['action']=="XML"){
+		require_once('EditableGrid.php');
+		require_once("quan_ly_dich_vu/xml.php");
+	}elseif($_GET['action']=="update_record"){
+		require_once("quan_ly_dich_vu/update2.php");
+	}else{
+		require_once("quan_ly_dich_vu/show_form.php");
+	}
 }
 function ql_tt() {
 	echo "hello";
