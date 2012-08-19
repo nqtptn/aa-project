@@ -225,7 +225,7 @@ function get_xml_link()
 }
 function get_report_link()
 {
-	var link='<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&noheader=1&nofooter=1&action=xuat_html';
+	var link='<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&noheader=1&nofooter=1&action=export_function';
 	link = link + "&khach_hang=" + $("#khach_hang").val();
 	link = link + "&thang=" + $("#thang").val();
 	link = link + "&nam=" + $("#nam").val();

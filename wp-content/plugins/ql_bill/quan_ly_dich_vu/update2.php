@@ -1,10 +1,5 @@
 <?
-global $wpdb;
-$mysqli = mysqli_init();
-$mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 5);
-if(!$mysqli->real_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME)){
-	echo "Die";
-}
+global $wpdb,$mysqli;
 $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
 	if($action=="update"){
 		$colname = $mysqli->real_escape_string(strip_tags($_POST['colname']));
@@ -21,7 +16,7 @@ $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
 		}
 		if($colname=="id"){
 			$result2 = $mysqli->query("SELECT ma_dich_vu FROM gia_dich_vu  WHERE ma_dich_vu = '$id'");
-			$num=mysql_num_rows($result2);
+			$num=$result2->num_rows;
 			if($num>0){
 				$result = $mysqli->query("UPDATE gia_dich_vu SET ma_dich_vu = '$value' WHERE ma_dich_vu = '$id'");
 			}else{
@@ -39,23 +34,17 @@ $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
 		$mysqli->close();
 		echo $result ? "ok" : "error";
 	}elseif($action=="add_record"){
-		$ngay = $mysqli->real_escape_string(strip_tags($_POST['ngay']));
-		$temp = explode("/",$ngay);
-		$ngay = $temp[2]."/".$temp[1]."/".$temp[0]. " 00:00:00";
 		$ma_dich_vu = $mysqli->real_escape_string(strip_tags($_POST['ma_dich_vu']));
-		$ma_tinh_den = $mysqli->real_escape_string(strip_tags($_POST['ma_tinh_den']));
-		$cuoc_phi = $mysqli->real_escape_string(strip_tags($_POST['cuoc_phi']));
-		$phu_thu = $mysqli->real_escape_string(strip_tags($_POST['phu_thu']));
-		$tong = $mysqli->real_escape_string(strip_tags($_POST['tong']));
-		$ghi_chu = $mysqli->real_escape_string(strip_tags($_POST['ghi_chu']));
-		$khoi_luong = $mysqli->real_escape_string(strip_tags($_POST['khoi_luong']));
-		$khach_hang = $mysqli->real_escape_string(strip_tags($_POST['khach_hang']));
-		$so_bill = $mysqli->real_escape_string(strip_tags($_POST['so_bill']));
-		$result =  $mysqli->query("INSERT INTO gia_van_chuyen_dn 
-			(ngay,ma_dich_vu,ma_tinh_den,ma_tinh_di,cuoc_phi,phu_thu,tong,ghi_chu,khoi_luong,ma_khach_hang,so_bill) value 
-			('$ngay','$ma_dich_vu','$ma_tinh_den','tp_hcm','$cuoc_phi','$phu_thu','$tong','$ghi_chu','$khoi_luong','$khach_hang','$so_bill')");
-		echo $result ? $mysqli->insert_id : "false";
-		echo $result ;
+		$ten_dich_vu = $mysqli->real_escape_string(strip_tags($_POST['ten_dich_vu']));
+		$thoi_gian_van_chuyen = $mysqli->real_escape_string(strip_tags($_POST['thoi_gian_van_chuyen']));
+		$mo_ta = $mysqli->real_escape_string(strip_tags($_POST['mo_ta']));
+		$la_dich_vu_cong_them = $mysqli->real_escape_string(strip_tags($_POST['la_dich_vu_cong_them']));
+		$gia_cong_them = $mysqli->real_escape_string(strip_tags($_POST['gia_cong_them']));
+		$ti_le_cong_them = $mysqli->real_escape_string(strip_tags($_POST['ti_le_cong_them']));
+		$result =  $mysqli->query("INSERT INTO gia_dich_vu 
+			(ma_dich_vu,ten_dich_vu,thoi_gian_van_chuyen,mo_ta,la_dich_vu_cong_them,gia_cong_them,ti_le_cong_them) value 
+			('$ma_dich_vu','$ten_dich_vu','$thoi_gian_van_chuyen','$mo_ta','$la_dich_vu_cong_them','$gia_cong_them','$ti_le_cong_them')");
+		echo $result ? "true" : "false";
 		$mysqli->close();
 	}
 ?>
