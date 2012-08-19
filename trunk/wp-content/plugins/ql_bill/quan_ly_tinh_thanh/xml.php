@@ -1,43 +1,23 @@
 <?php
-function fetch_pairs($mysqli,$query){
-	if (!($res = $mysqli->query($query)))return FALSE;
-	$rows = array();
-	while ($row = $res->fetch_assoc()) {
-		$first = true;
-		$key = $value = null;
-		foreach ($row as $val) {
-			if ($first) { $key = $val; $first = false; }
-			else { $value = $val; break; }
-		}
-		$rows[$key] = $value;
-	}
-	return $rows;
-}
+global $mysqli;
 $grid = new EditableGrid();
-$mysqli = mysqli_init();
-$mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 5);
-if(!$mysqli->real_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME)){
-	echo "Die";
-}
-$grid->addColumn('id', 'Mã dịch vụ', 'string', NULL,true);
-$grid->addColumn('ten_dich_vu', 'Tên dịch vụ', 'string', NULL,true);
-$grid->addColumn('thoi_gian_van_chuyen', 'Thời gian vận chuyển', 'string',  NULL,true);
-$grid->addColumn('mo_ta', 'Mô tả', 'string' , NULL,true);
-$grid->addColumn('la_dich_vu_cong_them', 'Là dịch vụ cộng thêm', 'boolean', NULL,true);
-$grid->addColumn('gia_cong_them', 'Giá cộng thêm', 'integer', NULL,true);
-$grid->addColumn('ti_le_cong_them', 'Tỉ lệ cộng thêm', 'double(%)', NULL,true);
+$grid->addColumn('id', 'Mã tỉnh', 'string', NULL,true);
+$grid->addColumn('ten_tinh', 'Tên tỉnh', 'string', NULL,true);
+$grid->addColumn('ma_khu_vuc', 'Khu vực', 'string',  fetch_pairs($mysqli,'SELECT ma_khu_vuc, ten_khu_vuc	FROM gia_khu_vuc ORDER by ten_khu_vuc'),true);
+$grid->addColumn('vi_tri_x', 'Vị trí X', 'integer' , NULL,true);
+$grid->addColumn('vi_tri_y', 'Vị trí Y', 'integer', NULL,true);
+$grid->addColumn('trung_tam_tinh', 'Trung tâm tỉnh', 'string', NULL,true);
 $grid->addColumn('action', 'Xóa', 'string', NULL,false);
 $query="
 	SELECT
-		ma_dich_vu as id, 
-		ten_dich_vu,
-		thoi_gian_van_chuyen,
-		mo_ta,
-		la_dich_vu_cong_them,
-		gia_cong_them,
-		ti_le_cong_them
-	FROM gia_dich_vu
-	ORDER by ten_dich_vu";
+		ma_tinh as id, 
+		ten_tinh,
+		ma_khu_vuc,
+		vi_tri_x,
+		vi_tri_y,
+		trung_tam_tinh
+	FROM gia_tinh_thanh_pho
+	ORDER by ten_tinh";
 $result = $mysqli->query($query);
 $mysqli->close();
 $grid->renderXML($result);

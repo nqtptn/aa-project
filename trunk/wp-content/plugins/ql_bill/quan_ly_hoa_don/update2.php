@@ -1,10 +1,5 @@
 <?
-global $wpdb;
-$mysqli = mysqli_init();
-$mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 5);
-if(!$mysqli->real_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME)){
-	echo "Die";
-}
+global $wpdb,$mysqli;
 $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
 	if($action=="update"){
 		$colname = $mysqli->real_escape_string(strip_tags($_POST['colname']));

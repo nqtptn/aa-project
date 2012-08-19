@@ -1,24 +1,6 @@
 <?php
-function fetch_pairs($mysqli,$query){
-	if (!($res = $mysqli->query($query)))return FALSE;
-	$rows = array();
-	while ($row = $res->fetch_assoc()) {
-		$first = true;
-		$key = $value = null;
-		foreach ($row as $val) {
-			if ($first) { $key = $val; $first = false; }
-			else { $value = $val; break; }
-		}
-		$rows[$key] = $value;
-	}
-	return $rows;
-}
+global $mysqli;
 $grid = new EditableGrid();
-$mysqli = mysqli_init();
-$mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 5);
-if(!$mysqli->real_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME)){
-	echo "Die";
-}
 $grid->addColumn('id', 'Mã dịch vụ', 'string', NULL,true);
 $grid->addColumn('ten_dich_vu', 'Tên dịch vụ', 'string', NULL,true);
 $grid->addColumn('thoi_gian_van_chuyen', 'Thời gian vận chuyển', 'string',  NULL,true);

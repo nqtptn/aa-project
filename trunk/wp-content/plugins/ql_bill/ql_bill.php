@@ -11,12 +11,10 @@ License: GPL
 add_action( 'admin_menu', 'ql_bill' );
 function ql_bill() {
 	add_menu_page('Quản lý hóa đơn', 'Quản lý hóa đơn', 'administrator','quan_ly_hoa_don', 'ql_bill2',plugins_url('/images/menu-vs.png', __FILE__));
-	add_submenu_page('quan_ly_hoa_don','Dịch vụ', 'Dịch vụ', 'administrator','quan_ly_dich_vu','ql_dv');
-	add_submenu_page('quan_ly_hoa_don','Tỉnh thành', 'Tỉnh thành', 'administrator','quan_ly_tinh_thanh','ql_tt');
-	add_submenu_page('quan_ly_hoa_don','Dịch vụ Tỉnh thành', 'Dịch vụ Tỉnh thành', 'administrator','dich_vu_tinh_thanh','dv_tt');
-	add_submenu_page('quan_ly_hoa_don','Quản lý bảng giá', 'Quản lý bảng giá', 'administrator','quan_ly_bang_gia','ql_bg');
+	add_submenu_page('quan_ly_hoa_don','Quản lý dịch vụ', 'Quản lý dịch vụ', 'administrator','quan_ly_dich_vu','quan_ly_dich_vu');
+	add_submenu_page('quan_ly_hoa_don','Quản lý tỉnh thành', 'Quản lý tỉnh thành', 'administrator','quan_ly_tinh_thanh','quan_ly_tinh_thanh');
+	add_submenu_page('quan_ly_hoa_don','Quản lý khu vực', 'Quản lý khu vực', 'administrator','quan_ly_khu_vuc','quan_ly_khu_vuc');
 }
-//Quan ly hoa don
 function ql_bill2() {
 	if($_GET['action']=="XML"){
 		require_once('EditableGrid.php');
@@ -27,48 +25,73 @@ function ql_bill2() {
 		require_once("quan_ly_hoa_don/load_cuoc_phi.php");
 	}elseif($_GET['action']=="load_tinh_tp"){
 		require_once("quan_ly_hoa_don/load_tinh_tp.php");
-	}elseif($_GET['action']=="xuat_html"){
+	}elseif($_GET['action']=="export_function"){
 		require_once('pdf/html2pdf.class.php');
-		require_once("quan_ly_hoa_don/xuat_html.php");
+		require_once("quan_ly_hoa_don/export_function.php");
 	}else{
 		require_once("quan_ly_hoa_don/show_form.php");
 	}
 }
-
-//Quan ly dich vu
-function ql_dv() {
+function quan_ly_dich_vu() {
 	if($_GET['action']=="XML"){
 		require_once('EditableGrid.php');
 		require_once("quan_ly_dich_vu/xml.php");
 	}elseif($_GET['action']=="update_record"){
 		require_once("quan_ly_dich_vu/update2.php");
+	}elseif($_GET['action']=="export_function"){
+		require_once('pdf/html2pdf.class.php');
+		require_once("quan_ly_dich_vu/export_function.php");
 	}else{
 		require_once("quan_ly_dich_vu/show_form.php");
 	}
 }
-
-//Quan ly tinh thanh
-function ql_tt() {
+function quan_ly_tinh_thanh() {
 	if($_GET['action']=="XML"){
 		require_once('EditableGrid.php');
 		require_once("quan_ly_tinh_thanh/xml.php");
 	}elseif($_GET['action']=="update_record"){
 		require_once("quan_ly_tinh_thanh/update2.php");
+	}elseif($_GET['action']=="export_function"){
+		require_once('pdf/html2pdf.class.php');
+		require_once("quan_ly_tinh_thanh/export_function.php");
 	}else{
 		require_once("quan_ly_tinh_thanh/show_form.php");
 	}
 }
-
-//Quan ly quan he dich vu & tinh thanh
-function dv_tt() {
-	echo "hello";
+function quan_ly_khu_vuc() {
+	if($_GET['action']=="XML"){
+		require_once('EditableGrid.php');
+		require_once("quan_ly_khu_vuc/xml.php");
+	}elseif($_GET['action']=="update_record"){
+		require_once("quan_ly_khu_vuc/update2.php");
+	}elseif($_GET['action']=="export_function"){
+		require_once('pdf/html2pdf.class.php');
+		require_once("quan_ly_khu_vuc/export_function.php");
+	}else{
+		require_once("quan_ly_khu_vuc/show_form.php");
+	}
 }
-
-//Quan ly bang gia
-function ql_bg() {
-	echo "hello";
+function fetch_pairs($mysqli,$query){
+	if (!($res = $mysqli->query($query)))return FALSE;
+	$rows = array();
+	while ($row = $res->fetch_assoc()) {
+		$first = true;
+		$key = $value = null;
+		foreach ($row as $val) {
+			if ($first) { $key = $val; $first = false; }
+			else { $value = $val; break; }
+		}
+		$rows[$key] = $value;
+	}
+	return $rows;
 }
-
+$mysqli = mysqli_init();
+$mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 5);
+if(!$mysqli->real_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME)){
+	echo "Die";
+}
+global $wpdb;
+$mysqli->set_charset($wpdb->charset);
 add_action('admin_head','add_header');
 function add_header() {
 ?>
@@ -79,3 +102,4 @@ function add_header() {
 <script type="text/javascript" src="<?php echo plugins_url('/jquery-ui-1.8.16.custom.min.js', __FILE__) ?>"></script>
 <?
 }
+
