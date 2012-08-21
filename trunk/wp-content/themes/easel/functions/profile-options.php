@@ -20,9 +20,10 @@ function easel_remove_unwanted_contactmethods( $contactmethods ) {
 
 
 function add_new_contactmethods($methods){
-	$methods['twitter'] = 'Twitter ID';
-	$methods['facebook'] = 'Facebook';
-	$methods['msn'] = 'MSN';
+	//Nha
+	//$methods['twitter'] = 'Twitter ID';
+	//$methods['facebook'] = 'Facebook';
+	//$methods['msn'] = 'MSN';
 	return $methods;
 }
 
