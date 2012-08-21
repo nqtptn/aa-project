@@ -1,31 +1,5 @@
 <?php
 
-/*
-Plugin Name: Wordpress Popup Scheduler
-Plugin URI: http://maketecheasier.com/
-Description: Wp Popup Scheduler allows you to add a popup box to your blog. You can customize the popup to suit your blog theme and schedule it to popup as and when you like it. 
-Version: 1.3.1
-Author: Damien Oh
-Author URI: http://maketecheasier.com/about
-cộng hoà xã hộic hủ nghĩa việt nam
-Copyright 2007  Damien Oh  (email : damien@maketecheasier.com)
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
-
-
 $WPS_config = array ('enable_popup' => "0",
 'popup_title' => "Welcome Back!",
 'display_message' => "Thanks for reading my blog. If you like what I write, why not subscribe to my feed?<br><br>If you are busy, I can send the latest post to your email. Just subscribe to my email updates.<br><br>Your Name", 
@@ -247,23 +221,20 @@ tinyMCE.init({
 	<?php } ?>
 	 <script type="text/javascript" src="<?php echo $WPS['wps_path']."simple_popup.js";?>"></script>
 	<div class="wrap">
-        <h2><?php _e("WordPress Popup Scheduler Option");?></h2>
-		<p><?php _e("A multi-purpose, fully customizable popup scheduler <em>(Note: This plugin requires your readers to have cookie and javascript enabled on their browser)");?></em></p>
-		<p><a href="http://maketecheasier.com/wordpress-plugins/wordpress-popup-scheduler"><?php _e("How to use it?");?></a></p>
-		<p><a href="http://maketecheasier.com/wordpress-plugins/wordpress-popup-scheduler#comment"><?php _e("Comments and suggestions");?></a></p>
+        <h2><?php _e("AA-Express Popup Scheduler Option");?></h2>
 		<p>&nbsp;</p>
 		<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?page=wp-popup-scheduler.php" id="popup_form">
 		<input type="hidden" name="check_post" value="1" />
-		<h3><?php _e("When to show your popup?");?></h3>
+		<h3><?php _e("Khi nào hiển thị popup?");?></h3>
 		<table cellspacing="5px">
-		<tr><td><input type="radio" name="show_popup_on" value="new_visitor" <?php if($WPS['show_popup_on']=="new_visitor") echo 'checked="checked"';?> /></td><td><?php _e("when new visitors arrived.");?></td></tr>
-		<tr><td><input type="radio" name="show_popup_on" value="visitor_return" <?php if($WPS['show_popup_on']=="visitor_return") echo 'checked="checked"';?>/></td><td> <?php _e("When visitors return for the ");?><select name="return_count">
+		<tr><td><input type="radio" name="show_popup_on" value="new_visitor" <?php if($WPS['show_popup_on']=="new_visitor") echo 'checked="checked"';?> /></td><td><?php _e("Lần đầu tiên truy cập.");?></td></tr>
+		<tr><td><input type="radio" name="show_popup_on" value="visitor_return" <?php if($WPS['show_popup_on']=="visitor_return") echo 'checked="checked"';?>/></td><td> <?php _e("Sau mỗi ");?><select name="return_count">
 			<option <?php if($WPS['return_count']==2) echo 'selected="selected" ';?> value="2"><?php _e("second");?></option>
 			<option <?php if($WPS['return_count']==3) echo 'selected="selected" ';?> value="3"><?php _e("third");?></option>
 			<option <?php if($WPS['return_count']==4) echo 'selected="selected" ';?> value="4"><?php _e("fourth");?></option>
 			<option <?php if($WPS['return_count']==5) echo 'selected="selected" ';?> value="5"><?php _e("fifth");?></option>
-			</select> <?php _e("visit.");?></td></tr>
-		<tr><td><input type="radio" name="show_popup_on" value="schedule" <?php if($WPS['show_popup_on']=="schedule") echo 'checked="checked"';?>/></td><td><?php _e("starting from");?> <select name="popup_day">
+			</select> <?php _e("truy cập.");?></td></tr>
+		<tr><td><input type="radio" name="show_popup_on" value="schedule" <?php if($WPS['show_popup_on']=="schedule") echo 'checked="checked"';?>/></td><td><?php _e("Bắt đầu từ");?> <select name="popup_day">
 	<option value="01" <?php if($WPS['popup_day']=="01") echo 'selected="selected" ';?>>1</option>
 	<option value="02" <?php if($WPS['popup_day']=="02") echo 'selected="selected" ';?>>2</option>
 	<option value="03" <?php if($WPS['popup_day']=="03") echo 'selected="selected" ';?>>3</option>
@@ -321,13 +292,13 @@ tinyMCE.init({
 	</select></td>
 		<td><p><input type="radio" name="schedule_option" value="consecutive" <?php if($WPS['schedule_option']=="consecutive") echo 'checked="checked"';?> /> <?php _e("for");?> <input type="text" name="show_popup_consec" value="<?php echo $WPS['show_popup_consec'];?>" maxlength="3" size="1" /> <?php _e("days");?></p>
 		<p><input type="radio" name="schedule_option" value="interval" <?php if($WPS['schedule_option']=="interval") echo 'checked="checked"';?>/> <?php _e("every");?> <input type="text" name="show_popup_interval" maxlength="2" size="2" value="<?php echo $WPS['show_popup_interval']; ?>" /> <?php _e("days");?></p></td></tr>
-		<tr><td><input type="radio" name="show_popup_on" id="show_popup_everytime" value="everytime" <?php if($WPS['show_popup_on']=="everytime") echo 'checked="checked"';?> onclick="checkDisplay()"/></td><td><?php _e("at all time");?>.</td></tr>
-		<tr><td><input type="radio" name="show_popup_on" value="onupdate" <?php if($WPS['show_popup_on']=="onupdate") echo 'checked="checked"';?> /></td><td><?php _e("whenever you make changes to the popup content.");?></td></tr></table>
+		<tr><td><input type="radio" name="show_popup_on" id="show_popup_everytime" value="everytime" <?php if($WPS['show_popup_on']=="everytime") echo 'checked="checked"';?> onclick="checkDisplay()"/></td><td><?php _e("Tất cả các lần truy cập.");?>.</td></tr>
+		<tr><td><input type="radio" name="show_popup_on" value="onupdate" <?php if($WPS['show_popup_on']=="onupdate") echo 'checked="checked"';?> /></td><td><?php _e("Khi thay đổi nội dung popup.");?></td></tr></table>
 		<p>&nbsp;</p>
-        <h3><?php _e("Set delay for popup");?></h3>
+        <h3><?php _e("Cài đặt thời gian trì hoãn popup");?></h3>
         <p>Delay for <input type="text" size="2" maxlength="3" name="delaytime" id="delaytime" value="<?php echo $WPS['delaytime']; ?>" onkeyup="checkDelayTime();" /> seconds before showing popup?  <em>(0 for no delay)</em></p>
 		<p>&nbsp;</p>
-        <h3><?php _e("Where to show your popup?");?></h3>
+        <h3><?php _e("Popup sẽ hiển thị ở trang nào?");?></h3>
 		<table>
 		<tr><td><input type="radio" name="display_page" value="home" <?php if($WPS['display_page']=="home") echo 'checked="checked"'?> /></td><td><?php _e("Home page");?></td></tr>
 		<tr><td><input type="radio" name="display_page" value="single" id="show_popup_single" <?php if($WPS['display_page']=="single") echo 'checked="checked"'?>/></td><td><?php _e("Visitor landing page");?></td></tr>
@@ -336,7 +307,7 @@ tinyMCE.init({
 		<table><tr><td rowspan="2" valign="top">Display popup on </td><td valign="top" colspan="2"><input type="radio" name="popup_position" value="center" <?php if($WPS['popup_position']=="center") echo 'checked="checked"';  ?> /> <?php _e("center of screen");?></td></tr>
 		<tr><td valign="top"><input type="radio" name="popup_position" value="user-defined" <?php if($WPS['popup_position']=="user-defined") echo 'checked="checked"';  ?> /> <?php _e("set popup location: ");?></td><td> Left: <input type="text" maxlength="4" name="popup_left" id="popup_left" size="4" value="<?php echo $WPS['popup_left'];?>" />px <?php _e("(input <strong><em>-1</em></strong> to centralize horizontally. Enter number only)");?><br /><?php _e("Top");?>: <input type="text" maxlength="4" size="4" name="popup_top" id="popup_top" value="<?php echo $WPS['popup_top']; ?>"  />px <?php _e("(input <strong><em>-1</em></strong> to centralize vertically. Enter number only)");?>. </td></tr></table>
 		<p>&nbsp;</p>
-		<h3><?php _e("How to show your popup?");?></h3>
+		<h3><?php _e("Cách thức hiển thị popup?");?></h3>
 		<table>
 		<tr><td><input type="radio" name="display_style" value="before_post" <?php if($WPS['display_style']=="before_post") echo 'checked="checked" ';?> /></td><td><?php _e("No effect - place before first post");?></td></tr>
 		<tr><td><input type="radio" name="display_style" value="after_post" <?php if($WPS['display_style']=="after_post") echo 'checked="checked" ';?>></td><td><?php _e("No effect - place after first post");?></td></tr>
@@ -346,21 +317,20 @@ tinyMCE.init({
 		<tr><td><input type="radio" name="display_style" value="lightbox" <?php if($WPS['display_style']=="lightbox") echo 'checked="checked" ';?> ></td><td><?php _e("Lightbox");?></td></tr>
 		</table>
 		<p>&nbsp;</p>
-		<h3><?php _e("What to show on your popup?");?></h3>
-		<p>Popup width: <input type="text" name="popup_width" id="popup_width" size="2"maxlength="3" value="<?php echo $WPS['popup_width'];?>" />px</p>
-		<table><tr><td><?php _e("Type your close popup text:");?> <input type="text" id="close_text" name="close_text" size="40" value="<?php echo htmlspecialchars(stripslashes($WPS['close_text'])); ?>" /></td><td><?php _e("Color:");?> <input type="text" id="close_color" name="closetext_color" size="7" maxlength="7" value="<?php echo $WPS['closetext_color'];?>" /></td><td> <div id="close_selectedColor" style="width:40px;height:20px;border: #000000 solid thin; cursor:pointer; background-color:<?php echo $WPS['closetext_color'];?>" onclick="document.getElementById('close_selectColor').style.display = 'block'"></div></td><td><div id="close_selectColor" style="cursor:pointer;display:none"><?php color_picker('close'); ?></div></td></tr></table>
-		<p><?php _e("Type your popup headline here");?></p>
+		<h3><?php _e("Cấu hình hiển thị popup?");?></h3>
+		<p>Chiều rộng popup: <input type="text" name="popup_width" id="popup_width" size="2"maxlength="3" value="<?php echo $WPS['popup_width'];?>" />px</p>
+		<table><tr><td><?php _e("Nhập nhãn cho nút đóng:");?> <input type="text" id="close_text" name="close_text" size="40" value="<?php echo htmlspecialchars(stripslashes($WPS['close_text'])); ?>" /></td><td><?php _e("Color:");?> <input type="text" id="close_color" name="closetext_color" size="7" maxlength="7" value="<?php echo $WPS['closetext_color'];?>" /></td><td> <div id="close_selectedColor" style="width:40px;height:20px;border: #000000 solid thin; cursor:pointer; background-color:<?php echo $WPS['closetext_color'];?>" onclick="document.getElementById('close_selectColor').style.display = 'block'"></div></td><td><div id="close_selectColor" style="cursor:pointer;display:none"><?php color_picker('close'); ?></div></td></tr></table>
+		<p><?php _e("Nhập tiêu đề trang popup");?></p>
 		<table><tr><td><input type="text" id="headline_text" name="headline_text" value="<?php echo htmlspecialchars(stripslashes($WPS['popup_title'])); ?>" size="40" /></td><td><?php _e("Align:");?> <select name="headline_align"><option value="center" <?php if($WPS['headline_align']=="center") echo 'selected="selected"'; ?>><?php _e("Center");?></option>
 												<option value="left" <?php if($WPS['headline_align']=="left") echo 'selected="selected"'; ?>><?php _e("Left");?></option>
 												<option value="right" <?php if($WPS['headline_align']=="right") echo 'selected="selected"'; ?>><?php _e("Right");?></option>
 				</select></td><td><td><?php _e("Color:");?> <input type="text" id="headline_color" name="headline_color" size="7" maxlength="7" value="<?php echo $WPS['headline_color'];?>" /></td><td> <div id="headline_selectedColor" style="width:40px;height:20px;border: #000000 solid thin;cursor:pointer; background-color:<?php echo $WPS['headline_color'];?>" onclick="document.getElementById('headline_selectColor').style.display = 'block'"></div></td><td><div id="headline_selectColor" style="cursor:pointer;display:none"><?php color_picker('headline'); ?></div></td></tr></table>
-        <h3><?php _e("Rich Text Editor");?></h3>
+        <h3><?php _e("Trình soạn thảo văn bản");?></h3>
         <p><input type="checkbox" name="rich_text" <?php echo $rich_text_msg; ?> /> <?php _e("Use rich text editor to compose message?"); ?></p>
-		<p><?php _e("Type the message that you want to display");?></p>
+		<p><?php _e("Nhập nội dung popup nếu muốn hiển thị");?></p>
 		
 		<textarea name="display_message" id="display_message" cols="60" rows="15" ><?php echo stripslashes($WPS['display_message']); ?></textarea>
 		<p><input type="checkbox" name="autoscroll" <?php if($WPS['autoscroll']=="1") echo 'checked="checked"'; ?> /> <?php _e("Enable Autoscrolling. (The Popup will follow as the user scrolls down the page.)"); ?></p>
-		<br/>(Note: You can also change the look and feel of the popup via the popup_css.css file in the wp-popup-scheduler folder)
         <p>&nbsp;</p> 
 			<script type="text/javascript">
 			function checkDisplay()
@@ -456,29 +426,17 @@ tinyMCE.init({
 			}
 			
 			</script>
-		<table border="0"><tr><td><?php _e("Pick background color:");?> <input type="text" name="bg_color" id="bg_color" size="8" value="<?php echo $WPS['background_color']; ?>"/></td><td><div id="bg_selectedColor" style="width:40px; height:20px; border:thin solid #000000; cursor:pointer; background-color:<?php echo $WPS['background_color']; ?>" onclick="document.getElementById('bg_selectColor').style.display = 'block'"></div></a></td><td><div id="bg_selectColor" style="cursor:pointer;display:none"><?php color_picker('bg'); ?></div></td></tr></table>
+		<table border="0"><tr><td><?php _e("Chọn màu nền hiển thị:");?> <input type="text" name="bg_color" id="bg_color" size="8" value="<?php echo $WPS['background_color']; ?>"/></td><td><div id="bg_selectedColor" style="width:40px; height:20px; border:thin solid #000000; cursor:pointer; background-color:<?php echo $WPS['background_color']; ?>" onclick="document.getElementById('bg_selectColor').style.display = 'block'"></div></a></td><td><div id="bg_selectColor" style="cursor:pointer;display:none"><?php color_picker('bg'); ?></div></td></tr></table>
 		<p>&nbsp;</p>		
-        <div style="border:thin dashed #666666;width:600px;padding:10px"><strong>Preview</strong>
+        <div style="border:thin dashed #666666;width:600px;padding:10px"><strong>Xem thử </strong>
         <ul style="margin-left:15px;list-style:circle; ">
-        <li>Preview only works when <em>simple popup</em>, <em>dropdown</em>, <em>fade in</em>  or <em>lightbox</em> is selected.</li>
-        <li>Depending on theme that you have used on your site, the actual font might differ from the preview font</li>
-        	<li>If you have make changes to the display message, please save first before viewing the preview.</li></ul>
-        </p><a href="#top" onclick="preview_popup(this);" style="font-size:medium">Click Here To See The Preview Popup</a></p>
+        </p><a href="#top" onclick="preview_popup(this);" style="font-size:medium">Nhấp vào đây để xem thử trang popup</a></p>
         </div>
     	<p>&nbsp;</p>
 		<p><input type="checkbox" name="enable_popup" <?php if($WPS['enable_popup']==1) echo 'checked ="checked"'; ?>/> <?php _e("Enable pop-up");?></p>
          <p class="submit"><input type="submit" name="Submit" value="<?php _e('Update Options') ?>" />
 </p>
 	</form>      
-	<h2><?php _e("Support");?></h2>
-	<p><?php _e("Support can be found at ");?><a href="http://maketecheasier.com/wordpress-plugins/wordpress-popup-scheduler"><?php _e("WP-Popup-Scheduler Support page");?></a></p>
-	<p><?php _e("If you like this plugin, you can show your support via donation to aid in this plugin development.");?> </p>
-	<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but21.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
-<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
-<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----MIIHVwYJKoZIhvcNAQcEoIIHSDCCB0QCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYBRqtEr8Dx4EJOw5IOUl/fruEV2Pw0NYfMBgzVwhWYpRqeAsbqgRHqolKvxRs+6BmmrOV14Y5IhEWWkl5pSA3LRpLNpwOXh/eEvLddHPgqWPmPQ2zO+sagq28HkEvOg3QciKOIdRkXrxrnkMhjJe2uDMWxD+DNtX924Tq6QD7Z9ezELMAkGBSsOAwIaBQAwgdQGCSqGSIb3DQEHATAUBggqhkiG9w0DBwQIkjXfqA68bdiAgbDOZ1nnar1Os3hnnntFV/y6XH5wQIU9HTIGae/qRnVkIfIoreLo0sBpBFT0Aabaka1Bs93YYwjjlBnjE0R07i/QPxhGQ1sBThDP3C6m313VI7yBEXgiQWbFFDnQDQ+WmdxDz3ptjzDp55W5g1v7niRqYrYLwoSTbX07lQc2wMIS3FT2+nAm8sihAXAFZf/FrAzlH2B/tLZ53pi6kc6k7ro5PpzEUnPinJT1NAwuABjyeKCCA4cwggODMIIC7KADAgECAgEAMA0GCSqGSIb3DQEBBQUAMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbTAeFw0wNDAyMTMxMDEzMTVaFw0zNTAyMTMxMDEzMTVaMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAwUdO3fxEzEtcnI7ZKZL412XvZPugoni7i7D7prCe0AtaHTc97CYgm7NsAtJyxNLixmhLV8pyIEaiHXWAh8fPKW+R017+EmXrr9EaquPmsVvTywAAE1PMNOKqo2kl4Gxiz9zZqIajOm1fZGWcGS0f5JQ2kBqNbvbg2/Za+GJ/qwUCAwEAAaOB7jCB6zAdBgNVHQ4EFgQUlp98u8ZvF71ZP1LXChvsENZklGswgbsGA1UdIwSBszCBsIAUlp98u8ZvF71ZP1LXChvsENZklGuhgZSkgZEwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tggEAMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEFBQADgYEAgV86VpqAWuXvX6Oro4qJ1tYVIT5DgWpE692Ag422H7yRIr/9j/iKG4Thia/Oflx4TdL+IFJBAyPK9v6zZNZtBgPBynXb048hsP16l2vi0k5Q2JKiPDsEfBhGI+HnxLXEaUWAcVfCsQFvd2A1sxRr67ip5y2wwBelUecP3AjJ+YcxggGaMIIBlgIBATCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwCQYFKw4DAhoFAKBdMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTA3MTIxNDAzMDI1MlowIwYJKoZIhvcNAQkEMRYEFHhmmsSgL7OrtjVQQK5Vol491L7QMA0GCSqGSIb3DQEBAQUABIGAUFZpRv4t2KLpmwO8KKZxpx8zm/eQlUZfSYm1D2cnQkxZIeeqFwsvLK8HDjZw1cuO8ajxCR8lIcuUaoJmjydzE824aOIAua8lZK0lWyhKe9r9qhrDbPOhylA7WOsA3PLkpqGRRiqlKy9lqkDcdkPUDJY2RkSXGp0lAQf8CqgFhRA=-----END PKCS7-----
-">
 </form>
 	<div id="WPS_preview" class="wps_popup" style="margin:auto;z-index:100;position:absolute;left:0px;top:-400px;visibility:hidden"></div> 
     <div id="lightbox_div" style="overflow:auto;width:100%;background-color:#000000;z-index:50;position:absolute;left:0px;top:0px;visibility:hidden"></div>
