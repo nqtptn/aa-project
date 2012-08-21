@@ -1,6 +1,11 @@
 		<?php get_template_part('layout', 'foot'); ?>
 		<div id="footer">
 			<div id="footer-menubar-wrapper">
+				<div class="footmenu">
+					<ul id="menu-menu-1" class="menu">
+						<li></li>
+					</ul>
+				</div>
 				<div class="clear"></div>
 			</div>
 			<?php do_action('easel-footer'); ?>
