@@ -7,6 +7,8 @@
  */
 
 /** Load WordPress Bootstrap */
+header( 'Location: ../wp-admin/admin.php?page=quan_ly_hoa_don' ) ;
+return;
 require_once('./admin.php');
 
 /** Load WordPress dashboard API */

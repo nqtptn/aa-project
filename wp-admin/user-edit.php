@@ -277,9 +277,42 @@ if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_c
 </tr>
 
 <tr>
-	<th><label for="nickname"><?php _e('Điện thoại'); ?></label></th>
+	<th><label for="nickname"><?php _e('Địa chỉ'); ?></label></th>
 	<td><input type="text" name="nickname" id="nickname" value="<?php echo esc_attr($profileuser->nickname) ?>" class="regular-text" /></td>
 </tr>
+</table>
+
+<table class="form-table">
+<tr>
+	<th><label for="email"><?php _e('E-mail'); ?> <span class="description"><?php _e('(required)'); ?></span></label></th>
+	<td><input type="text" name="email" id="email" value="<?php echo esc_attr($profileuser->user_email) ?>" class="regular-text" />
+	<?php
+	$new_email = get_option( $current_user->ID . '_new_email' );
+	if ( $new_email && $new_email != $current_user->user_email ) : ?>
+	<div class="updated inline">
+	<p><?php printf( __('There is a pending change of your e-mail to <code>%1$s</code>. <a href="%2$s">Cancel</a>'), $new_email['newemail'], esc_url( self_admin_url( 'profile.php?dismiss=' . $current_user->ID . '_new_email' ) ) ); ?></p>
+	</div>
+	<?php endif; ?>
+	</td>
+</tr>
+
+<tr>
+	<th><label for="url"><?php _e('Website') ?></label></th>
+	<td><input type="text" name="url" id="url" value="<?php echo esc_attr($profileuser->user_url) ?>" class="regular-text code" /></td>
+</tr>
+
+<?php
+	foreach (_wp_get_user_contactmethods( $profileuser ) as $name => $desc) {
+?>
+
+<tr>
+	<th><label for="<?php echo $name; ?>"><?php echo apply_filters('user_'.$name.'_label', $desc); ?></label></th>
+	<td><input type="text" name="<?php echo $name; ?>" id="<?php echo $name; ?>" value="<?php echo esc_attr($profileuser->$name) ?>" class="regular-text" /></td>
+</tr>
+<?php
+	}
+?>
+
 
 <tr>
 	<th><label for="display_name"><?php _e('Tên hiển thị mong muốn') ?></label></th>
@@ -316,42 +349,8 @@ if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_c
 		</select>
 	</td>
 </tr>
+
 </table>
-
-<h3><?php _e('Thông tin liên hệ') ?></h3>
-
-<table class="form-table">
-<tr>
-	<th><label for="email"><?php _e('E-mail'); ?> <span class="description"><?php _e('(required)'); ?></span></label></th>
-	<td><input type="text" name="email" id="email" value="<?php echo esc_attr($profileuser->user_email) ?>" class="regular-text" />
-	<?php
-	$new_email = get_option( $current_user->ID . '_new_email' );
-	if ( $new_email && $new_email != $current_user->user_email ) : ?>
-	<div class="updated inline">
-	<p><?php printf( __('There is a pending change of your e-mail to <code>%1$s</code>. <a href="%2$s">Cancel</a>'), $new_email['newemail'], esc_url( self_admin_url( 'profile.php?dismiss=' . $current_user->ID . '_new_email' ) ) ); ?></p>
-	</div>
-	<?php endif; ?>
-	</td>
-</tr>
-
-<tr>
-	<th><label for="url"><?php _e('Website') ?></label></th>
-	<td><input type="text" name="url" id="url" value="<?php echo esc_attr($profileuser->user_url) ?>" class="regular-text code" /></td>
-</tr>
-
-<?php
-	foreach (_wp_get_user_contactmethods( $profileuser ) as $name => $desc) {
-?>
-<tr>
-	<th><label for="<?php echo $name; ?>"><?php echo apply_filters('user_'.$name.'_label', $desc); ?></label></th>
-	<td><input type="text" name="<?php echo $name; ?>" id="<?php echo $name; ?>" value="<?php echo esc_attr($profileuser->$name) ?>" class="regular-text" /></td>
-</tr>
-<?php
-	}
-?>
-</table>
-
-<h3><?php IS_PROFILE_PAGE ? _e('About Yourself') : _e('Về khách hàng'); ?></h3>
 
 <table class="form-table">
 <tr>
