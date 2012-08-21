@@ -41,7 +41,7 @@ font-weight: normal;
 
 
 #menubar-wrapper {
-	width: 1093px;
+	width: 1133px;
 	margin: 0px 4px 4px 4px;
 	padding: 5px 0px 5px 0;
 	color: black;
@@ -114,9 +114,9 @@ font-weight: normal;
 
 
 h2.page-title, h2.post-title {
-	border-bottom: solid 1px #1B34EC;
+	border-bottom: solid 1px #B31F12;
 	margin-bottom: 3px;
-	color: #1B34EC;
+	color: #B31F12;
 	-moz-text-shadow: 1px 1px 1px #555;
 	-khtml-text-shadow: 1px 1px 1px #555;
 	-webkit-text-shadow: 1px 1px 1px #555;
@@ -237,18 +237,18 @@ body.signup #column {
 .sidebar h2 {
 	border: solid 1px #000;
 	margin-bottom: 3px;
-	color: #1B34EC;
+	color: #B31F12;
 	font-size: 17px;
 	background: url(images/banner-widget.jpg) top left repeat-y;
 	background-color: #FFF;
 }
 
 .sidebar h2 a {
-	color: #1B34EC;
+	color: #B31F12;
 }
 
 .sidebar h2 a:hover {
-	color: #f00;
+	color: #1B34EC;
 }
 
 .ceo_latest_thumbnail_widget .widget-content {
@@ -269,7 +269,7 @@ body.signup #column {
 .menu .current_page_item a {
     color: #1B34EC;
 	background-color: #C2EBF3;
-	border: solid 1px #A4DB93;
+	border: solid 1px #B31F12;
 }
 
 .menu-item-home {
