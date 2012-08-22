@@ -1,14 +1,4 @@
 <?php
-/**
- * WordPress User Page
- *
- * Handles authentication, registering, resetting passwords, forgot password,
- * and other user handling.
- *
- * @package WordPress
- */
-
-/** Make sure that the WordPress bootstrap has run before continuing. */
 require( dirname(__FILE__) . '/wp-load.php' );
 
 // Redirect to https login if forced to use SSL
@@ -22,23 +12,7 @@ if ( force_ssl_admin() && !is_ssl() ) {
 	}
 }
 
-/**
- * Outputs the header for the login page.
- *
- * @uses do_action() Calls the 'login_head' for outputting HTML in the Log In
- *		header.
- * @uses apply_filters() Calls 'login_headerurl' for the top login link.
- * @uses apply_filters() Calls 'login_headertitle' for the top login title.
- * @uses apply_filters() Calls 'login_message' on the message to display in the
- *		header.
- * @uses $error The error global, which is checked for displaying errors.
- *
- * @param string $title Optional. WordPress Log In Page title to display in
- *		<title/> element.
- * @param string $message Optional. Message to display in header.
- * @param WP_Error $wp_error Optional. WordPress Error Object
- */
-function login_header($title = 'Log In', $message = '', $wp_error = '') {
+function login_header($title = 'Đăng nhập', $message = '', $wp_error = '') {
 	global $error, $interim_login, $current_site, $customize_login;
 
 	// Don't index any of these forms
@@ -74,13 +48,8 @@ function login_header($title = 'Log In', $message = '', $wp_error = '') {
 	do_action( 'login_enqueue_scripts' );
 	do_action( 'login_head' );
 
-	if ( is_multisite() ) {
-		$login_header_url   = network_home_url();
-		$login_header_title = $current_site->site_name;
-	} else {
-		$login_header_url   = __( 'http://wordpress.org/' );
-		$login_header_title = __( 'Powered by WordPress' );
-	}
+	$login_header_url   = __( 'http://aa-express.net/' );
+	$login_header_title = __( 'AA EXPRESS' );
 
 	$login_header_url   = apply_filters( 'login_headerurl',   $login_header_url   );
 	$login_header_title = apply_filters( 'login_headertitle', $login_header_title );
@@ -93,7 +62,7 @@ function login_header($title = 'Log In', $message = '', $wp_error = '') {
 	</head>
 	<body class="login<?php if ( wp_is_mobile() ) echo ' mobile'; ?>">
 	<div id="login">
-		<h1><a href="<?php echo esc_url( $login_header_url ); ?>" title="<?php echo esc_attr( $login_header_title ); ?>"><?php bloginfo( 'name' ); ?></a></h1>
+		<h1><a href="<?php echo esc_url( $login_header_url ); ?>" title="AA EXPRESS"><?php  ?></a></h1>
 	<?php
 
 	unset( $login_header_url, $login_header_title );
@@ -137,7 +106,7 @@ function login_footer($input_id = '') {
 
 	// Don't allow interim logins to navigate away from the page.
 	if ( ! $interim_login ): ?>
-	<p id="backtoblog"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php esc_attr_e( 'Are you lost?' ); ?>"><?php printf( __( '&larr; Back to %s' ), get_bloginfo( 'title', 'display' ) ); ?></a></p>
+	<p id="backtoblog"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php esc_attr_e( 'Are you lost?' ); ?>"><?php printf( __( '&larr; Trở về trang %s' ), get_bloginfo( 'title', 'display' ) ); ?></a></p>
 	<?php endif; ?>
 
 	</div>
@@ -556,7 +525,7 @@ case 'register' :
 
 <p id="nav">
 <a href="<?php echo esc_url( wp_login_url() ); ?>"><?php _e( 'Log in' ); ?></a> |
-<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>" title="<?php esc_attr_e( 'Password Lost and Found' ) ?>"><?php _e( 'Lost your password?' ); ?></a>
+<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>" title="<?php esc_attr_e( 'Password Lost and Found' ) ?>"><?php _e( 'Bạn quên password?' ); ?></a>
 </p>
 
 <?php
@@ -603,7 +572,7 @@ default:
 
 	if ( !is_wp_error($user) && !$reauth ) {
 		if ( $interim_login ) {
-			$message = '<p class="message">' . __('You have logged in successfully.') . '</p>';
+			$message = '<p class="message">' . __('Bạn đã đăng nhập thành công.') . '</p>';
 			login_header( '', $message );
 
 			if ( ! $customize_login ) : ?>
@@ -647,7 +616,7 @@ default:
 
 	// Some parts of this script use the main login form to display a message
 	if		( isset($_GET['loggedout']) && true == $_GET['loggedout'] )
-		$errors->add('loggedout', __('You are now logged out.'), 'message');
+		$errors->add('loggedout', __('Bạn đã thoát khỏi trang quản trị.'), 'message');
 	elseif	( isset($_GET['registration']) && 'disabled' == $_GET['registration'] )
 		$errors->add('registerdisabled', __('User registration is currently not allowed.'));
 	elseif	( isset($_GET['checkemail']) && 'confirm' == $_GET['checkemail'] )
@@ -674,7 +643,7 @@ default:
 
 <form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post">
 	<p>
-		<label for="user_login"><?php _e('Username') ?><br />
+		<label for="user_login"><?php _e('Tài khoản') ?><br />
 		<input type="text" name="log" id="user_login" class="input" value="<?php echo esc_attr($user_login); ?>" size="20" tabindex="10" /></label>
 	</p>
 	<p>
@@ -682,9 +651,9 @@ default:
 		<input type="password" name="pwd" id="user_pass" class="input" value="" size="20" tabindex="20" /></label>
 	</p>
 <?php do_action('login_form'); ?>
-	<p class="forgetmenot"><label for="rememberme"><input name="rememberme" type="checkbox" id="rememberme" value="forever" tabindex="90"<?php checked( $rememberme ); ?> /> <?php esc_attr_e('Remember Me'); ?></label></p>
+	<p class="forgetmenot"><label for="rememberme"><input name="rememberme" type="checkbox" id="rememberme" value="forever" tabindex="90"<?php checked( $rememberme ); ?> /> <?php esc_attr_e('Ghi nhớ thông tin'); ?></label></p>
 	<p class="submit">
-		<input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="<?php esc_attr_e('Log In'); ?>" tabindex="100" />
+		<input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="<?php esc_attr_e('Đăng nhập'); ?>" tabindex="100" />
 <?php	if ( $interim_login ) { ?>
 		<input type="hidden" name="interim-login" value="1" />
 <?php	} else { ?>
@@ -702,9 +671,9 @@ default:
 <?php if ( isset($_GET['checkemail']) && in_array( $_GET['checkemail'], array('confirm', 'newpass') ) ) : ?>
 <?php elseif ( get_option('users_can_register') ) : ?>
 <a href="<?php echo esc_url( site_url( 'wp-login.php?action=register', 'login' ) ); ?>"><?php _e( 'Register' ); ?></a> |
-<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>" title="<?php esc_attr_e( 'Password Lost and Found' ); ?>"><?php _e( 'Lost your password?' ); ?></a>
+<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>" title="<?php esc_attr_e( 'Password Lost and Found' ); ?>"><?php _e( 'Bạn quên password?' ); ?></a>
 <?php else : ?>
-<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>" title="<?php esc_attr_e( 'Password Lost and Found' ); ?>"><?php _e( 'Lost your password?' ); ?></a>
+<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>" title="<?php esc_attr_e( 'Password Lost and Found' ); ?>"><?php _e( 'Bạn quên password?' ); ?></a>
 <?php endif; ?>
 </p>
 <?php } ?>
