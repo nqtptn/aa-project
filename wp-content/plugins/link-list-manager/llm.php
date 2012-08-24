@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS $db_llm (
 $result = $wpdb->query($sql);
 
 function llm_menu(){
-	add_options_page('Link List Manager', 'LL Manager', 8, basename(__FILE__), 'llm_setting');
+	add_options_page('Đối tác & Quảng cáo', 'Đối tác & Quảng cáo', 8, basename(__FILE__), 'llm_setting');
 }
 add_action('admin_menu', 'llm_menu');
 
@@ -78,7 +78,7 @@ function llm_setting() {
 	}
 ?>
 
-		<h2>Link List Manager</h2>
+		<h2>Quản lý Đối tác & Quảng cáo</h2>
 		
 <div style="float:left;">
 	<br class="clear">
