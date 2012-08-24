@@ -13,7 +13,8 @@ function ql_bill() {
 	add_menu_page('Quản lý hóa đơn', 'Quản lý hóa đơn', 'administrator','quan_ly_hoa_don', 'ql_bill2',plugins_url('/images/menu-vs.png', __FILE__));
 	add_submenu_page('quan_ly_hoa_don','Quản lý dịch vụ', 'Quản lý dịch vụ', 'administrator','quan_ly_dich_vu','quan_ly_dich_vu');
 	add_submenu_page('quan_ly_hoa_don','Quản lý tỉnh thành', 'Quản lý tỉnh thành', 'administrator','quan_ly_tinh_thanh','quan_ly_tinh_thanh');
-	add_submenu_page('quan_ly_hoa_don','Quản lý khu vực', 'Quản lý khu vực', 'administrator','quan_ly_khu_vuc','quan_ly_khu_vuc');
+	add_submenu_page('quan_ly_hoa_don','Quản lý dịch vụ & tỉnh thành', 'Quản lý dịch vụ & tỉnh thành', 'administrator','quan_ly_khu_vuc','quan_ly_khu_vuc');
+	add_submenu_page('quan_ly_hoa_don','Quản lý bảng giá', 'Quản lý bảng giá', 'administrator','quan_ly_bang_gia','quan_ly_bang_gia');
 }
 function ql_bill2() {
 	if($_GET['action']=="XML"){
@@ -69,6 +70,23 @@ function quan_ly_khu_vuc() {
 		require_once("quan_ly_khu_vuc/export_function.php");
 	}else{
 		require_once("quan_ly_khu_vuc/show_form.php");
+	}
+}
+function quan_ly_bang_gia() {
+	if($_GET['action']=="XML"){
+		require_once('EditableGrid.php');
+		require_once("quan_ly_bang_gia/xml.php");
+	}elseif($_GET['action']=="update_record"){
+		require_once("quan_ly_bang_gia/update2.php");
+	}elseif($_GET['action']=="load_cuoc_phi"){
+		require_once("quan_ly_bang_gia/load_cuoc_phi.php");
+	}elseif($_GET['action']=="load_tinh_tp"){
+		require_once("quan_ly_bang_gia/load_tinh_tp.php");
+	}elseif($_GET['action']=="export_function"){
+		require_once('pdf/html2pdf.class.php');
+		require_once("quan_ly_bang_gia/export_function.php");
+	}else{
+		require_once("quan_ly_bang_gia/show_form.php");
 	}
 }
 function fetch_pairs($mysqli,$query){
