@@ -26,7 +26,7 @@ global $wpdb, $sl_upload_path, $sl_path;
 print "<div class='wrap'>
             <div id='icon-add-locations' class='icon32'><br/></div>
             <h2>".
-            __('Store Locator Plus - Add Locations', SLPLUS_PREFIX).
+            __('Mạng lưới hoạt động - Thêm mới', SLPLUS_PREFIX).
             "</h2>";
             
 initialize_variables();

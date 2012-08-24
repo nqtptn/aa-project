@@ -347,7 +347,7 @@ $slpMapSettings = new wpCSL_settings__slplus(
             'no_license'        => true,
             'prefix'            => $slplus_plugin->prefix,
             'url'               => $slplus_plugin->url,
-            'name'              => $slplus_plugin->name . ' - Map Settings',
+            'name'              => $slplus_plugin->name . ' - Cài đặt hiển thị',
             'plugin_url'        => $slplus_plugin->plugin_url,
             'render_csl_blocks' => false,
             'form_action'       => SLPLUS_ADMINPAGE.'map-designer.php',
@@ -411,13 +411,7 @@ $slpDescription .=
         ""
         ;    
 }        
-$slpMapSettings->add_section(
-    array(
-            'name'          => __('Plugin Info',SLPLUS_PREFIX),
-            'description'   => $slpDescription,
-            'auto'          => true
-        )
- );
+
     
 //------------------------------------
 // Render It 

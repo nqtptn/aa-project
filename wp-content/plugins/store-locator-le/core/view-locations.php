@@ -24,7 +24,7 @@ foreach($_REQUEST as $key=>$val) {
 print "<div class='wrap'>
             <div id='icon-edit-locations' class='icon32'><br/></div>
             <h2>".
-            __('Store Locator Plus - Manage Locations', SLPLUS_PREFIX).
+            __('Mạng lưới dịch vụ - Xem danh sách', SLPLUS_PREFIX).
             "</h2>";
 
             

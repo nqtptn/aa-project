@@ -694,22 +694,22 @@ function csl_slplus_add_options_page() {
             );	
 		add_submenu_page(
     	    SLPLUS_COREDIR.'add-locations.php',
-		    __("Add Locations", SLPLUS_PREFIX), 
-		    __("Add Locations", SLPLUS_PREFIX), 
+		    __("Thêm mới", SLPLUS_PREFIX), 
+		    __("Thêm mới", SLPLUS_PREFIX), 
 		    'administrator', 
 		    SLPLUS_COREDIR.'add-locations.php'
 		    );
 		add_submenu_page(
     	    SLPLUS_COREDIR.'add-locations.php',
-		    __("Manage Locations", SLPLUS_PREFIX), 
-		    __("Manage Locations", SLPLUS_PREFIX), 
+		    __("Xem danh sách", SLPLUS_PREFIX), 
+		    __("Xem danh sách", SLPLUS_PREFIX), 
 		    'administrator', 
 		    SLPLUS_COREDIR.'view-locations.php'
 		    );
 		add_submenu_page(
     	    SLPLUS_COREDIR.'add-locations.php',
-		    __("Map Settings", SLPLUS_PREFIX), 
-		    __("Map Settings", SLPLUS_PREFIX), 
+		    __("Cài đặt hiển thị", SLPLUS_PREFIX), 
+		    __("Cài đặt hiển thị", SLPLUS_PREFIX), 
 		    'administrator', 
 		    SLPLUS_COREDIR.'map-designer.php'
 		    );
