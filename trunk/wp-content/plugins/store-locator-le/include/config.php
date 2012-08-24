@@ -36,7 +36,7 @@ if (defined('SLPLUS_PLUGINDIR')) {
             
             'prefix'                => SLPLUS_PREFIX,
             'css_prefix'            => SLPLUS_PREFIX,
-            'name'                  => 'Store Locator Plus',
+            'name'                  => 'Mạng lưới dịch vụ',
             'sku'                   => 'SLPLUS',
 
             'on_update' => array(SLPlus_Activate, update),
