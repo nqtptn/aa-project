@@ -183,7 +183,7 @@ if($WPS['enable_popup']=="1")
 
 function WPS_add_option_page ()
 {
-	add_options_page('WP Popup Scheduler', 'WP Popup Scheduler', 8, basename(__FILE__), 'WPS_option_page');
+	add_options_page('Cài đặt Popup', 'Cài đặt Popup', 8, basename(__FILE__), 'WPS_option_page');
 }
 	
 function WPS_option_page ()
