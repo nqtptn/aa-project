@@ -15,7 +15,7 @@ function DatabaseGrid(XML_link,field_id,filter_id,update_url)
 		tableLoaded: function() {
 			this.setCellRenderer("action", new CellRenderer({
 				render: function(cell, value) {
-					cell.innerHTML = "<a onclick=\"if (confirm('Are you sure you want to delete this record ? ')) delete_record(editableGrid," + cell.rowIndex + ",'"+update_url+"');\" style=\"cursor:pointer\" class='button'>Xóa</a>";
+					cell.innerHTML = "<a onclick=\"if (confirm('Bạn có muốn xoá dòng dữ liệu này?')) delete_record(editableGrid," + cell.rowIndex + ",'"+update_url+"');\" style=\"cursor:pointer\" class='button'>Xóa</a>";
 				}
 			}));
 			this.renderGrid(field_id, "testgrid");
