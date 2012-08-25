@@ -10,11 +10,12 @@ License: GPL
 */
 add_action( 'admin_menu', 'ql_bill' );
 function ql_bill() {
-	add_menu_page('Quản lý hóa đơn', 'Quản lý hóa đơn', 'administrator','quan_ly_hoa_don', 'ql_bill2',plugins_url('/images/menu-vs.png', __FILE__));
-	add_submenu_page('quan_ly_hoa_don','Quản lý dịch vụ', 'Quản lý dịch vụ', 'administrator','quan_ly_dich_vu','quan_ly_dich_vu');
-	add_submenu_page('quan_ly_hoa_don','Quản lý tỉnh thành', 'Quản lý tỉnh thành', 'administrator','quan_ly_tinh_thanh','quan_ly_tinh_thanh');
-	add_submenu_page('quan_ly_hoa_don','Quản lý dịch vụ & tỉnh thành', 'Quản lý dịch vụ & tỉnh thành', 'administrator','quan_ly_khu_vuc','quan_ly_khu_vuc');
-	add_submenu_page('quan_ly_hoa_don','Quản lý bảng giá', 'Quản lý bảng giá', 'administrator','quan_ly_bang_gia','quan_ly_bang_gia');
+	add_menu_page('Quản lý hóa đơn', 'Nhập hóa đơn', 'administrator','quan_ly_hoa_don', 'ql_bill2',plugins_url('/images/menu-vs.png', __FILE__));
+	add_submenu_page('quan_ly_hoa_don','Dịch vụ', 'Dịch vụ', 'administrator','quan_ly_dich_vu','quan_ly_dich_vu');
+	add_submenu_page('quan_ly_hoa_don','Tỉnh thành', 'Tỉnh thành', 'administrator','quan_ly_tinh_thanh','quan_ly_tinh_thanh');
+	add_submenu_page('quan_ly_hoa_don','Dịch vụ & tỉnh thành', 'Dịch vụ & tỉnh thành', 'administrator','quan_ly_khu_vuc','quan_ly_khu_vuc');
+	add_submenu_page('quan_ly_hoa_don','Phần chân hoá đơn', 'Phần chân hoá đơn', 'administrator','quan_ly_chan_hoa_don','quan_ly_chan_hoa_don');
+	add_submenu_page('quan_ly_hoa_don','Nhập bảng giá', 'Nhập bảng giá', 'administrator','quan_ly_bang_gia','quan_ly_bang_gia');
 }
 function ql_bill2() {
 	if($_GET['action']=="XML"){
@@ -70,6 +71,16 @@ function quan_ly_khu_vuc() {
 		require_once("quan_ly_khu_vuc/export_function.php");
 	}else{
 		require_once("quan_ly_khu_vuc/show_form.php");
+	}
+}
+function quan_ly_chan_hoa_don() {
+	if($_GET['action']=="XML"){
+		require_once('EditableGrid.php');
+		require_once("quan_ly_chan_hoa_don/xml.php");
+	}elseif($_GET['action']=="update_record"){
+		require_once("quan_ly_chan_hoa_don/update2.php");
+	}else{
+		require_once("quan_ly_chan_hoa_don/show_form.php");
 	}
 }
 function quan_ly_bang_gia() {
