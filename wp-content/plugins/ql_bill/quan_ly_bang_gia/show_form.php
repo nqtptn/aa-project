@@ -232,6 +232,7 @@ function get_report_link()
 }
 function load_content()
 {
+	load_tinh_tp();
 	$("#tablecontent").html("Loading...");
 	var xml_link=get_xml_link();
 	DatabaseGrid(xml_link,"tablecontent","filter",update_url);
@@ -260,8 +261,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&action=
 <select id='ma_tinh_di'>
 <?
 	global $wpdb;
-	$province = $wpdb->get_results("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho WHERE ma_tinh in (select ma_tinh_den from gia_dich_vu_tinh_thanh_pho where ma_tinh_di='tp_hcm' and ma_dich_vu='chuyen_phat_nhanh') order by (case when ma_tinh='tp_hcm' then 0 else 1 end),ma_tinh");
-	//echo $wpdb->get_var( $wpdb->prepare("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho", $comment_author, $comment_date) );
+	$province = $wpdb->get_results("select distinct ma_tinh,(select ten_tinh from gia_tinh_thanh_pho where ma_tinh=a.ma_tinh) ten_tinh from gia_dich_vu_tinh_thanh a where a.la_tinh_di=1 and ma_dich_vu='chuyen_phat_nhanh'");
 	foreach($province as $province2){
 		if(!empty($province2->ma_tinh)){
 			echo "<option value='".$province2->ma_tinh."'>".$province2->ten_tinh."</option>";
@@ -284,7 +284,6 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&action=
 
 <div id="tablecontent"></div>
 <div id="paginator"></div>
-<div id='report'></div>
 
 <div id='posting' style='margin-top:10px;border: 1px solid #ccc;-moz-border-radius: 5px;-webkit-border-radius: 5px;padding:10px'>
 	<div style='border-bottom:1px dotted #999;color:#588eaf'><b>Thêm mới</b></div>
@@ -318,8 +317,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&action=
 					<select id="ma_tinh_den">
 					<?
 						global $wpdb;
-						$province = $wpdb->get_results("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho WHERE ma_tinh in (select ma_tinh_den from gia_dich_vu_tinh_thanh_pho where ma_tinh_di='tp_hcm' and ma_dich_vu='chuyen_phat_nhanh')");
-						//echo $wpdb->get_var( $wpdb->prepare("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho", $comment_author, $comment_date) );
+						$province = $wpdb->get_results("select distinct ma_tinh,(select ten_tinh from gia_tinh_thanh_pho where ma_tinh=a.ma_tinh) ten_tinh from gia_dich_vu_tinh_thanh a where a.la_tinh_di=0 and ma_dich_vu='chuyen_phat_nhanh'");
 						foreach($province as $province2){
 							if(!empty($province2->ma_tinh)){
 								echo "<option value='".$province2->ma_tinh."'>".$province2->ten_tinh."</option>";
