@@ -371,8 +371,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 					<select id="ma_tinh_den" onchange="load_cuoc_phi();">
 					<?
 						global $wpdb;
-						$province = $wpdb->get_results("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho WHERE ma_tinh in (select ma_tinh_den from gia_dich_vu_tinh_thanh_pho where ma_tinh_di='tp_hcm' and ma_dich_vu='chuyen_phat_nhanh')");
-						//echo $wpdb->get_var( $wpdb->prepare("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho", $comment_author, $comment_date) );
+						$province = $wpdb->get_results("select distinct ma_tinh,(select ten_tinh from gia_tinh_thanh_pho where ma_tinh=a.ma_tinh) ten_tinh from gia_dich_vu_tinh_thanh a where a.la_tinh_di=0 and ma_dich_vu='chuyen_phat_nhanh'");
 						foreach($province as $province2){
 							if(!empty($province2->ma_tinh)){
 								echo "<option value='".$province2->ma_tinh."'>".$province2->ten_tinh."</option>";
