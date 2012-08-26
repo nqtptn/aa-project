@@ -11,6 +11,12 @@
  *
  * @var bool
  */
+//echo $_SERVER['REQUEST_URI'];
+//exit;
+if(substr($_SERVER['PHP_SELF'],-9)=="index.php" && $_SERVER['REQUEST_URI']=="/aaexpress/"){
+	
+	header("Location: ./trang-chu.html");
+}
 define('WP_USE_THEMES', true);
 
 /** Loads the WordPress Environment and Template */
