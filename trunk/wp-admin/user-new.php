@@ -130,14 +130,14 @@ Please click the following link to confirm the invite:
 	}
 }
 
-$title = __('Add New User');
+$title = __('Thêm mới tài khoản');
 $parent_file = 'users.php';
 
 $do_both = false;
 if ( is_multisite() && current_user_can('promote_users') && current_user_can('create_users') )
 	$do_both = true;
 
-$help = '<p>' . __('To add a new user to your site, fill in the form on this screen and click the Add New User button at the bottom.') . '</p>';
+$help = '<p>' . __('To add a new user to your site, fill in the form on this screen and click the Thêm mới tài khoản button at the bottom.') . '</p>';
 
 if ( is_multisite() ) {
 	$help .= '<p>' . __('Because this is a multisite installation, you may add accounts that already exist on the Network by specifying a username or email, and defining a role. For more options, such as specifying a password, you have to be a Network Administrator and use the hover link under an existing user&#8217;s name to Edit the user profile under Network Admin > All Users.') . '</p>' .
@@ -147,32 +147,17 @@ if ( is_multisite() ) {
 	'<p>' . __('New users will receive an email letting them know they&#8217;ve been added as a user for your site. By default, this email will also contain their password. Uncheck the box if you don&#8217;t want the password to be included in the welcome email.') . '</p>';
 }
 
-$help .= '<p>' . __('Remember to click the Add New User button at the bottom of this screen when you are finished.') . '</p>';
-
-get_current_screen()->add_help_tab( array(
-	'id'      => 'overview',
-	'title'   => __('Overview'),
-	'content' => $help,
-) );
+$help .= '<p>' . __('Remember to click the Thêm mới tài khoản button at the bottom of this screen when you are finished.') . '</p>';
 
 get_current_screen()->add_help_tab( array(
 'id'      => 'user-roles',
-'title'   => __('User Roles'),
-'content' => '<p>' . __('Here is a basic overview of the different user roles and the permissions associated with each one:') . '</p>' .
+'title'   => __('Phân quyền'),
+'content' => '<p>' . __('Thông tin phân quyền cho tài khoản:') . '</p>' .
 				'<ul>' .
-				'<li>' . __('Administrators have access to all the administration features.') . '</li>' .
-				'<li>' . __('Editors can publish posts, manage posts as well as manage other people&#8217;s posts, etc.') . '</li>' .
-				'<li>' . __('Authors can publish and manage their own posts, and are able to upload files.') . '</li>' .
-				'<li>' . __('Contributors can write and manage their posts but not publish posts or upload media files.') . '</li>' .
-				'<li>' . __('Subscribers can read comments/comment/receive newsletters, etc. but cannot create regular site content.') . '</li>' .
+				'<li>' . __('Administrators là tài khoản có truy cập các chức năng quản trị.') . '</li>' .
+				'<li>' . __('Subscribers là tài khoản khách hàng chỉ được xem thông tin và in hoá đơn.') . '</li>' .
 				'</ul>'
 ) );
-
-get_current_screen()->set_help_sidebar(
-    '<p><strong>' . __('For more information:') . '</strong></p>' .
-    '<p>' . __('<a href="http://codex.wordpress.org/Users_Add_New_Screen" target="_blank">Documentation on Adding New Users</a>') . '</p>' .
-    '<p>' . __('<a href="http://wordpress.org/support/" target="_blank">Support Forums</a>') . '</p>'
-);
 
 wp_enqueue_script('wp-ajax-response');
 wp_enqueue_script('user-profile');
@@ -218,7 +203,7 @@ if ( isset($_GET['update']) ) {
 <?php screen_icon(); ?>
 <h2 id="add-new-user"> <?php
 if ( current_user_can( 'create_users' ) ) {
-	echo _x( 'Add New User', 'user' );
+	echo _x( 'Thêm mới tài khoản', 'user' );
 } elseif ( current_user_can( 'promote_users' ) ) {
 	echo _x( 'Add Existing User', 'user' );
 } ?>

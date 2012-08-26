@@ -1,13 +1,6 @@
 <?php
-/**
- * Dashboard Administration Screen
- *
- * @package WordPress
- * @subpackage Administration
- */
-
-/** Load WordPress Bootstrap */
-header( 'Location: ../wp-admin/admin.php?page=quan_ly_hoa_don' ) ;
+header( 'Location: ../wp-admin/profile.php' ) ;
+//header( 'Location: ../wp-admin/admin.php?page=quan_ly_hoa_don' ) ;
 return;
 require_once('./admin.php');
 
