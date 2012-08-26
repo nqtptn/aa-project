@@ -63,14 +63,14 @@ if ( isset($_GET['update']) ) {
 		$messages[] = __('User added.');
 }
 
-$title = __('Add New User');
+$title = __('Thêm tài khoản');
 $parent_file = 'users.php';
 
 require('../admin-header.php'); ?>
 
 <div class="wrap">
 <?php screen_icon(); ?>
-<h2 id="add-new-user"><?php _e('Add New User') ?></h2>
+<h2 id="add-new-user"><?php _e('Thêm tài khoản') ?></h2>
 <?php
 if ( ! empty( $messages ) ) {
 	foreach ( $messages as $msg )

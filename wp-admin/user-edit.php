@@ -17,7 +17,7 @@ elseif ( ! get_userdata( $user_id ) )
 
 wp_enqueue_script('user-profile');
 
-$title = IS_PROFILE_PAGE ? __('Profile') : __('Edit User');
+$title = IS_PROFILE_PAGE ? __('Thông tin tài khoản') : __('Cập nhật tài khoản');
 if ( current_user_can('edit_users') && !IS_PROFILE_PAGE )
 	$submenu_file = 'users.php';
 else
@@ -363,7 +363,7 @@ $show_password_fields = apply_filters('show_password_fields', true, $profileuser
 if ( $show_password_fields ) :
 ?>
 <tr id="password">
-	<th><label for="pass1"><?php _e('New Password'); ?></label></th>
+	<th><label for="pass1"><?php _e('Password mới'); ?></label></th>
 	<td><input type="password" name="pass1" id="pass1" size="16" value="" autocomplete="off" /> <span class="description"><?php _e("Nhập password mới nếu bạn muốn thay đổi."); ?></span><br />
 		<input type="password" name="pass2" id="pass2" size="16" value="" autocomplete="off" /> <span class="description"><?php _e("Nhập lại password mới."); ?></span><br />
 		<div id="pass-strength-result"><?php _e('Mức độ bảo mật'); ?></div>

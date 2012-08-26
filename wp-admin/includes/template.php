@@ -761,10 +761,21 @@ function wp_dropdown_roles( $selected = false ) {
 
 	foreach ( $editable_roles as $role => $details ) {
 		$name = translate_user_role($details['name'] );
-		if ( $selected == $role ) // preselect specified role
-			$p = "\n\t<option selected='selected' value='" . esc_attr($role) . "'>$name</option>";
-		else
-			$r .= "\n\t<option value='" . esc_attr($role) . "'>$name</option>";
+		//Nha
+		if($name == 'Administrator'){
+			$name = 'QUẢN TRỊ WEBSITE';
+			if ( $selected == $role ) // preselect specified role
+				$p = "\n\t<option selected='selected' value='" . esc_attr($role) . "'>$name</option>";
+			else
+				$r .= "\n\t<option value='" . esc_attr($role) . "'>$name</option>";
+		}
+		if($name == 'Subscriber'){
+			$name = 'KHÁCH HÀNG';
+			if ( $selected == $role ) // preselect specified role
+				$p = "\n\t<option selected='selected' value='" . esc_attr($role) . "'>$name</option>";
+			else
+				$r .= "\n\t<option value='" . esc_attr($role) . "'>$name</option>";
+		}		
 	}
 	echo $p . $r;
 }
