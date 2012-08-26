@@ -303,7 +303,7 @@ body.layout-2cl #page, body.layout-2cr #page{
 }
 
 .menu ul li a:link, .menu ul li a:visited, .menunav a:link, .menunav a:visited  {
-	color: #B31F12;
+	color: #1B34EC;
 }
 
 .menu ul li ul li a:link, .menu ul li ul li a:visited {
@@ -676,10 +676,7 @@ textarea#comment {
 	font-size: 12px;
 	background: #ccc;
 	border: 1px solid #999;
-	-moz-border-radius: 6px;
-	-khtml-border-radius: 6px;
-	-webkit-border-radius: 6px;
-	border-radius: 6px;
+	border-radius: 2px;
 }
 
 #comment-textarea:focus, #comment:hover, #author:hover, #email:hover, 
@@ -1533,6 +1530,6 @@ h2.slider-title a:hover, h2.slider-title:hover {
 	float: left;
 }
 .copy-right{
-	color: #B31F12;
+	color: #1B34EC;
 	text-align: center;
 }
