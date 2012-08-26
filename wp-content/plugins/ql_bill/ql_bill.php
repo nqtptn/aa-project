@@ -13,7 +13,7 @@ function ql_bill() {
 	add_menu_page('Quản lý hóa đơn', 'Nhập hóa đơn', 'administrator','quan_ly_hoa_don', 'ql_bill2',plugins_url('/images/menu-vs.png', __FILE__));
 	add_submenu_page('quan_ly_hoa_don','Dịch vụ', 'Dịch vụ', 'administrator','quan_ly_dich_vu','quan_ly_dich_vu');
 	add_submenu_page('quan_ly_hoa_don','Tỉnh thành', 'Tỉnh thành', 'administrator','quan_ly_tinh_thanh','quan_ly_tinh_thanh');
-	add_submenu_page('quan_ly_hoa_don','Dịch vụ & tỉnh thành', 'Dịch vụ & tỉnh thành', 'administrator','quan_ly_khu_vuc','quan_ly_khu_vuc');
+	add_submenu_page('quan_ly_hoa_don','Dịch vụ & tỉnh thành', 'Dịch vụ & tỉnh thành', 'administrator','quan_ly_dich_vu_tinh_thanh','quan_ly_dich_vu_tinh_thanh');
 	add_submenu_page('quan_ly_hoa_don','Phần chân hoá đơn', 'Phần chân hoá đơn', 'administrator','quan_ly_chan_hoa_don','quan_ly_chan_hoa_don');
 	add_submenu_page('quan_ly_hoa_don','Nhập bảng giá', 'Nhập bảng giá', 'administrator','quan_ly_bang_gia','quan_ly_bang_gia');
 }
@@ -60,17 +60,17 @@ function quan_ly_tinh_thanh() {
 		require_once("quan_ly_tinh_thanh/show_form.php");
 	}
 }
-function quan_ly_khu_vuc() {
+function quan_ly_dich_vu_tinh_thanh() {
 	if($_GET['action']=="XML"){
 		require_once('EditableGrid.php');
-		require_once("quan_ly_khu_vuc/xml.php");
+		require_once("quan_ly_dich_vu_tinh_thanh/xml.php");
 	}elseif($_GET['action']=="update_record"){
-		require_once("quan_ly_khu_vuc/update2.php");
+		require_once("quan_ly_dich_vu_tinh_thanh/update2.php");
 	}elseif($_GET['action']=="export_function"){
 		require_once('pdf/html2pdf.class.php');
-		require_once("quan_ly_khu_vuc/export_function.php");
+		require_once("quan_ly_dich_vu_tinh_thanh/export_function.php");
 	}else{
-		require_once("quan_ly_khu_vuc/show_form.php");
+		require_once("quan_ly_dich_vu_tinh_thanh/show_form.php");
 	}
 }
 function quan_ly_chan_hoa_don() {
