@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: WP-Polls
+Plugin Name: Khảo sát ý kiến
 Plugin URI: http://lesterchan.net/portfolio/programming/php/
 Description: Adds an AJAX poll system to your WordPress blog. You can easily include a poll into your WordPress's blog post/page. WP-Polls is extremely customizable via templates and css styles and there are tons of options for you to choose to ensure that WP-Polls runs the way you wanted. It now supports multiple selection of answers.
 Version: 2.63
@@ -45,14 +45,19 @@ $wpdb->pollsip	 = $wpdb->prefix.'pollsip';
 ### Function: Poll Administration Menu
 add_action('admin_menu', 'poll_menu');
 function poll_menu() {
-	if (function_exists('add_menu_page')) {
-		add_menu_page(__('Polls', 'wp-polls'), __('Polls', 'wp-polls'), 'manage_polls', 'wp-polls/polls-manager.php', '', plugins_url('wp-polls/images/poll.png'));
-	}
-	if (function_exists('add_submenu_page')) {
-		add_submenu_page('wp-polls/polls-manager.php', __('Manage Polls', 'wp-polls'), __('Manage Polls', 'wp-polls'), 'manage_polls', 'wp-polls/polls-manager.php');
-		add_submenu_page('wp-polls/polls-manager.php', __('Add Poll', 'wp-polls'), __('Add Poll', 'wp-polls'), 'manage_polls', 'wp-polls/polls-add.php');		
-		add_submenu_page('wp-polls/polls-manager.php', __('Poll Options', 'wp-polls'), __('Poll Options', 'wp-polls'), 'manage_polls', 'wp-polls/polls-options.php');
-		add_submenu_page('wp-polls/polls-manager.php', __('Poll Templates', 'wp-polls'), __('Poll Templates', 'wp-polls'), 'manage_polls', 'wp-polls/polls-templates.php');
+	//Nha
+	require( ABSPATH . WPINC . '/pluggable.php' );
+	$current_user = wp_get_current_user();
+	if (is_admin() && $current_user->user_login == 'admin') {
+		if (function_exists('add_menu_page')) {
+			add_menu_page(__('Khảo sát ý kiến', 'wp-polls'), __('Khảo sát ý kiến', 'wp-polls'), 'manage_polls', 'wp-polls/polls-manager.php', '', plugins_url('wp-polls/images/poll.png'));
+		}
+		if (function_exists('add_submenu_page')) {
+			add_submenu_page('wp-polls/polls-manager.php', __('Danh sách khảo sát', 'wp-polls'), __('Danh sách khảo sát', 'wp-polls'), 'manage_polls', 'wp-polls/polls-manager.php');
+			add_submenu_page('wp-polls/polls-manager.php', __('Thêm khảo sát', 'wp-polls'), __('Thêm khảo sát', 'wp-polls'), 'manage_polls', 'wp-polls/polls-add.php');		
+			add_submenu_page('wp-polls/polls-manager.php', __('Lựa chọn', 'wp-polls'), __('Lựa chọn', 'wp-polls'), 'manage_polls', 'wp-polls/polls-options.php');
+			add_submenu_page('wp-polls/polls-manager.php', __('Cài đặt', 'wp-polls'), __('Cài đặt', 'wp-polls'), 'manage_polls', 'wp-polls/polls-templates.php');
+		}
 	}
 }
 
