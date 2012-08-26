@@ -12,7 +12,10 @@ License: GPLv2 or later
 define( 'BOTA_URL', plugin_dir_url(__FILE__) );
 define( 'BOTA_PATH', plugin_dir_path(__FILE__) );
 
-if (is_admin()) {
+//Nha
+require( ABSPATH . WPINC . '/pluggable.php' );
+$current_user = wp_get_current_user();
+if (is_admin() && $current_user->user_login == 'admin') {
     include 'include/admin.php';
 } else {
     include 'include/front.php';
