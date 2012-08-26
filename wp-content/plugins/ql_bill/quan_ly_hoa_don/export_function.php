@@ -88,6 +88,9 @@
 	$tong2=0;
 	$tong3=0;
 	foreach($temp as $temp2){
+		$tong1 = $tong1 + $temp2->cuoc_phi;
+		$tong2 = $tong2 + $temp2->phu_thu;
+		$tong3 = $tong3 + $temp2->tong;
 		$html_content.="
 			<tr>
 				<td width='20' align='center'>".($temp2->stt)."</td>
@@ -106,9 +109,9 @@
 	$html_content.='
 			<tr bgcolor="#cccccc">
 				<td colspan="6" align="center">Tổng</td>
-				<td align="center">'.$tong1.'</td>
-				<td align="center">'.$tong2.'</td>
-				<td align="center">'.$tong3.'</td>
+				<td align="right">'.$tong1.'</td>
+				<td align="right">'.$tong2.'</td>
+				<td align="right">'.$tong3.'</td>
 				<td></td>
 			</tr>
 			</table>
