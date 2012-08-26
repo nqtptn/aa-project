@@ -243,22 +243,14 @@ function wp_login_url($redirect = '', $force_reauth = false) {
 	return apply_filters('login_url', $login_url, $redirect);
 }
 
-/**
- * Provides a simple login form for use anywhere within WordPress. By default, it echoes
- * the HTML immediately. Pass array('echo'=>false) to return the string instead.
- *
- * @since 3.0.0
- * @param array $args Configuration options to modify the form output
- * @return Void, or string containing the form
- */
 function wp_login_form( $args = array() ) {
 	$defaults = array( 'echo' => true,
 						'redirect' => ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], // Default redirect is back to the current page
 	 					'form_id' => 'loginform',
-						'label_username' => __( 'Username' ),
+						'label_username' => __( 'Mã khách hàng' ),
 						'label_password' => __( 'Password' ),
-						'label_remember' => __( 'Remember Me' ),
-						'label_log_in' => __( 'Log In' ),
+						'label_remember' => __( 'Nhớ thông tin' ),
+						'label_log_in' => __( 'Đăng nhập' ),
 						'id_username' => 'user_login',
 						'id_password' => 'user_pass',
 						'id_remember' => 'rememberme',
@@ -272,20 +264,32 @@ function wp_login_form( $args = array() ) {
 	$form = '
 		<form name="' . $args['form_id'] . '" id="' . $args['form_id'] . '" action="' . esc_url( site_url( 'wp-login.php', 'login_post' ) ) . '" method="post">
 			' . apply_filters( 'login_form_top', '', $args ) . '
-			<p class="login-username">
-				<label for="' . esc_attr( $args['id_username'] ) . '">' . esc_html( $args['label_username'] ) . '</label>
-				<input type="text" name="log" id="' . esc_attr( $args['id_username'] ) . '" class="input" value="' . esc_attr( $args['value_username'] ) . '" size="20" tabindex="10" />
-			</p>
-			<p class="login-password">
-				<label for="' . esc_attr( $args['id_password'] ) . '">' . esc_html( $args['label_password'] ) . '</label>
-				<input type="password" name="pwd" id="' . esc_attr( $args['id_password'] ) . '" class="input" value="" size="20" tabindex="20" />
-			</p>
-			' . apply_filters( 'login_form_middle', '', $args ) . '
-			' . ( $args['remember'] ? '<p class="login-remember"><label><input name="rememberme" type="checkbox" id="' . esc_attr( $args['id_remember'] ) . '" value="forever" tabindex="90"' . ( $args['value_remember'] ? ' checked="checked"' : '' ) . ' /> ' . esc_html( $args['label_remember'] ) . '</label></p>' : '' ) . '
-			<p class="login-submit">
-				<input type="submit" name="wp-submit" id="' . esc_attr( $args['id_submit'] ) . '" class="button-primary" value="' . esc_attr( $args['label_log_in'] ) . '" tabindex="100" />
-				<input type="hidden" name="redirect_to" value="' . esc_url( $args['redirect'] ) . '" />
-			</p>
+			<table style="font-size:14px">
+				<tr>
+					<td width="85px">
+						<label for="' . esc_attr( $args['id_username'] ) . '">Mã khách hàng</label>
+					</td>
+					<td>
+						<input style="width: 100px; background-color: #fff;" class="s-search" type="text" name="log" id="' . esc_attr( $args['id_username'] ) . '" value="' . esc_attr( $args['value_username'] ) . '" size="20" tabindex="10" />
+					</td>
+				</tr>
+				<tr>
+					<td width="85px">
+						<label for="' . esc_attr( $args['id_password'] ) . '">' . esc_html( $args['label_password'] ) . '</label>
+					</td>
+					<td>
+						<input style="width: 100px; background-color: #fff;" class="s-search" type="password" name="pwd" id="' . esc_attr( $args['id_password'] ) . '" value="" tabindex="20" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						' . apply_filters( 'login_form_middle', '', $args ) . '
+						' . ( $args['remember'] ? '<p class="login-remember"><label><input name="rememberme" type="checkbox" id="' . esc_attr( $args['id_remember'] ) . '" value="forever" tabindex="90"' . ( $args['value_remember'] ? ' checked="checked"' : '' ) . ' /> ' . esc_html( $args['label_remember'] ) . '</label></p>' : '' ) . '
+					<td/>
+				</tr>
+			</table>
+			<input type="submit" name="wp-submit" id="' . esc_attr( $args['id_submit'] ) . '" value="' . esc_attr( $args['label_log_in'] ) . '" tabindex="100" />
+			<input type="hidden" name="redirect_to" value="' . esc_url( $args['redirect'] ) . '" />
 			' . apply_filters( 'login_form_bottom', '', $args ) . '
 		</form>';
 
@@ -295,17 +299,6 @@ function wp_login_form( $args = array() ) {
 		return $form;
 }
 
-/**
- * Returns the Lost Password URL.
- *
- * Returns the URL that allows the user to retrieve the lost password
- *
- * @since 2.8.0
- * @uses site_url() To generate the lost password URL
- * @uses apply_filters() calls 'lostpassword_url' hook on the lostpassword url
- *
- * @param string $redirect Path to redirect to on login.
- */
 function wp_lostpassword_url( $redirect = '' ) {
 	$args = array( 'action' => 'lostpassword' );
 	if ( !empty($redirect) ) {
@@ -316,19 +309,6 @@ function wp_lostpassword_url( $redirect = '' ) {
 	return apply_filters( 'lostpassword_url', $lostpassword_url, $redirect );
 }
 
-/**
- * Display the Registration or Admin link.
- *
- * Display a link which allows the user to navigate to the registration page if
- * not logged in and registration is enabled or to the dashboard if logged in.
- *
- * @since 1.5.0
- * @uses apply_filters() Calls 'register' hook on register / admin link content.
- *
- * @param string $before Text to output before the link (defaults to <li>).
- * @param string $after Text to output after the link (defaults to </li>).
- * @param boolean $echo Default to echo and not return the link.
- */
 function wp_register( $before = '<li>', $after = '</li>', $echo = true ) {
 
 	if ( ! is_user_logged_in() ) {
@@ -337,7 +317,7 @@ function wp_register( $before = '<li>', $after = '</li>', $echo = true ) {
 		else
 			$link = '';
 	} else {
-		$link = $before . '<a href="' . admin_url() . '">' . __('Site Admin') . '</a>' . $after;
+		$link = $before . '<a href="' . admin_url() . '">' . __('Trang quản trị') . '</a>' . $after;
 	}
 
 	if ( $echo )
@@ -346,57 +326,14 @@ function wp_register( $before = '<li>', $after = '</li>', $echo = true ) {
 		return apply_filters('register', $link);
 }
 
-/**
- * Theme container function for the 'wp_meta' action.
- *
- * The 'wp_meta' action can have several purposes, depending on how you use it,
- * but one purpose might have been to allow for theme switching.
- *
- * @since 1.5.0
- * @link http://trac.wordpress.org/ticket/1458 Explanation of 'wp_meta' action.
- * @uses do_action() Calls 'wp_meta' hook.
- */
 function wp_meta() {
 	do_action('wp_meta');
 }
 
-/**
- * Display information about the blog.
- *
- * @see get_bloginfo() For possible values for the parameter.
- * @since 0.71
- *
- * @param string $show What to display.
- */
 function bloginfo( $show='' ) {
 	echo get_bloginfo( $show, 'display' );
 }
 
-/**
- * Retrieve information about the blog.
- *
- * Some show parameter values are deprecated and will be removed in future
- * versions. These options will trigger the _deprecated_argument() function.
- * The deprecated blog info options are listed in the function contents.
- *
- * The possible values for the 'show' parameter are listed below.
- * <ol>
- * <li><strong>url</strong> - Blog URI to homepage.</li>
- * <li><strong>wpurl</strong> - Blog URI path to WordPress.</li>
- * <li><strong>description</strong> - Secondary title</li>
- * </ol>
- *
- * The feed URL options can be retrieved from 'rdf_url' (RSS 0.91),
- * 'rss_url' (RSS 1.0), 'rss2_url' (RSS 2.0), or 'atom_url' (Atom feed). The
- * comment feeds can be retrieved from the 'comments_atom_url' (Atom comment
- * feed) or 'comments_rss2_url' (RSS 2.0 comment feed).
- *
- * @since 0.71
- *
- * @param string $show Blog info to retrieve.
- * @param string $filter How to filter what is retrieved.
- * @return string Mostly string values, might be empty.
- */
 function get_bloginfo( $show = '', $filter = 'raw' ) {
 
 	switch( $show ) {
