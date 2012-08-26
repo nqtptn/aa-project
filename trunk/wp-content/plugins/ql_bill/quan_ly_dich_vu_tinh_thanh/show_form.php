@@ -15,7 +15,7 @@ function DatabaseGrid(XML_link,field_id,filter_id,update_url)
 		tableLoaded: function() {
 			this.setCellRenderer("action", new CellRenderer({
 				render: function(cell, value) {
-					cell.innerHTML = "<a onclick=\"if (confirm('Bạn có muốn xoá dòng dữ liệu này?')) delete_record(editableGrid," + cell.rowIndex + ",'"+update_url+"');\" style=\"cursor:pointer\" class='button'>Xóa</a>";
+					//cell.innerHTML = "<a onclick=\"if (confirm('Bạn có muốn xoá dòng dữ liệu này?')) delete_record(editableGrid," + cell.rowIndex + ",'"+update_url+"');\" style=\"cursor:pointer\" class='button'>Xóa</a>";
 				}
 			}));
 			this.renderGrid(field_id, "testgrid");
@@ -36,52 +36,13 @@ function DatabaseGrid(XML_link,field_id,filter_id,update_url)
 	});
 	editableGrid.loadXML(XML_link);
 }
-function post_data(xml_link){
-	var input_value=new Array();
-	input_value['id'] = $("#ma_khu_vuc").val();
-	input_value['ten_khu_vuc'] = $("#ten_khu_vuc").val();
-	if(input_value['id']==""){
-		alert("Vui lòng nhập Mã khu vực!");
-		$("#ma_khu_vuc").focus();
-	}else if(input_value['ten_khu_vuc']==""){
-		alert("Vui lòng nhập Tên khu vực!");
-		$("#ten_khu_vuc").focus();
-	}else{
-		$.ajax({
-			url: xml_link,
-			type: 'POST',
-			dataType: "html",
-			data: {
-				ma_khu_vuc : input_value['id'],
-				ten_khu_vuc : input_value['ten_khu_vuc'],
-				action: "add_record",
-			},
-			success: function (response)
-			{
-				if(response!="false"){
-					if(editableGrid.getRowCount()==0){
-						load_content();
-					}else{
-						editableGrid.insert(editableGrid.getRowId(editableGrid.getRowCount() - 1),input_value['id'],input_value);
-					}
-					$("#ma_khu_vuc").val("");
-					$("#ten_khu_vuc").val("");
-					$("#ma_khu_vuc").focus();
-				}else{
-					alert("Mã dịch vụ đã tồn tại!\n Vui lòng nhập mã dịch vụ khác hoặc kiểm tra lại");
-				}
-			},
-			error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
-			async: true
-		});
-	}
-	return false;
-}
+
 /**
    updateCellValue calls the PHP script that will update the database.
  */
 function updateCellValue(editableGrid, rowIndex, columnIndex, oldValue, newValue, row,sys_url,onResponse)
 {
+	var total=editableGrid.getValueAt(rowIndex, 5);
 	$.ajax({
 		url: sys_url,
 		type: 'POST',
@@ -97,11 +58,8 @@ function updateCellValue(editableGrid, rowIndex, columnIndex, oldValue, newValue
 		{
 			// reset old value if failed then highlight row
 			var success = onResponse ? onResponse(response) : (response == "ok" || !isNaN(parseInt(response))); // by default, a sucessfull reponse can be "ok" or a database id
-			if (!success){
-				editableGrid.setValueAt(rowIndex, columnIndex, oldValue);
-				if(editableGrid.getColumnName(columnIndex)=="id"){
-					alert("Mã dịch vụ đã tồn tại!\n Vui lòng nhập mã dịch vụ khác hoặc kiểm tra lại");
-				}
+			if (!success) editableGrid.setValueAt(rowIndex, columnIndex, oldValue)
+			else{
 			}
 		    highlight(row.id, success ? "ok" : "error");
 		},
@@ -110,37 +68,14 @@ function updateCellValue(editableGrid, rowIndex, columnIndex, oldValue, newValue
 	});
 
 }
-function delete_record(editableGrid, rowIndex,sys_url,onResponse)
-{
-	$.ajax({
-		url: sys_url,
-		type: 'POST',
-		dataType: "html",
-		data: {
-			tablename : editableGrid.name,
-			id: editableGrid.getRowId(rowIndex),
-			action: "delete"
-		},
-		success: function (response)
-		{
-			// reset old value if failed then highlight row
-			var success = onResponse ? onResponse(response) : (response == "ok" || !isNaN(parseInt(response))); // by default, a sucessfull reponse can be "ok" or a database id
-			if (success) editableGrid.remove(rowIndex);
-		},
-		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
-		async: true
-	});
-}
+
 function get_xml_link()
 {
-	var link='<? echo get_admin_url()?>admin.php?page=quan_ly_khu_vuc&noheader=1&nofooter=1&action=XML';
+	var link='<? echo get_admin_url()?>admin.php?page=quan_ly_dich_vu_tinh_thanh&noheader=1&nofooter=1&action=XML';
+	link = link + "&dich_vu=" + $("#ma_dich_vu").val();
 	return link;
 }
-function get_report_link()
-{
-	var link='<? echo get_admin_url()?>admin.php?page=quan_ly_khu_vuc&noheader=1&nofooter=1&action=export_function';
-	return link;
-}
+
 function load_content()
 {
 	$("#tablecontent").html("Loading...");
@@ -148,11 +83,23 @@ function load_content()
 	DatabaseGrid(xml_link,"tablecontent","filter",update_url);
 	$("#report").html("<img src='<? echo plugins_url('ql_bill/images/icon_16.gif')?>' border='0' style='vertical-align: middle' /> <a href='" + get_report_link() +"' target=_blank>Xuất Báo Cáo</a>");
 }
-var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_khu_vuc&action=update_record&noheader=1&nofooter=1";
+var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_dich_vu_tinh_thanh&action=update_record&noheader=1&nofooter=1";
 </script>
 <br/>
+<label for="ma_dich_vu">Dịch vụ:</label>
+<select id='ma_dich_vu' onchange="load_content()">
+<?
+	global $wpdb;
+	$province = $wpdb->get_results("select ma_dich_vu,ten_dich_vu from gia_dich_vu");
+	foreach($province as $province2){
+		echo "<option value='".$province2->ma_dich_vu."'>".$province2->ten_dich_vu."</option>";
+	}
+?>
+</select>
+
 <label for="pagesize">Số dòng trên trang:</label>
 <select id="pagesize" name="pagesize">
+	<option value="1000">Tất cả</option>
 	<option value="10">10</option>
 	<option value="20">20</option>
 	<option value="30">30</option>
@@ -167,33 +114,6 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_khu_vuc&action=u
 <div id="paginator"></div>
 <div id='report'></div>
 
-<div id='posting' style='margin-top:10px;border: 1px solid #ccc;-moz-border-radius: 5px;-webkit-border-radius: 5px;padding:10px'>
-	<div style='border-bottom:1px dotted #999;color:#588eaf'><b>Thêm mới</b></div>
-	<form name="post_form" method="post" onsubmit='return post_data(update_url)'>
-		<table>
-			<tr>
-				<td>
-					<label for="ma_khu_vuc">Mã khu vực</label>
-				</td>
-				<td>
-					<label for="ten_khu_vuc">Tên khu vực</label>
-				</td>				
-				<td></td>
-			</tr>
-			<tr>
-				<td>
-					<input type='text' size='12' id='ma_khu_vuc' value=''  />	
-				</td>
-				<td>
-					<input type='text' size='12' id='ten_khu_vuc' value=''  />
-				</td>				
-				<td>
-					<input type='submit' value='    Save    ' />
-				</td>
-			</tr>			
-		</table>
-	</form>
-</div>
 <script type='text/javascript'>
 load_content();
 </script>
