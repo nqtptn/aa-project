@@ -138,7 +138,7 @@ function wp_admin_bar_my_account_item( $wp_admin_bar ) {
 		return;
 
 	$avatar = get_avatar( $user_id, 16 );
-	$howdy  = sprintf( __('Howdy, %1$s'), $current_user->display_name );
+	$howdy  = sprintf( __('Xin chào, %1$s'), $current_user->display_name );
 	$class  = empty( $avatar ) ? '' : 'with-avatar';
 
 	$wp_admin_bar->add_menu( array(
@@ -148,7 +148,7 @@ function wp_admin_bar_my_account_item( $wp_admin_bar ) {
 		'href'      => $profile_url,
 		'meta'      => array(
 			'class'     => $class,
-			'title'     => __('My Account'),
+			'title'     => __('Tài khoản'),
 		),
 	) );
 }
@@ -186,18 +186,20 @@ function wp_admin_bar_my_account_menu( $wp_admin_bar ) {
 			'tabindex' => -1,
 		),
 	) );
+	//Nha
 	$wp_admin_bar->add_menu( array(
 		'parent' => 'user-actions',
 		'id'     => 'edit-profile',
-		'title'  => __( 'Edit My Profile' ),
+		'title'  => __( 'Thông tin tài khoản' ),
 		'href' => $profile_url,
 	) );
 	$wp_admin_bar->add_menu( array(
 		'parent' => 'user-actions',
 		'id'     => 'logout',
-		'title'  => __( 'Log Out' ),
+		'title'  => __( 'Thoát' ),
 		'href'   => wp_logout_url(),
 	) );
+
 }
 
 /**
@@ -244,28 +246,39 @@ function wp_admin_bar_site_menu( $wp_admin_bar ) {
 		$wp_admin_bar->add_menu( array(
 			'parent' => 'site-name',
 			'id'     => 'view-site',
-			'title'  => __( 'Visit Site' ),
+			'title'  => __( 'Xem AA Express' ),
 			'href'   => home_url( '/' ),
 		) );
 
-		if ( is_blog_admin() && is_multisite() && current_user_can( 'manage_sites' ) ) {
-			$wp_admin_bar->add_menu( array(
-				'parent' => 'site-name',
-				'id'     => 'edit-site',
-				'title'  => __( 'Edit Site' ),
-				'href'   => network_admin_url( 'site-info.php?id=' . get_current_blog_id() ),
-			) );
-		}
+		//Nha rem
+		// if ( is_blog_admin() && is_multisite() && current_user_can( 'manage_sites' ) ) {
+			// $wp_admin_bar->add_menu( array(
+				// 'parent' => 'site-name',
+				// 'id'     => 'edit-site',
+				// 'title'  => __( 'Edit Site' ),
+				// 'href'   => network_admin_url( 'site-info.php?id=' . get_current_blog_id() ),
+			// ) );
+		// }
 
 	} else {
-		// We're on the front end, link to the Dashboard.
-		$wp_admin_bar->add_menu( array(
-			'parent' => 'site-name',
-			'id'     => 'dashboard',
-			'title'  => __( 'Dashboard' ),
-			'href'   => admin_url(),
-		) );
-
+		// Nha
+		if ( ! is_network_admin() && ! is_user_admin() ) {
+			$wp_admin_bar->add_menu( array(
+				'parent' => 'site-name',
+				'id'     => 'dashboard',
+				'title'  => __( 'In hoá đơn' ),
+				'href'   => admin_url().'admin.php?page=in_hoa_don',
+			) );
+		}
+		else{
+			$wp_admin_bar->add_menu( array(
+				'parent' => 'site-name',
+				'id'     => 'dashboard',
+				'title'  => __( 'Nhập hoá đơn' ),
+				'href'   => admin_url(),
+			) );		
+		}
+		
 		// Add the appearance submenu items.
 		wp_admin_bar_appearance_menu( $wp_admin_bar );
 	}
@@ -369,21 +382,22 @@ function wp_admin_bar_my_sites_menu( $wp_admin_bar ) {
 			$wp_admin_bar->add_menu( array(
 				'parent' => $menu_id,
 				'id'     => $menu_id . '-n',
-				'title'  => __( 'New Post' ),
+				'title'  => __( 'Thêm tin tức' ),
 				'href'   => get_admin_url( $blog->userblog_id, 'post-new.php' ),
 			) );
-			$wp_admin_bar->add_menu( array(
-				'parent' => $menu_id,
-				'id'     => $menu_id . '-c',
-				'title'  => __( 'Manage Comments' ),
-				'href'   => get_admin_url( $blog->userblog_id, 'edit-comments.php' ),
-			) );
+			//Nha - rem
+			// $wp_admin_bar->add_menu( array(
+				// 'parent' => $menu_id,
+				// 'id'     => $menu_id . '-c',
+				// 'title'  => __( 'Manage Comments' ),
+				// 'href'   => get_admin_url( $blog->userblog_id, 'edit-comments.php' ),
+			// ) );
 		}
 
 		$wp_admin_bar->add_menu( array(
 			'parent' => $menu_id,
 			'id'     => $menu_id . '-v',
-			'title'  => __( 'Visit Site' ),
+			'title'  => __( 'Xem AA Express' ),
 			'href'   => get_home_url( $blog->userblog_id, '/' ),
 		) );
 	}
@@ -479,52 +493,62 @@ function wp_admin_bar_edit_menu( $wp_admin_bar ) {
  *
  * @since 3.1.0
  */
+
 function wp_admin_bar_new_content_menu( $wp_admin_bar ) {
 	$actions = array();
 
 	$cpts = (array) get_post_types( array( 'show_in_admin_bar' => true ), 'objects' );
 
-	if ( isset( $cpts['post'] ) && current_user_can( $cpts['post']->cap->edit_posts ) ) {
-		$actions[ 'post-new.php' ] = array( $cpts['post']->labels->name_admin_bar, 'new-post' );
-		unset( $cpts['post'] );
-	}
+	//Nha
+	// if ( isset( $cpts['post'] ) && current_user_can( $cpts['post']->cap->edit_posts ) ) {
+		// $actions[ 'post-new.php' ] = array( $cpts['post']->labels->name_admin_bar, 'new-post' );
+		// unset( $cpts['post'] );
+	// }
 
 	if ( current_user_can( 'upload_files' ) )
-		$actions[ 'media-new.php' ] = array( _x( 'Media', 'add new from admin bar' ), 'new-media' );
+		$actions[ 'media-new.php' ] = array( _x( 'Hình ảnh, file, video', 'add new from admin bar' ), 'new-media' );
 
-	if ( current_user_can( 'manage_links' ) )
-		$actions[ 'link-add.php' ] = array( _x( 'Link', 'add new from admin bar' ), 'new-link' );
+	 //Nha
+	// if ( current_user_can( 'manage_links' ) )
+		// $actions[ 'link-add.php' ] = array( _x( 'Link', 'add new from admin bar' ), 'new-link' );
 
-	if ( isset( $cpts['page'] ) && current_user_can( $cpts['page']->cap->edit_posts ) ) {
-		$actions[ 'post-new.php?post_type=page' ] = array( $cpts['page']->labels->name_admin_bar, 'new-page' );
-		unset( $cpts['page'] );
-	}
+	// if ( isset( $cpts['page'] ) && current_user_can( $cpts['page']->cap->edit_posts ) ) {
+		// $actions[ 'post-new.php?post_type=page' ] = array( $cpts['page']->labels->name_admin_bar, 'new-page' );
+		// unset( $cpts['page'] );
+	// }
 
-	// Add any additional custom post types.
-	foreach ( $cpts as $cpt ) {
-		if ( ! current_user_can( $cpt->cap->edit_posts ) )
-			continue;
+	// Nha - rem Post, Page
+	// foreach ( $cpts as $cpt ) {
+		// if ( ! current_user_can( $cpt->cap->edit_posts ) )
+			// continue;
 
-		$key = 'post-new.php?post_type=' . $cpt->name;
-		$actions[ $key ] = array( $cpt->labels->name_admin_bar, 'new-' . $cpt->name );
-	}
+		// $key = 'post-new.php?post_type=' . $cpt->name;
+		// $actions[ $key ] = array( $cpt->labels->name_admin_bar, 'new-' . $cpt->name );
+	// }
 
 	if ( current_user_can( 'create_users' ) || current_user_can( 'promote_users' ) )
-		$actions[ 'user-new.php' ] = array( _x( 'User', 'add new from admin bar' ), 'new-user' );
+		$actions[ 'user-new.php' ] = array( _x( 'Tài khoản đăng nhập', 'add new from admin bar' ), 'new-user' );
 
+	$key = 'post-new.php?post_type=post';
+	$actions[ $key ] = array( 'Tin tức', 'new-post');
+	
 	if ( ! $actions )
 		return;
 
-	$title = '<span class="ab-icon"></span><span class="ab-label">' . _x( 'New', 'admin bar menu group label' ) . '</span>';
+	$title = '<span class="ab-icon"></span><span class="ab-label">' . _x( 'Thêm mới', 'admin bar menu group label' ) . '</span>';
 
-	$wp_admin_bar->add_menu( array(
-		'id'    => 'new-content',
-		'title' => $title,
-		'href'  => admin_url( current( array_keys( $actions ) ) ),
-		'meta'  => array(
-			'title' => _x( 'Add New', 'admin bar menu group label' ),
-		),
-	) );
+	//Nha +New
+	// if ( !is_network_admin() && !is_user_admin() ) {
+
+		// $wp_admin_bar->add_menu( array(
+			// 'id'    => 'new-content',
+			// 'title' => $title,
+			// 'href'  => admin_url( current( array_keys( $actions ) ) ),
+			// 'meta'  => array(
+				// 'title' => _x( 'Add New', 'admin bar menu group label' ),
+			// ),
+		// ) );	
+	// }
 
 	foreach ( $actions as $link => $action ) {
 		list( $title, $id ) = $action;
@@ -570,23 +594,24 @@ function wp_admin_bar_comments_menu( $wp_admin_bar ) {
 function wp_admin_bar_appearance_menu( $wp_admin_bar ) {
 	$wp_admin_bar->add_group( array( 'parent' => 'site-name', 'id' => 'appearance' ) );
 
-	if ( current_user_can( 'switch_themes' ) || current_user_can( 'edit_theme_options' ) )
-		$wp_admin_bar->add_menu( array( 'parent' => 'appearance', 'id' => 'themes', 'title' => __('Themes'), 'href' => admin_url('themes.php') ) );
+	//Nha - rem
+	// if ( current_user_can( 'switch_themes' ) || current_user_can( 'edit_theme_options' ) )
+		// $wp_admin_bar->add_menu( array( 'parent' => 'appearance', 'id' => 'themes', 'title' => __('Themes'), 'href' => admin_url('themes.php') ) );
 
 	if ( ! current_user_can( 'edit_theme_options' ) )
 		return;
 
-	$current_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-	$wp_admin_bar->add_menu( array(
-		'parent' => 'appearance',
-		'id'     => 'customize',
-		'title'  => __('Customize'),
-		'href'   => add_query_arg( 'url', urlencode( $current_url ), wp_customize_url() ),
-		'meta'   => array(
-			'class' => 'hide-if-no-customize',
-		),
-	) );
-	add_action( 'wp_before_admin_bar_render', 'wp_customize_support_script' );
+	// $current_url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+	// $wp_admin_bar->add_menu( array(
+		// 'parent' => 'appearance',
+		// 'id'     => 'customize',
+		// 'title'  => __('Customize'),
+		// 'href'   => add_query_arg( 'url', urlencode( $current_url ), wp_customize_url() ),
+		// 'meta'   => array(
+			// 'class' => 'hide-if-no-customize',
+		// ),
+	// ) );
+	// add_action( 'wp_before_admin_bar_render', 'wp_customize_support_script' );
 
 	if ( current_theme_supports( 'widgets' )  )
 		$wp_admin_bar->add_menu( array( 'parent' => 'appearance', 'id' => 'widgets', 'title' => __('Widgets'), 'href' => admin_url('widgets.php') ) );
@@ -594,11 +619,12 @@ function wp_admin_bar_appearance_menu( $wp_admin_bar ) {
 	 if ( current_theme_supports( 'menus' ) || current_theme_supports( 'widgets' ) )
 		$wp_admin_bar->add_menu( array( 'parent' => 'appearance', 'id' => 'menus', 'title' => __('Menus'), 'href' => admin_url('nav-menus.php') ) );
 
-	if ( current_theme_supports( 'custom-background' ) )
-		$wp_admin_bar->add_menu( array( 'parent' => 'appearance', 'id' => 'background', 'title' => __('Background'), 'href' => admin_url('themes.php?page=custom-background') ) );
+	//Nha - rem
+	// if ( current_theme_supports( 'custom-background' ) )
+		// $wp_admin_bar->add_menu( array( 'parent' => 'appearance', 'id' => 'background', 'title' => __('Background'), 'href' => admin_url('themes.php?page=custom-background') ) );
 
-	if ( current_theme_supports( 'custom-header' ) )
-		$wp_admin_bar->add_menu( array( 'parent' => 'appearance', 'id' => 'header', 'title' => __('Header'), 'href' => admin_url('themes.php?page=custom-header') ) );
+	// if ( current_theme_supports( 'custom-header' ) )
+		// $wp_admin_bar->add_menu( array( 'parent' => 'appearance', 'id' => 'header', 'title' => __('Header'), 'href' => admin_url('themes.php?page=custom-header') ) );
 }
 
 /**
