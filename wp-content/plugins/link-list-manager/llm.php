@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: link-list-manager
+Plugin Name: Quảng cáo & Đối tác
 Plugin URI: http://www.zetrider.ru
 Description: Планин для составления листов ссылок, партнеров, баннеров
 Version: 1.0
