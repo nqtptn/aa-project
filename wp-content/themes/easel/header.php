@@ -55,7 +55,7 @@
 		<?php easel_get_sidebar('above-header'); ?>
 		
 		<table border="0" cellpadding="0" cellspacing="0" width="1135px" height="180px" 
-			style="background-color: #FFF; margin: 0px 0px 1px 3px; border: solid 1px black;">
+			style="background-color: #FFF; margin: 0px 0px 1px 3px; border: solid 1px black; z-index: 200;">
 			<tr>
 				<td width="100%">
 					 <object
@@ -64,11 +64,12 @@
 						id="banner"
 						width="1132" height="340"
 					  >
-						<param name="movie" value="banner.swf">
+						<param name="movie" value="<?php echo get_template_directory_uri(); ?>/images/Banner2.swf">
 						<param name="bgcolor" value="#FFFFFF">
 						<param name="quality" value="high">
 						<param name="seamlesstabbing" value="false">
 						<param name="allowscriptaccess" value="samedomain">
+						<param name="wmode" value="opaque">
 						<embed
 						  type="application/x-shockwave-flash"
 						  pluginspage="http://www.adobe.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash"
