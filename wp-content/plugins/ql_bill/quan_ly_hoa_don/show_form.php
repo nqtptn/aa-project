@@ -351,7 +351,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 					<input type='text' size='10' id='so_bill' value=''  />
 				</td>				
 				<td>
-					<select id='ma_dich_vu'  onchange="load_tinh_tp();">
+					<select id='ma_dich_vu' onchange="load_cuoc_phi();">
 						<?
 							global $wpdb;
 							$temp=$wpdb->get_results("select ma_dich_vu,ten_dich_vu from  gia_dich_vu where la_dich_vu_cong_them=0");
@@ -371,7 +371,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 					<select id="ma_tinh_den" onchange="load_cuoc_phi();">
 					<?
 						global $wpdb;
-						$province = $wpdb->get_results("select distinct ma_tinh,(select ten_tinh from gia_tinh_thanh_pho where ma_tinh=a.ma_tinh) ten_tinh from gia_dich_vu_tinh_thanh a where a.la_tinh_di=0 and ma_dich_vu='chuyen_phat_nhanh'");
+						$province = $wpdb->get_results("select ma_tinh,ten_tinh from gia_tinh_thanh_pho a where a.ma_khu_vuc IS NULL or a.ma_khu_vuc=''");
 						foreach($province as $province2){
 							if(!empty($province2->ma_tinh)){
 								echo "<option value='".$province2->ma_tinh."'>".$province2->ten_tinh."</option>";
