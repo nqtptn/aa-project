@@ -105,7 +105,7 @@ function danh_sach_tinh_den() {
 	global $wpdb;
 	$dich_vu=$_POST['dich_vu'];
 	$province = $wpdb->get_results("
-		select distinct ma_tinh ma_tinh_den,(select ten_tinh from gia_tinh_thanh_pho where ma_tinh=a.ma_tinh) tinh_den from gia_dich_vu_tinh_thanh a where a.la_tinh_di=0 and ma_dich_vu='".$dich_vu."'
+		select ma_tinh ma_tinh_den,ten_tinh tinh_den from gia_tinh_thanh_pho a where a.ma_khu_vuc IS NULL or a.ma_khu_vuc=''
 	");
 	foreach($province as $province2){
 		if(!empty($province2->tinh_den)){
@@ -116,7 +116,7 @@ function danh_sach_tinh_den() {
 }
 function danh_sach_dich_vu() {
 	global $wpdb;
-	$temp=$wpdb->get_results("select ma_dich_vu,ten_dich_vu from  gia_dich_vu where la_dich_vu_cong_them=0");
+	$temp=$wpdb->get_results("select ma_dich_vu,ten_dich_vu from  gia_dich_vu where la_dich_vu_cong_them=0 order by (case when ma_dich_vu='chuyen_phat_nhanh' then 0 else 1 end)");
 	foreach($temp as $temp2){
 		if(!empty($temp2->ma_dich_vu)){
 			echo "<option value='".$temp2->ma_dich_vu."'>".$temp2->ten_dich_vu."</option>";
