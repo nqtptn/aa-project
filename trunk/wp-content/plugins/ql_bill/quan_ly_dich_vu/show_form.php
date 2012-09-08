@@ -162,52 +162,11 @@ function delete_record(editableGrid, rowIndex,sys_url,onResponse)
 		async: true
 	});
 }
-function load_cuoc_phi()
-{
-	$.ajax({
-		url: "<? echo get_admin_url()?>admin.php?page=quan_ly_dich_vu&action=load_cuoc_phi&noheader=1&nofooter=1",
-		type: 'POST',
-		dataType: "html",
-		data: {
-			ma_dich_vu : $("#ma_dich_vu").val(),
-			ma_tinh_den : $("#ma_tinh_den").val(),
-			khoi_luong : $("#khoi_luong").val()
-		},
-		success: function (response)
-		{
-			// reset old value if failed then highlight row
-			$("#cuoc_phi").val(response);
-		},
-		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
-		async: true
-	});
-}
-function load_tinh_tp()
-{
-	$.ajax({
-		url: "<? echo get_admin_url()?>admin.php?page=quan_ly_dich_vu&action=load_tinh_tp&noheader=1&nofooter=1",
-		type: 'POST',
-		dataType: "html",
-		data: {
-			ma_dich_vu : $("#ma_dich_vu").val()
-		},
-		success: function (response)
-		{
-			// reset old value if failed then highlight row
-			$("#ma_tinh_den").html(response);
-		},
-		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
-		async: true
-	});
-}
+
 function get_xml_link()
 {
-	var link='<? echo get_admin_url()?>admin.php?page=quan_ly_dich_vu&noheader=1&nofooter=1&action=XML';
-	return link;
-}
-function get_report_link()
-{
-	var link='<? echo get_admin_url()?>admin.php?page=quan_ly_dich_vu&noheader=1&nofooter=1&action=export_function';
+	var link='<? echo get_admin_url()?>admin.php?page=quan_ly_dkvc&noheader=1&nofooter=1&action=XML';
+	link = link + "&status=" + ($("#status").is(':checked') ? 1 : 0);
 	return link;
 }
 function load_content()
@@ -215,11 +174,12 @@ function load_content()
 	$("#tablecontent").html("Loading...");
 	var xml_link=get_xml_link();
 	DatabaseGrid(xml_link,"tablecontent","filter",update_url);
-	$("#report").html("<img src='<? echo plugins_url('ql_bill/images/icon_16.gif')?>' border='0' style='vertical-align: middle' /> <a href='" + get_report_link() +"' target=_blank>Xuất Báo Cáo</a>");
 }
-var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_dich_vu&action=update_record&noheader=1&nofooter=1";
+var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_dkvc&action=update_record&noheader=1&nofooter=1";
 </script>
 <br/>
+<label for="thang">Đăng ký vận chuyển đã xem:</label>
+<input type='checkbox' id='status' value='1' onchange="load_content()"/>
 <label for="pagesize">Số dòng trên trang:</label>
 <select id="pagesize" name="pagesize">
 	<option value="10">10</option>
@@ -235,71 +195,6 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_dich_vu&action=u
 <div id="tablecontent"></div>
 <div id="paginator"></div>
 
-<div id='posting' style='margin-top:10px;border: 1px solid #ccc;-moz-border-radius: 5px;-webkit-border-radius: 5px;padding:10px'>
-	<div style='border-bottom:1px dotted #999;color:#588eaf'><b>Thêm mới</b></div>
-	<form name="post_form" method="post" onsubmit='return post_data(update_url)'>
-		<table>
-			<tr>
-				<td>
-					<label for="ma_dich_vu">Mã dịch vụ</label>
-				</td>
-				<td>
-					<label for="ten_dich_vu">Tên dịch vụ</label>
-				</td>				
-				<td>
-					<label for="thoi_gian_van_chuyen">T/G vận chuyển</label>
-				</td>
-				<td>
-					<label for="mo_ta">Mô tả</label>
-				</td>
-
-				<td>
-					<label for="la_dich_vu_cong_them">D/V cộng thêm</label>
-				</td>
-				<td>
-					<label for="gia_cong_them">Giá cộng thêm</label>
-				</td>
-				<td>
-					<label for="ti_le_phu_phi">Tỉ lệ phụ phí (%)</label>
-				</td>
-				<td>
-					<label for="vat">Thuế VAT (%)</label>
-				</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>
-					<input type='text' size='12' id='ma_dich_vu' value=''  />	
-				</td>
-				<td>
-					<input type='text' size='12' id='ten_dich_vu' value=''  />
-				</td>				
-				<td>
-					<input type='text' size='12' id='thoi_gian_van_chuyen' value=''  />
-				</td>
-				<td>
-					<input type='text' size='12' id='mo_ta' value=''  />				
-				</td>
-				<td align="center">
-					<input type='checkbox' id='la_dich_vu_cong_them' value='1' />
-				</td>
-				<td>
-					<input type='text' size='12' id='gia_cong_them' value='0' />
-				</td>
-				<td>
-					<input type='text' size='8' id='ti_le_phu_phi' value='15' />
-				</td>
-				<td>
-					<input type='text' size='8' id='vat' value='10' />
-				</td>
-				<td>
-					<input type='submit' value='    Save    ' />
-				</td>
-			</tr>			
-		</table>
-		
-	</form>
-</div>
 <script type='text/javascript'>
 load_content();
 </script>

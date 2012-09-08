@@ -9,42 +9,16 @@ $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
 		
 		// This very generic. So this script can be used to update several tables.
 		$return=false;
-		if($colname=="id"){
-			$field="ma_dich_vu";
-		}else{
-			$field=$colname;
-		}
-		if($colname=="id"){
-			$result2 = $mysqli->query("SELECT ma_dich_vu FROM gia_dich_vu  WHERE ma_dich_vu = '$id'");
-			$num=$result2->num_rows;
-			if($num>0){
-				$result = $mysqli->query("UPDATE gia_dich_vu SET ma_dich_vu = '$value' WHERE ma_dich_vu = '$id'");
-			}else{
-				$result="";
-			}
-		}else{
-			$result = $mysqli->query("UPDATE gia_dich_vu SET $field = '$value' WHERE ma_dich_vu = '$id'");
-		}
+
+		$result = $mysqli->query("UPDATE gia_dang_ky_van_chuyen SET status = $value WHERE id = $id");
+
 		echo $result ? "ok" : "error";
 		$mysqli->close();
 		
 	}elseif($action=="delete"){
 		$id = $mysqli->real_escape_string(strip_tags($_POST['id']));
-		$result = $mysqli->query("DELETE from gia_dich_vu WHERE ma_dich_vu = '$id'");
+		$result = $mysqli->query("DELETE from gia_dang_ky_van_chuyen WHERE id = $id");
 		$mysqli->close();
 		echo $result ? "ok" : "error";
-	}elseif($action=="add_record"){
-		$ma_dich_vu = $mysqli->real_escape_string(strip_tags($_POST['ma_dich_vu']));
-		$ten_dich_vu = $mysqli->real_escape_string(strip_tags($_POST['ten_dich_vu']));
-		$thoi_gian_van_chuyen = $mysqli->real_escape_string(strip_tags($_POST['thoi_gian_van_chuyen']));
-		$mo_ta = $mysqli->real_escape_string(strip_tags($_POST['mo_ta']));
-		$la_dich_vu_cong_them = $mysqli->real_escape_string(strip_tags($_POST['la_dich_vu_cong_them']));
-		$gia_cong_them = $mysqli->real_escape_string(strip_tags($_POST['gia_cong_them']));
-		$ti_le_phu_phi = $mysqli->real_escape_string(strip_tags($_POST['ti_le_phu_phi']));
-		$result =  $mysqli->query("INSERT INTO gia_dich_vu 
-			(ma_dich_vu,ten_dich_vu,thoi_gian_van_chuyen,mo_ta,la_dich_vu_cong_them,gia_cong_them,ti_le_phu_phi) value 
-			('$ma_dich_vu','$ten_dich_vu','$thoi_gian_van_chuyen','$mo_ta','$la_dich_vu_cong_them','$gia_cong_them','$ti_le_phu_phi')");
-		echo $result ? "true" : "false";
-		$mysqli->close();
 	}
 ?>
