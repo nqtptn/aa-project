@@ -98,10 +98,10 @@
 				<td width='70' align='center'>".($temp2->so_bill)."</td>
 				<td width='80' align='left'>".($temp2->tinh_den)."</td>
 				<td width='170' align='left'>".($temp2->dich_vu)."</td>				
-				<td width='60' align='right'>".($temp2->khoi_luong)."</td>
-				<td width='60' align='right'>".($temp2->cuoc_phi)."</td>
-				<td width='50' align='right'>".($temp2->phu_thu)."</td>
-				<td width='80' align='right'>".($temp2->tong)."</td>
+				<td width='60' align='right'>".(number_format($temp2->khoi_luong,0,'',','))."</td>
+				<td width='60' align='right'>".(number_format($temp2->cuoc_phi,0,'',','))."</td>
+				<td width='50' align='right'>".(number_format($temp2->phu_thu,0,'',','))."</td>
+				<td width='80' align='right'>".(number_format($temp2->tong,0,'',','))."</td>
 				<td width='70' align='right'>".($temp2->ghi_chu)."</td>
 			</tr>
 		";
@@ -109,9 +109,9 @@
 	$html_content.='
 			<tr bgcolor="#cccccc">
 				<td colspan="6" align="center">Tổng</td>
-				<td align="right">'.$tong1.'</td>
-				<td align="right">'.$tong2.'</td>
-				<td align="right">'.$tong3.'</td>
+				<td align="right">'.number_format($tong1,0,'',',').'</td>
+				<td align="right">'.number_format($tong2,0,'',',').'</td>
+				<td align="right">'.number_format($tong3,0,'',',').'</td>
 				<td></td>
 			</tr>
 			</table>
