@@ -27,11 +27,11 @@ $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
 				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET phu_thu='$value',tong = $value + cuoc_phi WHERE ma_van_chuyen = '$id'");
 			}elseif($colname=="ma_dich_vu"){
 				$temp1 = $wpdb->get_row("SELECT ma_tinh_den,khoi_luong FROM gia_van_chuyen_dn where ma_van_chuyen = '$id'");
-				$temp2 = $wpdb->get_row("select fn_tinh_gia('".$value."','tp_hcm','".$temp1->ma_tinh_den."',".$temp1->khoi_luong.",0) as returnvalue");
+				$temp2 = $wpdb->get_row("select round((select (1+vat/100)*(1+ti_le_phu_phi/100) from gia_dich_vu where ma_dich_vu='".$value."') * fn_tinh_gia('".$value."','tp_hcm','".$temp1->ma_tinh_den."',".$temp1->khoi_luong.",0),0) as returnvalue");
 				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET ma_dich_vu = '$value', cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
 			}elseif($colname=="ma_tinh_den"){
 				$temp1 = $wpdb->get_row("SELECT ma_dich_vu,khoi_luong FROM gia_van_chuyen_dn where ma_van_chuyen = '$id'");
-				$temp2 = $wpdb->get_row("select fn_tinh_gia('".$temp1->ma_dich_vu."','tp_hcm','".$value."',".$temp1->khoi_luong.",0) as returnvalue");
+				$temp2 = $wpdb->get_row("select round((select (1+vat/100)*(1+ti_le_phu_phi/100) from gia_dich_vu where ma_dich_vu='".$temp1->ma_dich_vu."') * fn_tinh_gia('".$temp1->ma_dich_vu."','tp_hcm','".$value."',".$temp1->khoi_luong.",0),0) as returnvalue");
 				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET ma_tinh_den = '$value', cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
 			}else{
 				//Neu cot khoi luong dc cap nhat, tinh lai cuoc phi
@@ -39,7 +39,7 @@ $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
 					$value=0;
 				}
 				$temp1 = $wpdb->get_row("SELECT ma_dich_vu,ma_tinh_den FROM gia_van_chuyen_dn where ma_van_chuyen = '$id'");
-				$temp2 = $wpdb->get_row("select fn_tinh_gia('".$temp1->ma_dich_vu."','tp_hcm','".$temp1->ma_tinh_den."',".$value.",0) as returnvalue");
+				$temp2 = $wpdb->get_row("select round((select (1+vat/100)*(1+ti_le_phu_phi/100) from gia_dich_vu where ma_dich_vu='".$temp1->ma_dich_vu."') * fn_tinh_gia('".$temp1->ma_dich_vu."','tp_hcm','".$temp1->ma_tinh_den."',".$value.",0),0) as returnvalue");
 				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET khoi_luong = '$value', cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
 			}
 		}else if ($colname=="ngay"){
