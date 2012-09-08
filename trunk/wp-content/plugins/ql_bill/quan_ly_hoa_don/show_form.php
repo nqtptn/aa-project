@@ -97,7 +97,7 @@ function post_data(xml_link){
 						$("#so_bill").focus();
 					}
 				}else{
-					alert("Thêm mới không thành công!");
+					alert("Thêm mới không thành công, vui lòng kiểm tra Số Bill và thông tin nhập!");
 				}
 			},
 			error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
@@ -371,7 +371,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 					<select id="ma_tinh_den" onchange="load_cuoc_phi();">
 					<?
 						global $wpdb;
-						$province = $wpdb->get_results("select ma_tinh,ten_tinh from gia_tinh_thanh_pho a where a.ma_khu_vuc IS NULL or a.ma_khu_vuc=''");
+						$province = $wpdb->get_results("select ma_tinh,ten_tinh from gia_tinh_thanh_pho a where a.ma_tinh not in ('den_300km','tren_300km') order by ma_tinh");
 						foreach($province as $province2){
 							if(!empty($province2->ma_tinh)){
 								echo "<option value='".$province2->ma_tinh."'>".$province2->ten_tinh."</option>";
