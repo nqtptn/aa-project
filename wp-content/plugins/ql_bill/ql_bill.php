@@ -132,17 +132,6 @@ function quan_ly_bang_gia() {
 		require_once("quan_ly_bang_gia/show_form.php");
 	}
 }
-function csv_bill_import() {
-	if($_GET['action']=="XML"){
-		require_once('EditableGrid.php');
-		require_once("csv_bill_import/xml.php");
-	}elseif($_GET['action']=="update_record"){
-		require_once("csv_bill_import/update2.php");
-	}else{
-		require_once("csv_bill_import/show_form.php");
-	}
-}
-
 function fetch_pairs($mysqli,$query){
 	if (!($res = $mysqli->query($query)))return FALSE;
 	$rows = array();
