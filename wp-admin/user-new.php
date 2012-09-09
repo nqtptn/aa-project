@@ -302,8 +302,8 @@ foreach ( array( 'user_login' => 'login', 'first_name' => 'firstname', 'last_nam
 		<th scope="row"><label for="user_login"><?php _e('Mã khách hàng'); ?> <span class="description"><?php _e('(required)'); ?></span></label></th>
 		<td><input name="user_login" type="text" id="user_login" value="<?php echo esc_attr($new_user_login); ?>" aria-required="true" /></td>
 	</tr>
-	<tr class="form-field form-required">
-		<th scope="row"><label for="email"><?php _e('E-mail'); ?> <span class="description"><?php _e('(required)'); ?></span></label></th>
+	<tr class="form-field">
+		<th scope="row"><label for="email"><?php _e('E-mail'); ?></label></th>
 		<td><input name="email" type="text" id="email" value="<?php echo esc_attr($new_user_email); ?>" /></td>
 	</tr>
 <?php if ( !is_multisite() ) { ?>
