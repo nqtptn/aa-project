@@ -139,7 +139,7 @@ function edit_user( $user_id = 0 ) {
 	if ( !$update && username_exists( $user->user_login ) )
 		$errors->add( 'user_login', __( '<strong>ERROR</strong>: This username is already registered. Please choose another one.' ));
 
-	/* checking e-mail address */
+	/*//Nha checking e-mail address 
 	if ( empty( $user->user_email ) ) {
 		$errors->add( 'empty_email', __( '<strong>ERROR</strong>: Please enter an e-mail address.' ), array( 'form-field' => 'email' ) );
 	} elseif ( !is_email( $user->user_email ) ) {
@@ -147,6 +147,7 @@ function edit_user( $user_id = 0 ) {
 	} elseif ( ( $owner_id = email_exists($user->user_email) ) && ( !$update || ( $owner_id != $user->ID ) ) ) {
 		$errors->add( 'email_exists', __('<strong>ERROR</strong>: This email is already registered, please choose another one.'), array( 'form-field' => 'email' ) );
 	}
+	*/
 
 	// Allow plugins to return their own errors.
 	do_action_ref_array('user_profile_update_errors', array ( &$errors, $update, &$user ) );
