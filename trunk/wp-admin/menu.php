@@ -59,35 +59,6 @@
 	/* translators: add new file */
 	$submenu['upload.php'][10] = array( _x('Thêm mới', 'file'), 'upload_files', 'media-new.php');
 
-//Nha
-	// $menu[15] = array( __('Links'), 'manage_links', 'link-manager.php', '', 'menu-top menu-icon-links', 'menu-links', 'div' );
-	// $submenu['link-manager.php'][5] = array( _x('All Links', 'admin menu'), 'manage_links', 'link-manager.php' );
-	/* translators: add new links */
-	// $submenu['link-manager.php'][10] = array( _x('Add New', 'link'), 'manage_links', 'link-add.php' );
-	// $submenu['link-manager.php'][15] = array( __('Link Categories'), 'manage_categories', 'edit-tags.php?taxonomy=link_category' );
-
-//Nha
-	// $menu[20] = array( __('Pages'), 'edit_pages', 'edit.php?post_type=page', '', 'menu-top menu-icon-page', 'menu-pages', 'div' );
-	// $submenu['edit.php?post_type=page'][5] = array( __('All Pages'), 'edit_pages', 'edit.php?post_type=page' );
-	// /* translators: add new page */
-	// $submenu['edit.php?post_type=page'][10] = array( _x('Add New', 'page'), 'edit_pages', 'post-new.php?post_type=page' );
-	// $i = 15;
-	// foreach ( get_taxonomies( array(), 'objects' ) as $tax ) {
-		// if ( ! $tax->show_ui || ! in_array('page', (array) $tax->object_type, true) )
-			// continue;
-
-		// $submenu['edit.php?post_type=page'][$i++] = array( esc_attr( $tax->labels->menu_name ), $tax->cap->manage_terms, 'edit-tags.php?taxonomy=' . $tax->name . '&amp;post_type=page' );
-	// }
-	// unset($tax);
-
-	//Nha
-	// $awaiting_mod = wp_count_comments();
-	// $awaiting_mod = $awaiting_mod->moderated;
-	// $menu[25] = array( sprintf( __('Comments %s'), "<span class='awaiting-mod count-$awaiting_mod'><span class='pending-count'>" . number_format_i18n($awaiting_mod) . "</span></span>" ), 'edit_posts', 'edit-comments.php', '', 'menu-top menu-icon-comments', 'menu-comments', 'div' );
-	// unset($awaiting_mod);
-
-	// $submenu[ 'edit-comments.php' ][0] = array( __('All Comments'), 'edit_posts', 'edit-comments.php' );
-
 $_wp_last_object_menu = 25; // The index of the last top-level menu in the object menu group
 
 foreach ( (array) get_post_types( array('show_ui' => true, '_builtin' => false, 'show_in_menu' => true ) ) as $ptype ) {
@@ -141,6 +112,36 @@ if($current_user->user_login == 'admin'){
 				$submenu['themes.php'][10] = array(__('Menus'), 'edit_theme_options', 'nav-menus.php' );
 	}
 
+//Nha
+	// $menu[15] = array( __('Links'), 'manage_links', 'link-manager.php', '', 'menu-top menu-icon-links', 'menu-links', 'div' );
+	// $submenu['link-manager.php'][5] = array( _x('All Links', 'admin menu'), 'manage_links', 'link-manager.php' );
+	/* translators: add new links */
+	// $submenu['link-manager.php'][10] = array( _x('Add New', 'link'), 'manage_links', 'link-add.php' );
+	// $submenu['link-manager.php'][15] = array( __('Link Categories'), 'manage_categories', 'edit-tags.php?taxonomy=link_category' );
+
+//Nha
+	$menu[20] = array( __('Pages'), 'edit_pages', 'edit.php?post_type=page', '', 'menu-top menu-icon-page', 'menu-pages', 'div' );
+	$submenu['edit.php?post_type=page'][5] = array( __('All Pages'), 'edit_pages', 'edit.php?post_type=page' );
+	/* translators: add new page */
+	$submenu['edit.php?post_type=page'][10] = array( _x('Add New', 'page'), 'edit_pages', 'post-new.php?post_type=page' );
+	// $i = 15;
+	// foreach ( get_taxonomies( array(), 'objects' ) as $tax ) {
+		// if ( ! $tax->show_ui || ! in_array('page', (array) $tax->object_type, true) )
+			// continue;
+
+		// $submenu['edit.php?post_type=page'][$i++] = array( esc_attr( $tax->labels->menu_name ), $tax->cap->manage_terms, 'edit-tags.php?taxonomy=' . $tax->name . '&amp;post_type=page' );
+	// }
+	// unset($tax);
+
+	//Nha
+	// $awaiting_mod = wp_count_comments();
+	// $awaiting_mod = $awaiting_mod->moderated;
+	// $menu[25] = array( sprintf( __('Comments %s'), "<span class='awaiting-mod count-$awaiting_mod'><span class='pending-count'>" . number_format_i18n($awaiting_mod) . "</span></span>" ), 'edit_posts', 'edit-comments.php', '', 'menu-top menu-icon-comments', 'menu-comments', 'div' );
+	// unset($awaiting_mod);
+
+	// $submenu[ 'edit-comments.php' ][0] = array( __('All Comments'), 'edit_posts', 'edit-comments.php' );
+	
+	
 	// Add 'Editor' to the bottom of the Appearance menu.
 	if ( ! is_multisite() )
 		add_action('admin_menu', '_add_themes_utility_last', 101);
