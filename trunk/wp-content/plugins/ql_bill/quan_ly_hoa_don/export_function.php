@@ -2,6 +2,7 @@
 	global $wpdb;
 	$current_user = wp_get_current_user();
 	$khach_hang= $_GET['khach_hang'];
+	$report_content= $_GET['content'];
 	$temp2=$wpdb->get_row("
 		select user_login as
 		ma_khach_hang
@@ -126,26 +127,26 @@
 	$html_content.='
 		<br/>
 		<div align="center">
-			Đề nghị Quý cơ quan kiểm tra và thanh toán bảng kê trên trước ngày <b>10/'.$thang_1.'/'.$nam_1.' </b>
+			'.$report_content.'
 			<br />
 			Mọi thắc mắc vui lòng liên hệ: '.($temp2->lien_he).'
 		</div>
 		<br />
 		<table>
 			<tr>
-				<td width="190" text-align="center">
+				<td width="190" text-align="center" valign="top">
 					Giám đốc<br /><br /><br /><br />
 					<b>'.($temp2->giam_doc).'</b>
 				</td>
-				<td width="190" text-align="center">
+				<td width="190" text-align="center" valign="top">
 					Kế toán trưởng<br /><br /><br /><br />
 					<b>'.($temp2->ke_toan_truong).'</b>
 				</td>
-				<td width="190" text-align="center">
+				<td width="190" text-align="center" valign="top">
 					Kế toán công nợ<br /><br /><br /><br />
 					<b>'.($temp2->ke_toan_cong_no).'</b>
 				</td>
-				<td width="190" text-align="center">
+				<td width="190" text-align="center" valign="top">
 					Kế toán dữ liệu<br /><br /><br /><br />
 					<b>'.($temp2->ke_toan_du_lieu).'</b>
 				</td>

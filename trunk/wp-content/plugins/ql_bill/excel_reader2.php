@@ -1762,14 +1762,39 @@ class Spreadsheet_Excel_Reader {
 //main form
 global $wpdb;
 // if the form is submitted
-if ($_POST['mode'] == "submit") {
-	$thang=$_POST['thang'];
-	$nam=$_POST['nam'];
-	$khach_hang=$_POST['khach_hang'];
-	$data = new Spreadsheet_Excel_Reader($_FILES['csv_file']['tmp_name'],true,"UTF-8");
-	$arr_rows = $data->dump2();
-	$show_value = $data->dump(false,false);
-	
+if($_GET['action']=="xacnhan"){
+	$khach_hang=$_POST['makhachhang'];
+	if($data2 = $wpdb->query("INSERT INTO gia_van_chuyen_dn 
+	(SELECT 
+		ma_dich_vu,
+		ma_tinh_di,
+		ma_tinh_den,
+		khoi_luong,
+		cuoc_phi,
+		phu_thu,
+		tong,
+		ghi_chu,
+		ngay,
+		ck_sale,
+		ma_khach_hang,
+		so_bill
+		FROM gia_van_chuyen_dn_import where ma_khach_hang='$khach_hang')")){
+		echo "ok";
+		$import_query = array('ma_khach_hang' => $khach_hang);
+		$wpdb->delete("gia_van_chuyen_dn_import", $import_query );
+	}else{
+		echo "error";
+	}
+}else{
+	if ($_POST['mode'] == "submit") {
+		$thang=$_POST['thang'];
+		$nam=$_POST['nam'];
+		$khach_hang=$_POST['khach_hang'];
+		$data = new Spreadsheet_Excel_Reader($_FILES['csv_file']['tmp_name'],true,"UTF-8");
+		$arr_rows = $data->dump2();
+		$show_value = $data->dump(false,false);
+		$import_query = array('ma_khach_hang' => $khach_hang);
+		$wpdb->delete("gia_van_chuyen_dn_import", $import_query );
 		if (is_array($arr_rows)) {
 			$i=0;
 			foreach ($arr_rows as $row) {
@@ -1800,6 +1825,32 @@ if ($_POST['mode'] == "submit") {
 		}
 	}
 ?>
+<script type="text/javascript">
+function xac_nhan(khachhang)
+{
+	$.ajax({
+		url: update_url,
+		type: 'POST',
+		dataType: "html",
+		data: {
+			makhachhang : khachhang
+		},
+		success: function (response)
+		{
+			if(response!="error"){
+				alert("Đã thực hiện");
+				$("#noidung").html("");
+			}else{
+				alert("Có lỗi xảy ra");
+			}
+		},
+		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
+		async: true
+	});
+
+}
+var update_url="<? echo get_admin_url()?>admin.php?page=xls_import&action=xacnhan&noheader=1&nofooter=1";
+</script>
 	<div class="wrap">
 		<?php echo $html_update; ?>
 		<div id="icon-users" class="icon32"><br /></div>
@@ -1857,7 +1908,11 @@ if ($_POST['mode'] == "submit") {
 		Ngày, Số bill, Mã dịch vụ, Mã tỉnh đến, Khối lượng, Giá cước, Phụ phí, Tổng, Ghi chú
 		<?
 		if($show_value){
-			echo "<br/>Nội dung file excel (.xls):".$show_value;
+			echo "<div id='noidung'><br/>Nội dung file excel (.xls):".$show_value."";
+			echo "<br /><input type='button' value='Xác nhận upload hoá đơn' onclick='xac_nhan(\"$khach_hang\")' /></div>";
 		}
 		?>
 	</div>
+<?
+}
+?>

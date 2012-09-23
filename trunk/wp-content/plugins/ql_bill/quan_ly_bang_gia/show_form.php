@@ -241,6 +241,19 @@ function Get_ma_tinh_den()
 var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&action=update_record&noheader=1&nofooter=1";
 </script>
 <br/>
+<label for="ma_tinh_di">Tỉnh đi:</label>
+<select id='ma_tinh_di'  onchange="load_content();">
+<?
+	global $wpdb;
+	$province = $wpdb->get_results("select ma_tinh,ten_tinh from gia_tinh_thanh_pho where ma_tinh in ('ha_noi','tp_hcm')");
+	foreach($province as $province2){
+		if(!empty($province2->ma_tinh)){
+			echo "<option value='".$province2->ma_tinh."'>".$province2->ten_tinh."</option>";
+		}
+	}
+?>
+</select>
+
 <label for="ma_dich_vu">Dịch vụ:</label>
 <select id='ma_dich_vu'  onchange="load_content();">
 	<?
@@ -256,18 +269,6 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&action=
 			}
 		}
 	?>
-</select>
-<label for="ma_tinh_di">Tỉnh đi:</label>
-<select id='ma_tinh_di'>
-<?
-	global $wpdb;
-	$province = $wpdb->get_results("select distinct ma_tinh,(select ten_tinh from gia_tinh_thanh_pho where ma_tinh=a.ma_tinh) ten_tinh from gia_dich_vu_tinh_thanh a where a.la_tinh_di=1 and ma_dich_vu='chuyen_phat_nhanh'");
-	foreach($province as $province2){
-		if(!empty($province2->ma_tinh)){
-			echo "<option value='".$province2->ma_tinh."'>".$province2->ten_tinh."</option>";
-		}
-	}
-?>
 </select>
 
 <label for="pagesize">Số dòng trên trang:</label>
@@ -314,10 +315,10 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&action=
 			</tr>
 			<tr>
 				<td width="140" valign="top">
-					<select id="ma_tinh_den" name="ma_tinh_den" multiple="multiple" onclick="Get_ma_tinh_den()">
+					<select id="ma_tinh_den" name="ma_tinh_den" multiple="multiple" size="50" onclick="Get_ma_tinh_den()">
 					<?
 						global $wpdb;
-						$province = $wpdb->get_results("select distinct ma_tinh,(select ten_tinh from gia_tinh_thanh_pho where ma_tinh=a.ma_tinh) ten_tinh from gia_dich_vu_tinh_thanh a where a.la_tinh_di=0 and ma_dich_vu='chuyen_phat_nhanh'");
+						$province = $wpdb->get_results("select ma_tinh,ten_tinh from gia_tinh_thanh_pho order by ma_tinh");
 						foreach($province as $province2){
 							if(!empty($province2->ma_tinh)){
 								echo "<option value='".$province2->ma_tinh."'>".$province2->ten_tinh."</option>";
