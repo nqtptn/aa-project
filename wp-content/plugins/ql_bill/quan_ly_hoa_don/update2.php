@@ -66,7 +66,11 @@ $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
 		$phu_thu = $mysqli->real_escape_string(strip_tags($_POST['phu_thu']));
 		$tong = $mysqli->real_escape_string(strip_tags($_POST['tong']));
 		$ghi_chu = $mysqli->real_escape_string(strip_tags($_POST['ghi_chu']));
+		$don_vi_kg = $mysqli->real_escape_string(strip_tags($_POST['don_vi_kg']));		
 		$khoi_luong = $mysqli->real_escape_string(strip_tags($_POST['khoi_luong']));
+		if($don_vi_kg == 1){
+			$khoi_luong = $khoi_luong * 1000;
+		}
 		$khach_hang = $mysqli->real_escape_string(strip_tags($_POST['khach_hang']));
 		$so_bill = $mysqli->real_escape_string(strip_tags($_POST['so_bill']));
 		$result =  $mysqli->query("INSERT INTO gia_van_chuyen_dn 
