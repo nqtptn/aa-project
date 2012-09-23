@@ -3,7 +3,7 @@ global $mysqli;
 $grid = new EditableGrid();
 $grid->addColumn('id', 'Mã tỉnh', 'string', NULL,true);
 $grid->addColumn('ten_tinh', 'Tên tỉnh', 'string', NULL,true);
-$grid->addColumn('ma_khu_vuc', 'Khu vực', 'string',  fetch_pairs($mysqli,'SELECT ma_khu_vuc, ten_khu_vuc	FROM gia_khu_vuc ORDER by ten_khu_vuc'),true);
+$grid->addColumn('ma_khu_vuc', 'Khu vực', 'string', NULL,true);
 $grid->addColumn('vi_tri_x', 'Vị trí X', 'integer' , NULL,true);
 $grid->addColumn('vi_tri_y', 'Vị trí Y', 'integer', NULL,true);
 $grid->addColumn('trung_tam_tinh', 'Trung tâm tỉnh', 'string', NULL,true);

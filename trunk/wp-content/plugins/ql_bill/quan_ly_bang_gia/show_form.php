@@ -286,7 +286,9 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&action=
 <div id="paginator"></div>
 
 <div id='posting' style='margin-top:10px;border: 1px solid #ccc;-moz-border-radius: 5px;-webkit-border-radius: 5px;padding:10px'>
-	<div style='border-bottom:1px dotted #999;color:#588eaf'><b>Thêm mới</b></div>
+	<div style='border-bottom:1px dotted #999;color:#588eaf'>
+		<b>Thêm mới</b>
+	</div>
 	<form name="post_form" method="post" onsubmit='return post_data(update_url)'>
 		<table>
 			<tr>

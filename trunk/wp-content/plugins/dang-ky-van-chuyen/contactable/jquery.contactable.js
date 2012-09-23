@@ -27,10 +27,12 @@
 		var defaults = {
 			name: 'Name',
 			email: 'Email',
+			phone: 'Phone',
 			message : 'Message',
 			subject : 'A contactable message',
 			label_name: 'Name',
       label_email: 'E-Mail',
+      label_phone: 'Phone',
       label_website: 'Website',
       label_feedback: 'Your Feedback',
       label_send: 'SEND',
@@ -38,6 +40,7 @@
 			notRecievedMsg : 'Sorry but your message could not be sent, try again later',
 			disclaimer: 'Please feel free to get in touch, we value your feedback',
 			hide_email: 'false',
+			hide_phone: 'false',
       hide_website: 'false',
 			fileMail: 'mail.php',
 			side: 'left',
@@ -55,8 +58,11 @@
 			div_form = '<div id="contactable" '+conf_side+' ></div><form '+conf_side+' id="contactForm" method="" action=""><div id="loading"></div><div id="callback"></div><div class="holder">';
 			div_form += '<p><label for="name">'+defaults.label_name+' <span class="red"> * </span></label><br /><input id="name_mc" class="contact" name="name" /></p>';
 			if(defaults.hide_email == 'false'){
-			  div_form += '<p><label for="email">'+defaults.label_email+' <span class="red"> * </span></label><br /><input id="email_mc" class="contact" name="email" /></p>';
-		  }
+				  div_form += '<p><label for="email">'+defaults.label_email+' <span class="red"> * </span></label><br /><input id="email_mc" class="contact" name="email" /></p>';
+			}
+			if(defaults.hide_phone == 'false'){
+				  div_form += '<p><label for="phone">'+defaults.label_phone+' <span class="red"> * </span></label><br /><input id="phone_mc" class="contact" name="phone" /></p>';
+			}
 		  if(defaults.hide_website == 'false'){
 			  div_form += '<p><label for="email">'+defaults.label_website+' <span class="red"> * </span></label><br /><input id="website_mc" class="contact" name="url" /></p>';
 		  }
@@ -110,6 +116,9 @@
 						required: true,
 						email: true
 					},
+					phone: {
+						required: true
+					},
 					url: {
 						required: true,
 						url: true
@@ -122,6 +131,7 @@
 					messages: {
 						name: "",
 						email: "",
+						phone: "",
 						url: "",
 						comment: ""
 					},			
@@ -132,19 +142,22 @@
 					name_val = $('#contactForm #name_mc').val();
 					if(defaults.hide_email == 'false') email_val = $('#contactForm #email_mc').val();
 					else email_val = 'nothing';
+					if(defaults.hide_phone == 'false') phone_val = $('#contactForm #phone_mc').val();
+					else phone_val = 'nothing';
 					if(defaults.hide_website == 'false') website_val = $('#contactForm #website_mc').val();
 					else website_val = 'nothing';
 					comment_val = $('#contactForm #comment_mc').val();
-					$.post(defaults.fileMail,{subject:defaults.subject, name: name_val, email: email_val, website: website_val, comment:comment_val, action:defaults.action},
+					$.post(defaults.fileMail,{subject:defaults.subject, name: name_val, email: email_val,phone: phone_val, website: website_val, comment:comment_val, action:defaults.action},
 					function(data){
 						$('#loading').css({display:'none'}); 
 						data = jQuery.trim(data);
+						alert(data);
 						if( data == 'success') {
 							$('#callback').show().append(defaults.recievedMsg);
 							if(defaults.hideOnSubmit == true) {
 								//hide the tab after successful submition if requested
 								setTimeout(function(){$('div#contactable').click();},1200);
-                $('#comment_mc').val('');
+								$('#comment_mc').val('');
 								$('#overlay').css({display: 'none'});	
 							}
 						} else {
