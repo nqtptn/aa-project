@@ -21,10 +21,10 @@ function DatabaseGrid(XML_link,field_id,filter_id,update_url)
 			this.renderGrid(field_id, "testgrid");
 			_$(filter_id).value = this.currentFilter ? this.currentFilter : '';
 			_$(filter_id).onkeyup = function() {
-				editableGrid.filter(_$(filter_id).value); 
+				editableGrid.filter(_$(filter_id).value);
 			};
 			$("#pagesize").change(function() {
-				editableGrid.setPageSize($("#pagesize").val()); 
+				editableGrid.setPageSize($("#pagesize").val());
 			});
 			editableGrid.setPageSize($("#pagesize").val());
 		},
@@ -32,53 +32,58 @@ function DatabaseGrid(XML_link,field_id,filter_id,update_url)
 			updateCellValue(this, rowIndex, columnIndex, oldValue, newValue, row,update_url);
 		},
 		tableRendered: function() { this.updatePaginator(); }
-		
+
 	});
 	editableGrid.loadXML(XML_link);
 }
 function post_data(xml_link){
 	var input_value=new Array();
-	input_value['ngay'] = $("#ngay").val();
 	input_value['ma_dich_vu'] = $("#ma_dich_vu").val();
-	input_value['ma_tinh_den'] = $("#ma_tinh_den").val();
-	input_value['cuoc_phi'] = $("#cuoc_phi").val();
-	if(input_value['cuoc_phi']==""){
-		input_value['cuoc_phi']=0;
+	input_value['ma_tinh_di'] = $("#ma_tinh_di").val();
+	input_value['ma_tinh_den'] = Get_ma_tinh_den();
+	input_value['khoi_luong_tu'] = $("#khoi_luong_tu").val();
+	if(input_value['khoi_luong_tu']==""){
+		input_value['khoi_luong_tu']=0;
 	}
-	input_value['phu_thu'] = $("#phu_thu").val();
-	if(input_value['phu_thu']==""){
-		input_value['phu_thu']=0;
+	input_value['khoi_luong_den'] = $("#khoi_luong_den").val();
+	if(input_value['khoi_luong_den']==""){
+		input_value['khoi_luong_den']=0;
 	}
-	input_value['ghi_chu'] = $("#ghi_chu").val();
-	input_value['khoi_luong'] = $("#khoi_luong").val();
-	input_value['tong'] = parseInt(input_value['cuoc_phi']) + parseInt(input_value['phu_thu']);
-	input_value['stt'] = editableGrid.getRowCount() + 1;
-	input_value['so_bill'] = $("#so_bill").val();
-	if(isNaN(input_value['cuoc_phi'])){
-		alert("Cước phí phải là số!");
-		$("#cuoc_phi").focus();
-	}else if(isNaN(input_value['phu_thu'])){
-		alert("Phụ thu phải là số!");
-		$("#phu_thu").focus();
-	}else if(isNaN(input_value['khoi_luong'])){
-		alert("Khối lượng phải là số!");
-		$("#khoi_luong").focus();
+	input_value['ma_phuong_tien'] = $("#ma_phuong_tien").val();
+	input_value['gia'] = $("#cuoc_phi").val();
+	input_value['don_vi_khoi_luong_vuot'] = $("#don_vi_khoi_luong_vuot").val();
+	input_value['gia_cong_them_gui_sau_12h'] = $("#gia_sau_12h").val();
+	
+	if(isNaN(input_value['gia'])){
+		alert("'Cước' phí phải là số!");
+		$("#gia").focus();
+	}else if(isNaN(input_value['khoi_luong_tu'])){
+		alert("'Khối lượng từ' phải là số!");
+		$("#khoi_luong_tu").focus();
+	}else if(isNaN(input_value['khoi_luong_den'])){
+		alert("'Khối lượng đến' phải là số!");
+		$("#khoi_luong_den").focus();
+	}else if(isNaN(input_value['don_vi_khoi_luong_vuot'])){
+		alert("'ĐVKL vượt' phải là số!");
+		$("#don_vi_khoi_luong_vuot").focus();
+	}else if(isNaN(input_value['gia_cong_them_gui_sau_12h'])){
+		alert("'Giá sau 12h' phải là số!");
+		$("#gia_cong_them_gui_sau_12h").focus();
 	}else{
 		$.ajax({
 			url: xml_link,
 			type: 'POST',
 			dataType: "html",
 			data: {
-				ngay : $("#ngay").val() + "/" + $("#thang").val() + "/" + $("#nam").val(),
 				ma_dich_vu : input_value['ma_dich_vu'],
+				ma_tinh_di : input_value['ma_tinh_di'],
 				ma_tinh_den : input_value['ma_tinh_den'],
-				cuoc_phi : input_value['cuoc_phi'],
-				phu_thu : input_value['phu_thu'],
-				ghi_chu : input_value['ghi_chu'],
-				khoi_luong : input_value['khoi_luong'],
-				khach_hang : $("#khach_hang").val(),
-				so_bill : $("#so_bill").val(),
-				tong : parseInt(input_value['cuoc_phi']) + parseInt(input_value['phu_thu']),
+				khoi_luong_tu : input_value['khoi_luong_tu'],
+				khoi_luong_den : input_value['khoi_luong_den'],
+				ma_phuong_tien : input_value['ma_phuong_tien'],
+				cuoc_phi : input_value['gia'],
+				don_vi_khoi_luong_vuot : input_value['don_vi_khoi_luong_vuot'],
+				gia_sau_12h : input_value['gia_cong_them_gui_sau_12h'],
 				action: "add_record",
 			},
 			success: function (response)
@@ -87,14 +92,17 @@ function post_data(xml_link){
 					if(editableGrid.getRowCount()==0){
 						load_content();
 					}else{
-						input_value['id']=response;
+						var temp222 = response.split('|')
+						input_value['id']=temp222[0];
+						input_value['gia_toi_da_can_tren']=temp222[1];
+						input_value['gia_toi_da_can_tren_gui_sau_12h']=temp222[2];
 						editableGrid.insert(editableGrid.getRowId(editableGrid.getRowCount() - 1),response,input_value);
+						$("#khoi_luong_tu").val("");
+						$("#khoi_luong_den").val("");
 						$("#cuoc_phi").val("");
-						$("#phu_thu").val("");
-						$("#ghi_chu").val("");
-						$("#khoi_luong").val("");
-						$("#so_bill").val("");
-						$("#so_bill").focus();
+						$("#don_vi_khoi_luong_vuot").val("");
+						$("#gia_sau_12h").val("");
+						$("#khoi_luong_tu").focus();
 					}
 				}else{
 					alert("Thêm mới không thành công!");
@@ -125,31 +133,17 @@ function updateCellValue(editableGrid, rowIndex, columnIndex, oldValue, newValue
 		},
 		success: function (response)
 		{
+
 			// reset old value if failed then highlight row
-			var success = onResponse ? onResponse(response) : (response == "ok" || !isNaN(parseInt(response))); // by default, a sucessfull reponse can be "ok" or a database id
-			if (!success) editableGrid.setValueAt(rowIndex, columnIndex, oldValue)
+			if (response=="error") editableGrid.setValueAt(rowIndex, columnIndex, oldValue)
 			else{
-				var cot_cuoc_phi=6;
-				var cot_phu_thu=7;
-				var cot_tong=8;
-				if(editableGrid.getColumnName(columnIndex)=="phu_thu" || editableGrid.getColumnName(columnIndex)=="cuoc_phi"){
-					total = editableGrid.getValueAt(rowIndex, cot_cuoc_phi) + editableGrid.getValueAt(rowIndex, cot_phu_thu);
-					editableGrid.setValueAt(rowIndex, cot_tong, total);
-				}else if(editableGrid.getColumnName(columnIndex)=="khoi_luong"){
-					editableGrid.setValueAt(rowIndex, cot_cuoc_phi, response);
-					total = editableGrid.getValueAt(rowIndex, cot_cuoc_phi) + editableGrid.getValueAt(rowIndex, cot_phu_thu);
-					editableGrid.setValueAt(rowIndex, cot_tong, total);
-				}else if(editableGrid.getColumnName(columnIndex)=="ma_tinh_den"){
-					editableGrid.setValueAt(rowIndex, cot_cuoc_phi, response);
-					total = editableGrid.getValueAt(rowIndex, cot_cuoc_phi) + editableGrid.getValueAt(rowIndex, cot_phu_thu);
-					editableGrid.setValueAt(rowIndex, cot_tong, total);
-				}else if(editableGrid.getColumnName(columnIndex)=="ma_dich_vu"){
-					editableGrid.setValueAt(rowIndex, cot_cuoc_phi, response);
-					total = editableGrid.getValueAt(rowIndex, cot_cuoc_phi) + editableGrid.getValueAt(rowIndex, cot_phu_thu);
-					editableGrid.setValueAt(rowIndex, cot_tong, total);
-				}
+				var giatoida=7;
+				var giatoidasau12h=9;
+				var temp222 = response.split('|')
+				editableGrid.setValueAt(rowIndex, giatoida, temp222[0]);
+				editableGrid.setValueAt(rowIndex, giatoidasau12h, temp222[1]);
 			}
-		    highlight(row.id, success ? "ok" : "error");
+		    highlight(row.id, response=="error" ? "error" : "ok");
 		},
 		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
 		async: true
@@ -222,14 +216,6 @@ function get_xml_link()
 	link = link + "&ma_tinh_di=" + $("#ma_tinh_di").val();
 	return link;
 }
-function get_report_link()
-{
-	var link='<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&noheader=1&nofooter=1&action=export_function';
-	link = link + "&khach_hang=" + $("#khach_hang").val();
-	link = link + "&thang=" + $("#thang").val();
-	link = link + "&nam=" + $("#nam").val();
-	return link;
-}
 function load_content()
 {
 	load_tinh_tp();
@@ -237,6 +223,20 @@ function load_content()
 	var xml_link=get_xml_link();
 	DatabaseGrid(xml_link,"tablecontent","filter",update_url);
 	$("#report").html("<img src='<? echo plugins_url('ql_bill/images/icon_16.gif')?>' border='0' style='vertical-align: middle' /> <a href='" + get_report_link() +"' target=_blank>Xuất Báo Cáo</a>");
+}
+function Get_ma_tinh_den()
+{
+	var selectedArray = new Array();
+	var selObj = document.getElementById('ma_tinh_den');
+	var i;
+	var count = 0;
+	for (i=0; i<selObj.options.length; i++) {
+		if (selObj.options[i].selected) {
+			selectedArray[count] = selObj.options[i].value;
+			count++;
+		}
+	}
+	return "," + selectedArray + ",";
 }
 var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&action=update_record&noheader=1&nofooter=1";
 </script>
@@ -286,10 +286,8 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&action=
 <div id="paginator"></div>
 
 <div id='posting' style='margin-top:10px;border: 1px solid #ccc;-moz-border-radius: 5px;-webkit-border-radius: 5px;padding:10px'>
-	<div style='border-bottom:1px dotted #999;color:#588eaf'>
-		<b>Thêm mới</b>
-	</div>
-	<form name="post_form" method="post" onsubmit='return post_data(update_url)'>
+	<div style='border-bottom:1px dotted #999;color:#588eaf'><b>Thêm mới</b></div>
+	<form id="post_form" name="post_form" method="post" onsubmit='return post_data(update_url)'>
 		<table>
 			<tr>
 				<td>
@@ -297,26 +295,26 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&action=
 				</td>
 				<td>
 					<label for="khoi_luong_tu">KL từ</label>
-				</td>			
+				</td>
 				<td>
 					<label for="khoi_luong_den">KL đến</label>
 				</td>
 				<td>
 					<label for="ma_phuong_tien">Phương tiện</label>
-				</td>					
+				</td>
 				<td>
 					<label for="cuoc_phi">Cước phí</label>
 				</td>
 				<td>
-					<label for="vuot">KL Vượt</label>
+					<label for="don_vi_khoi_luong_vuot">ĐVKL vượt</label>
 				</td>
 				<td>
 					<label for="gia_sau_12h">Giá sau 12h</label>
-				</td>				
+				</td>
 			</tr>
 			<tr>
-				<td>
-					<select id="ma_tinh_den">
+				<td width="140" valign="top">
+					<select id="ma_tinh_den" name="ma_tinh_den" multiple="multiple" onclick="Get_ma_tinh_den()">
 					<?
 						global $wpdb;
 						$province = $wpdb->get_results("select distinct ma_tinh,(select ten_tinh from gia_tinh_thanh_pho where ma_tinh=a.ma_tinh) ten_tinh from gia_dich_vu_tinh_thanh a where a.la_tinh_di=0 and ma_dich_vu='chuyen_phat_nhanh'");
@@ -325,16 +323,19 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&action=
 								echo "<option value='".$province2->ma_tinh."'>".$province2->ten_tinh."</option>";
 							}
 						}
-					?>			
+					?>
+					</select>
+					<br /><i>Nhấn Ctrl hoặc Shift để chọn nhiều giá trị</i>
 				</td>
-				<td>
+				<td valign="top">
 					<input type='text' size='8' id='khoi_luong_tu' value=''/>
-				</td>				
-				<td>
-					<input type='text' size='8' id='khoi_luong_den' value=''/>				
 				</td>
-				<td>
+				<td valign="top">
+					<input type='text' size='8' id='khoi_luong_den' value=''/>
+				</td>
+				<td valign="top">
 					<select id="ma_phuong_tien">
+						<option value=''></option>
 					<?
 						global $wpdb;
 						$province = $wpdb->get_results("SELECT ma_phuong_tien, ten_phuong_tien FROM gia_phuong_tien");
@@ -343,21 +344,22 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&action=
 								echo "<option value='".$province2->ma_phuong_tien."'>".$province2->ten_phuong_tien."</option>";
 							}
 						}
-					?>						
+					?>
+					</select>
 				</td>
-				<td>
+				<td valign="top">
 					<input type='text' size='12' id='cuoc_phi' value='' />
 				</td>
-				<td>
-					<input type='text' size='8' id='khoi_luong_vuot' value=''/>
-				</td>				
-				<td>
+				<td valign="top">
+					<input type='text' size='8' id='don_vi_khoi_luong_vuot' value=''/>
+				</td>
+				<td valign="top">
 					<input type='text' size='12' id='gia_sau_12h' value=''/>
 					<input type='submit' value='    Save    ' />
 				</td>
-			</tr>			
+			</tr>
 		</table>
-		
+
 	</form>
 </div>
 <script type='text/javascript'>
