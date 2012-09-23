@@ -1810,7 +1810,7 @@ if ($_POST['mode'] == "submit") {
 			<select id='khach_hang' name="khach_hang">
 			<?
 				global $wpdb;
-				$province = $wpdb->get_results("select user_login as ma_khach_hang, user_nicename as ten_khach_hang from dev_users");
+				$province = $wpdb->get_results("select user_login as ma_khach_hang, concat(user_nicename,' - ',(select meta_value from dev_usermeta where user_id=ID and meta_key='last_name')) as ten_khach_hang from dev_users where user_login <> 'admin'");
 				foreach($province as $province2){
 					echo "<option value='".$province2->ma_khach_hang."'>".$province2->ten_khach_hang."</option>";
 				}

@@ -92,7 +92,7 @@ function danh_sach_tinh_di() {
 	global $wpdb;
 	$dich_vu=$_POST['dich_vu'];
 	$province = $wpdb->get_results("
-		select distinct ma_tinh ma_tinh_di,(select ten_tinh from gia_tinh_thanh_pho where ma_tinh=a.ma_tinh) tinh_di from gia_dich_vu_tinh_thanh a where a.la_tinh_di=1 and ma_dich_vu='".$dich_vu."'
+		select ma_tinh  ma_tinh_di, ten_tinh tinh_di from gia_tinh_thanh_pho where ma_tinh in ('tp_hcm','ha_noi') order by ma_tinh desc
 	");
 	foreach($province as $province2){
 		if(!empty($province2->tinh_di)){
@@ -105,7 +105,7 @@ function danh_sach_tinh_den() {
 	global $wpdb;
 	$dich_vu=$_POST['dich_vu'];
 	$province = $wpdb->get_results("
-		select ma_tinh ma_tinh_den,ten_tinh tinh_den from gia_tinh_thanh_pho a where a.ma_khu_vuc IS NULL or a.ma_khu_vuc=''
+		select ma_tinh ma_tinh_den,ten_tinh tinh_den from gia_tinh_thanh_pho a where a.ma_khu_vuc IS NULL or a.ma_khu_vuc='' order by ma_tinh
 	");
 	foreach($province as $province2){
 		if(!empty($province2->tinh_den)){

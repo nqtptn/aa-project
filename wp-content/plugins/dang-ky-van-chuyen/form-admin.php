@@ -47,9 +47,17 @@ elseif((!isset($this) || !is_a($this, 'Magic_Contact')))
       <div class="contactleft">
         <label for="label_email_contact"><?php _e('Label for Email'); ?></label>
       </div>
-      
+  
       <div class="contactright">
         <input id="label_email_contact" name="magic_contact[label_email_contact]" type="text" class="magic_contact" value="<?php echo $this->options['label_email_contact']; ?>" />
+      </div>
+	  
+	   <div class="contactleft">
+        <label for="label_phone_contact"><?php _e('Label for phone'); ?></label>
+      </div>
+  
+      <div class="contactright">
+        <input id="label_phone_contact" name="magic_contact[label_phone_contact]" type="text" class="magic_contact" value="<?php echo $this->options['label_phone_contact']; ?>" />
       </div>
       
       <div class="contactleft">
@@ -109,6 +117,14 @@ elseif((!isset($this) || !is_a($this, 'Magic_Contact')))
 
       <div class="contactright">
         <input name="magic_contact[hide_email_contact]" id="hide_email_contact" value="true" type="checkbox" <?php checked($this->options['hide_email_contact']); ?> />
+      </div>
+	  
+       <div class="contactleft">
+        <label for="hide_phone_contact"><?php _e('Hide Phone field'); ?></label>
+      </div>
+
+      <div class="contactright">
+        <input name="magic_contact[hide_phone_contact]" id="hide_phone_contact" value="true" type="checkbox" <?php checked($this->options['hide_phone_contact']); ?> />
       </div>
       
       <div class="contactleft">

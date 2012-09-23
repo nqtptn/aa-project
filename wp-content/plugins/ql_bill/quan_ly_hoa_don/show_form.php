@@ -234,6 +234,8 @@ function get_report_link()
 function load_content()
 {
 	$("#tablecontent").html("Loading...");
+	$ten_kh = $('#khach_hang').find(":selected").text();
+	$("#ten_khach_hang").html(" ( "  + $ten_kh + " )");
 	var xml_link=get_xml_link();
 	DatabaseGrid(xml_link,"tablecontent","filter",update_url);
 	$("#report").html("<img src='<? echo plugins_url('ql_bill/images/icon_16.gif')?>' border='0' style='vertical-align: middle' /> <a href='" + get_report_link() +"' target=_blank>Xuất Báo Cáo</a>");
@@ -245,7 +247,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 <select id='khach_hang' onchange="load_content()">
 <?
 	global $wpdb;
-	$province = $wpdb->get_results("select user_login as ma_khach_hang, user_nicename as ten_khach_hang from dev_users");
+	$province = $wpdb->get_results("select user_login as ma_khach_hang, concat(user_nicename,' - ',(select meta_value from dev_usermeta where user_id=ID and meta_key='last_name')) as ten_khach_hang from dev_users where user_login <> 'admin'");
 	//echo $wpdb->get_var( $wpdb->prepare("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho", $comment_author, $comment_date) );
 	foreach($province as $province2){
 		echo "<option value='".$province2->ma_khach_hang."'>".$province2->ten_khach_hang."</option>";
@@ -298,7 +300,10 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 <div id='report'></div>
 
 <div id='posting' style='margin-top:10px;border: 1px solid #ccc;-moz-border-radius: 5px;-webkit-border-radius: 5px;padding:10px'>
-	<div style='border-bottom:1px dotted #999;color:#588eaf'><b>Thêm mới</b></div>
+	<div style='border-bottom:1px dotted #999;color:#588eaf'>
+		<b>Thêm mới <label id="ten_khach_hang"></label>
+		</b>
+	</div>
 	<form name="post_form" method="post" onsubmit='return post_data(update_url)'>
 		<table>
 			<tr>

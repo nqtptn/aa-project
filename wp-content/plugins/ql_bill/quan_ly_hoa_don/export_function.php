@@ -1,7 +1,7 @@
 <?php
 	global $wpdb;
 	$current_user = wp_get_current_user();
-	$khach_hang=$current_user->user_login;
+	$khach_hang= $_GET['khach_hang'];
 	$temp2=$wpdb->get_row("
 		select user_login as
 		ma_khach_hang

@@ -34,6 +34,7 @@ class Magic_Contact {
       'subject_contact'         => 'Nội dung liên hệ',
       'label_name_contact'      => 'Tên liên hệ',
       'label_email_contact'     => 'E-mail',
+      'label_phone_contact'     => 'Phone',
       'label_website_contact'   => 'Website',
       'label_feedback_contact'  => 'Nội dung',
       'label_send_contact'      => 'Gửi',
@@ -41,6 +42,7 @@ class Magic_Contact {
       'notRecievedMsg_contact'  => 'Yêu cầu không gửi được, vui lòng thử lại!',
       'disclaimer_contact'      => 'Xin vui lòng điền thông tin yêu cầu của bạn, chúng tôi xin hân hạnh được phục vụ bạn!',
       'hide_email_contact'      => false,
+      'hide_phone_contact'      => false,
       'hide_website_contact'    => false,
       'side_contact'            => 'left'
     );
@@ -80,6 +82,7 @@ class Magic_Contact {
         $nv['subject_contact'] = isset($mc['subject_contact']) ? $mc['subject_contact'] : $this->options['subject_contact'];
         $nv['label_name_contact'] = isset($mc['label_name_contact']) ? $mc['label_name_contact'] : $this->options['label_name_contact'];
         $nv['label_email_contact'] = isset($mc['label_email_contact']) ? $mc['label_email_contact'] : $this->options['label_email_contact'];
+        $nv['label_phone_contact'] = isset($mc['label_phone_contact']) ? $mc['label_phone_contact'] : $this->options['label_phone_contact'];
         $nv['label_website_contact'] = isset($mc['label_website_contact']) ? $mc['label_website_contact'] : $this->options['label_website_contact'];
         $nv['label_feedback_contact'] = isset($mc['label_feedback_contact']) ? $mc['label_feedback_contact'] : $this->options['label_feedback_contact'];
         $nv['label_send_contact'] = isset($mc['label_send_contact']) ? $mc['label_send_contact'] : $this->options['label_send_contact'];
@@ -87,6 +90,7 @@ class Magic_Contact {
         $nv['notRecievedMsg_contact'] = isset($mc['notRecievedMsg_contact']) ? $mc['notRecievedMsg_contact'] : $this->options['notRecievedMsg_contact'];
         $nv['disclaimer_contact'] = isset($mc['disclaimer_contact']) ? $mc['disclaimer_contact'] : $this->options['disclaimer_contact'];
         $nv['hide_email_contact'] = isset($mc['hide_email_contact']) ? true : false;
+        $nv['hide_phone_contact'] = isset($mc['hide_phone_contact']) ? true : false;
         $nv['hide_website_contact'] = isset($mc['hide_website_contact']) ? true : false;
         $nv['side_contact'] = isset($mc['side_contact']) ? $mc['side_contact'] : $this->options['side_contact'];
         $this->options = array_merge($this->options, $nv);
@@ -107,10 +111,12 @@ class Magic_Contact {
     $js_vars = array(
       'name'            => 'Tên liên hệ',
       'email'           => 'E-mail',
+      'phone'           => 'Phone',
       'message'         => 'Nội dung',
       'subject'         => $this->options['subject_contact'],
       'label_name'      => $this->options['label_name_contact'],
       'label_email'     => $this->options['label_email_contact'],
+      'label_phone'     => $this->options['label_phone_contact'],
       'label_website'   => $this->options['label_website_contact'],
       'label_feedback'  => $this->options['label_feedback_contact'],
       'label_send'      => $this->options['label_send_contact'],
@@ -118,6 +124,7 @@ class Magic_Contact {
       'notRecievedMsg'  => $this->options['notRecievedMsg_contact'],
       'disclaimer'      => $this->options['disclaimer_contact'],
       'hide_email'      => $this->options['hide_email_contact'] ? 'true' : 'false',
+      'hide_phone'      => $this->options['hide_phone_contact'] ? 'true' : 'false',
       'hide_website'    => $this->options['hide_website_contact'] ? 'true' : 'false',
       'fileMail'        => admin_url('admin-ajax.php'),
       'side'            => $this->options['side_contact'],
@@ -132,17 +139,23 @@ class Magic_Contact {
   function div_magic_contact(){
     echo '<div id="mycontactform"> </div>';
   }
-	
   function magic_contact_ajax(){
-   
+	global $wpdb;
     $name = esc_attr(trim($_POST['name']));
     $emailAddr = is_email($_POST['email']) ? $_POST['email']: get_bloginfo('admin_email');
     $comment = nl2br(esc_attr(trim($_POST['comment'])));
+    $phone = nl2br(esc_attr(trim($_POST['phone'])));
     $subject = esc_attr(trim($_POST['subject']));	
     $website = empty($_POST['website']) ? false : esc_url($_POST['website']);
-    $contactMessage = sprintf('<div><p style="font-weight: bold; display: inline;">From:</p> %s</div>',$name);
+	$edit_poll_question = $wpdb->query("INSERT INTO $wpdb->gia_dang_ky_van_chuyen 
+		(ten_lien_he,dien_thoai,email,website,noi_dung)
+		value
+		('$name','$phone','$emailAddr','$website','$comment')");
+   $contactMessage = sprintf('<div><p style="font-weight: bold; display: inline;">From:</p> %s</div>',$name);
     if($website)
       $contactMessage .= sprintf('<div><p style="font-weight: bold; display: inline;">Website:</p> %s</div>',$website);
+	if($phone)
+      $contactMessage .= sprintf('<div><p style="font-weight: bold; display: inline;">Phone:</p> %s</div>',$phone);
     if($emailAddr)
       $contactMessage .= sprintf('<div><p style="font-weight: bold; display: inline;">Reply to:</p> %s</div>',$emailAddr);
     
