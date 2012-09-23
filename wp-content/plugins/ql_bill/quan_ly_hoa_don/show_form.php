@@ -50,8 +50,8 @@ function post_data(xml_link){
 		input_value['phu_thu']=0;
 	}
 	input_value['ghi_chu'] = $("#ghi_chu").val();
-	input_value['don_vi_kg'] = ($("#don_vi_kg").is(':checked') ? 1 : 0);
-	input_value['khoi_luong'] = $("#khoi_luong").val();
+	input_value['don_vi_kg'] = ($("#don_vi_kg").attr('checked') ? 1000 : 1);
+	input_value['khoi_luong'] = $("#khoi_luong").val() * input_value['don_vi_kg'];
 	input_value['tong'] = parseInt(input_value['cuoc_phi']) + parseInt(input_value['phu_thu']);
 	input_value['stt'] = editableGrid.getRowCount() + 1;
 	input_value['so_bill'] = $("#so_bill").val();
@@ -181,6 +181,7 @@ function delete_record(editableGrid, rowIndex,sys_url,onResponse)
 }
 function load_cuoc_phi()
 {
+	var temp2 = ($("#don_vi_kg").attr('checked') ? 1 : -1);
 	$.ajax({
 		url: "<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=load_cuoc_phi&noheader=1&nofooter=1",
 		type: 'POST',
@@ -188,7 +189,7 @@ function load_cuoc_phi()
 		data: {
 			ma_dich_vu : $("#ma_dich_vu").val(),
 			ma_tinh_den : $("#ma_tinh_den").val(),
-			don_vi_kg : $("#don_vi_kg").val(),
+			don_vi_kg : temp2,
 			khoi_luong : $("#khoi_luong").val()
 		},
 		success: function (response)
@@ -232,6 +233,7 @@ function get_report_link()
 	link = link + "&khach_hang=" + $("#khach_hang").val();
 	link = link + "&thang=" + $("#thang").val();
 	link = link + "&nam=" + $("#nam").val();
+	link = link + "&content=" + $("#report_content").val();
 	return link;
 }
 function load_content()
@@ -250,7 +252,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 <select id='khach_hang' onchange="load_content()">
 <?
 	global $wpdb;
-	$province = $wpdb->get_results("select user_login as ma_khach_hang, concat(user_nicename,' - ',(select meta_value from dev_usermeta where user_id=ID and meta_key='last_name')) as ten_khach_hang from dev_users where user_login <> 'admin'");
+	$province = $wpdb->get_results("select user_login as ma_khach_hang, concat(user_nicename,' - ',(select meta_value from dev_usermeta where user_id=ID and meta_key='last_name')) as ten_khach_hang from dev_users where user_login <> 'admin' order by ma_khach_hang");
 	//echo $wpdb->get_var( $wpdb->prepare("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho", $comment_author, $comment_date) );
 	foreach($province as $province2){
 		echo "<option value='".$province2->ma_khach_hang."'>".$province2->ten_khach_hang."</option>";
@@ -300,8 +302,14 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 
 <div id="tablecontent"></div>
 <div id="paginator"></div>
-<div id='report'></div>
-
+<div id='posting' style='margin-top:10px;border: 1px solid #ccc;-moz-border-radius: 5px;-webkit-border-radius: 5px;padding:10px'>
+	<div style='border-bottom:1px dotted #999;color:#588eaf'>
+		<b>Báo cáo</b>
+	</div>
+	Nội dung footer báo cáo:
+	<input type="text" id="report_content" size="107" onchange="load_content()" value="Đề nghị Quý cơ quan kiểm tra và thanh toán bảng kê trên trước ngày" />
+	<span id='report'></span>
+</div>
 <div id='posting' style='margin-top:10px;border: 1px solid #ccc;-moz-border-radius: 5px;-webkit-border-radius: 5px;padding:10px'>
 	<div style='border-bottom:1px dotted #999;color:#588eaf'>
 		<b>Thêm mới <label id="ten_khach_hang"></label>
@@ -392,7 +400,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 					</select>				
 				</td>
 				<td align="right">
-					<input type='checkbox' id='don_vi_kg' value='0' onchange="load_cuoc_phi();"/>
+					<input type='checkbox' id='don_vi_kg' value='1' CHECKED onclick="load_cuoc_phi();"/>
 				</td>
 				<td>
 					<input type='text' size='8' id='khoi_luong' value=''  onchange="load_cuoc_phi();" />
