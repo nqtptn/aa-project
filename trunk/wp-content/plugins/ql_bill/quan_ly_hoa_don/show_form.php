@@ -50,6 +50,7 @@ function post_data(xml_link){
 		input_value['phu_thu']=0;
 	}
 	input_value['ghi_chu'] = $("#ghi_chu").val();
+	input_value['don_vi_kg'] = ($("#don_vi_kg").is(':checked') ? 1 : 0);
 	input_value['khoi_luong'] = $("#khoi_luong").val();
 	input_value['tong'] = parseInt(input_value['cuoc_phi']) + parseInt(input_value['phu_thu']);
 	input_value['stt'] = editableGrid.getRowCount() + 1;
@@ -75,6 +76,7 @@ function post_data(xml_link){
 				cuoc_phi : input_value['cuoc_phi'],
 				phu_thu : input_value['phu_thu'],
 				ghi_chu : input_value['ghi_chu'],
+				don_vi_kg : input_value['don_vi_kg'],
 				khoi_luong : input_value['khoi_luong'],
 				khach_hang : $("#khach_hang").val(),
 				so_bill : $("#so_bill").val(),
@@ -186,6 +188,7 @@ function load_cuoc_phi()
 		data: {
 			ma_dich_vu : $("#ma_dich_vu").val(),
 			ma_tinh_den : $("#ma_tinh_den").val(),
+			don_vi_kg : $("#don_vi_kg").val(),
 			khoi_luong : $("#khoi_luong").val()
 		},
 		success: function (response)
@@ -321,8 +324,11 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 				</td>
 
 				<td>
-					<label for="khoi_luong">Trọng lượng</label>
+					<label for="khoi_luong">Nhập KG</label>
 				</td>
+				<td>
+					<label for="khoi_luong">Trọng lượng</label>
+				</td>				
 				<td>
 					<label for="cuoc_phi">Cước phí</label>
 				</td>
@@ -384,6 +390,9 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 						}
 					?>
 					</select>				
+				</td>
+				<td align="right">
+					<input type='checkbox' id='don_vi_kg' value='0' onchange="load_cuoc_phi();"/>
 				</td>
 				<td>
 					<input type='text' size='8' id='khoi_luong' value=''  onchange="load_cuoc_phi();" />
