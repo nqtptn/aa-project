@@ -52,6 +52,7 @@ function post_data(xml_link){
 	input_value['ghi_chu'] = $("#ghi_chu").val();
 	input_value['don_vi_kg'] = ($("#don_vi_kg").attr('checked') ? 1000 : 1);
 	input_value['khoi_luong'] = $("#khoi_luong").val() * input_value['don_vi_kg'];
+	input_value['ngoai_thanh'] = ($("#ngoai_thanh").is(':checked') ? 1 : 0);
 	input_value['tong'] = parseInt(input_value['cuoc_phi']) + parseInt(input_value['phu_thu']);
 	input_value['stt'] = editableGrid.getRowCount() + 1;
 	input_value['so_bill'] = $("#so_bill").val();
@@ -76,8 +77,9 @@ function post_data(xml_link){
 				cuoc_phi : input_value['cuoc_phi'],
 				phu_thu : input_value['phu_thu'],
 				ghi_chu : input_value['ghi_chu'],
-				don_vi_kg : input_value['don_vi_kg'],
+				don_vi_kg : input_value['don_vi_kg'],				
 				khoi_luong : input_value['khoi_luong'],
+				ngoai_thanh : input_value['ngoai_thanh'],
 				khach_hang : $("#khach_hang").val(),
 				so_bill : $("#so_bill").val(),
 				tong : parseInt(input_value['cuoc_phi']) + parseInt(input_value['phu_thu']),
@@ -131,9 +133,9 @@ function updateCellValue(editableGrid, rowIndex, columnIndex, oldValue, newValue
 			var success = onResponse ? onResponse(response) : (response == "ok" || !isNaN(parseInt(response))); // by default, a sucessfull reponse can be "ok" or a database id
 			if (!success) editableGrid.setValueAt(rowIndex, columnIndex, oldValue)
 			else{
-				var cot_cuoc_phi=6;
-				var cot_phu_thu=7;
-				var cot_tong=8;
+				var cot_cuoc_phi=7;
+				var cot_phu_thu=8;
+				var cot_tong=9;
 				if(editableGrid.getColumnName(columnIndex)=="phu_thu" || editableGrid.getColumnName(columnIndex)=="cuoc_phi"){
 					total = editableGrid.getValueAt(rowIndex, cot_cuoc_phi) + editableGrid.getValueAt(rowIndex, cot_phu_thu);
 					editableGrid.setValueAt(rowIndex, cot_tong, total);
@@ -182,6 +184,7 @@ function delete_record(editableGrid, rowIndex,sys_url,onResponse)
 function load_cuoc_phi()
 {
 	var temp2 = ($("#don_vi_kg").attr('checked') ? 1 : -1);
+	var temp3 = ($("#ngoai_thanh").attr('checked') ? 1 : 0);
 	$.ajax({
 		url: "<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=load_cuoc_phi&noheader=1&nofooter=1",
 		type: 'POST',
@@ -190,6 +193,7 @@ function load_cuoc_phi()
 			ma_dich_vu : $("#ma_dich_vu").val(),
 			ma_tinh_den : $("#ma_tinh_den").val(),
 			don_vi_kg : temp2,
+			ngoai_thanh : temp3,
 			khoi_luong : $("#khoi_luong").val()
 		},
 		success: function (response)
@@ -338,6 +342,9 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 					<label for="khoi_luong">Trọng lượng</label>
 				</td>				
 				<td>
+					<label for="ngoai_thanh">Ngoại thành</label>
+				</td>
+				<td>
 					<label for="cuoc_phi">Cước phí</label>
 				</td>
 				<td>
@@ -404,6 +411,9 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 				</td>
 				<td>
 					<input type='text' size='8' id='khoi_luong' value=''  onchange="load_cuoc_phi();" />
+				</td>
+				<td align="right">
+					<input type='checkbox' id='ngoai_thanh' value='0' onclick="load_cuoc_phi();"/>
 				</td>
 				<td>
 					<input type='text' size='12' id='cuoc_phi' value='' />

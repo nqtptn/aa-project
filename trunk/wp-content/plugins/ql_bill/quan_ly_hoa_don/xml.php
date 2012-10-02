@@ -10,6 +10,7 @@ $grid->addColumn('so_bill', 'Số Bill', 'string', NULL,true);
 $grid->addColumn('ma_dich_vu', 'Dịch vụ', 'string',  fetch_pairs($mysqli,'select ma_dich_vu,ten_dich_vu from  gia_dich_vu where la_dich_vu_cong_them=0'),true);
 $grid->addColumn('ma_tinh_den', 'Tỉnh đến', 'string' , fetch_pairs($mysqli,'SELECT ma_tinh as ma_tinh_den, ten_tinh FROM gia_tinh_thanh_pho'),true);
 $grid->addColumn('khoi_luong', 'Trọng lượng', 'integer (tấn)', NULL,true);
+$grid->addColumn('ngoai_thanh', 'Ngoại thành', 'boolean', NULL,true);
 $grid->addColumn('cuoc_phi', 'Giá cước', 'integer', NULL,true);
 $grid->addColumn('phu_thu', 'Phụ phí', 'integer', NULL,true);
 $grid->addColumn('tong', 'Tổng', 'integer', NULL,false);
@@ -23,6 +24,7 @@ $query="
 		ma_dich_vu,
 		ma_tinh_den,
 		khoi_luong,
+		ngoai_thanh,
 		cuoc_phi,
 		phu_thu,
 		tong,
