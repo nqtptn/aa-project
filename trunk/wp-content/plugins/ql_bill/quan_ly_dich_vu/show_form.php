@@ -48,6 +48,7 @@ function post_data(xml_link){
 		input_value['gia_cong_them']=0;
 	}
 	input_value['ti_le_phu_phi'] = parseInt($("#ti_le_phu_phi").val());
+	input_value['ti_le_phu_phi_ngoai_thanh'] = parseInt($("#ti_le_phu_phi_ngoai_thanh").val());
 	if(input_value['ti_le_phu_phi']==""){
 		input_value['ti_le_phu_phi']=0;
 	}
@@ -60,8 +61,11 @@ function post_data(xml_link){
 		alert("Giá cộng thêm phải là số!");
 		$("#gia_cong_them").focus();
 	}else if(isNaN(input_value['ti_le_phu_phi'])){
-		alert("Tỉ lệ cộng thêm phải là số!");
+		alert("Tỉ lệ phụ phí phải là số!");
 		$("#ti_le_phu_phi").focus();
+	}else if(isNaN(input_value['ti_le_phu_phi_ngoai_thanh'])){
+		alert("Tỉ lệ phụ phí ngoại thành phải là số!");
+		$("#ti_le_phu_phi_ngoai_thanh").focus();		
 	}else if(isNaN(input_value['vat'])){
 		alert("Thuế phải là số!");
 		$("#vat").focus();
@@ -78,6 +82,7 @@ function post_data(xml_link){
 				la_dich_vu_cong_them : input_value['la_dich_vu_cong_them'],
 				gia_cong_them : input_value['gia_cong_them'],
 				ti_le_phu_phi : input_value['ti_le_phu_phi'],
+				ti_le_phu_phi_ngoai_thanh : input_value['ti_le_phu_phi_ngoai_thanh'],
 				vat : input_value['vat'],
 				action: "add_record",
 			},
@@ -95,6 +100,7 @@ function post_data(xml_link){
 						$("#la_dich_vu_cong_them").removeAttr("checked");
 						$("#gia_cong_them").val("");
 						$("#ti_le_phu_phi").val("15");
+						$("#ti_le_phu_phi_ngoai_thanh").val("10");
 						$("#vat").val("10");
 						$("#ma_dich_vu").focus();
 					}
@@ -162,44 +168,7 @@ function delete_record(editableGrid, rowIndex,sys_url,onResponse)
 		async: true
 	});
 }
-function load_cuoc_phi()
-{
-	$.ajax({
-		url: "<? echo get_admin_url()?>admin.php?page=quan_ly_dich_vu&action=load_cuoc_phi&noheader=1&nofooter=1",
-		type: 'POST',
-		dataType: "html",
-		data: {
-			ma_dich_vu : $("#ma_dich_vu").val(),
-			ma_tinh_den : $("#ma_tinh_den").val(),
-			khoi_luong : $("#khoi_luong").val()
-		},
-		success: function (response)
-		{
-			// reset old value if failed then highlight row
-			$("#cuoc_phi").val(response);
-		},
-		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
-		async: true
-	});
-}
-function load_tinh_tp()
-{
-	$.ajax({
-		url: "<? echo get_admin_url()?>admin.php?page=quan_ly_dich_vu&action=load_tinh_tp&noheader=1&nofooter=1",
-		type: 'POST',
-		dataType: "html",
-		data: {
-			ma_dich_vu : $("#ma_dich_vu").val()
-		},
-		success: function (response)
-		{
-			// reset old value if failed then highlight row
-			$("#ma_tinh_den").html(response);
-		},
-		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
-		async: true
-	});
-}
+
 function get_xml_link()
 {
 	var link='<? echo get_admin_url()?>admin.php?page=quan_ly_dich_vu&noheader=1&nofooter=1&action=XML';
@@ -263,6 +232,9 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_dich_vu&action=u
 					<label for="ti_le_phu_phi">Tỉ lệ phụ phí (%)</label>
 				</td>
 				<td>
+					<label for="ti_le_phu_phi_ngoai_thanh">Tỉ lệ phụ phí ngoại thành (%)</label>
+				</td>				
+				<td>
 					<label for="vat">Thuế VAT (%)</label>
 				</td>
 				<td></td>
@@ -289,6 +261,9 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_dich_vu&action=u
 				<td>
 					<input type='text' size='8' id='ti_le_phu_phi' value='15' />
 				</td>
+				<td>
+					<input type='text' size='8' id='ti_le_phu_phi_ngoai_thanh' value='10' />
+				</td>				
 				<td>
 					<input type='text' size='8' id='vat' value='10' />
 				</td>
