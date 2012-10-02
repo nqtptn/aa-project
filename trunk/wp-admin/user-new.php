@@ -37,7 +37,6 @@ Please click the following link to activate your user account:
 
 if ( isset($_REQUEST['action']) && 'adduser' == $_REQUEST['action'] ) {
 	check_admin_referer( 'add-user', '_wpnonce_add-user' );
-
 	$user_details = null;
 	if ( false !== strpos($_REQUEST[ 'email' ], '@') ) {
 		$user_details = get_user_by('email', $_REQUEST[ 'email' ]);
@@ -88,16 +87,18 @@ Please click the following link to confirm the invite:
 	die();
 } elseif ( isset($_REQUEST['action']) && 'createuser' == $_REQUEST['action'] ) {
 	check_admin_referer( 'create-user', '_wpnonce_create-user' );
-
 	if ( ! current_user_can('create_users') )
 		wp_die(__('Cheatin&#8217; uh?'));
 
 	if ( ! is_multisite() ) {
 		$user_id = edit_user();
-
 		if ( is_wp_error( $user_id ) ) {
 			$add_user_errors = $user_id;
 		} else {
+			$ma_tinh_di=$_POST['ma_tinh_di'];
+			if($ma_tinh_di){
+				$temp = $wpdb->query("UPDATE $wpdb->users SET ma_tinh_di='$ma_tinh_di' WHERE ID=$user_id");
+			}
 			if ( current_user_can( 'list_users' ) )
 				$redirect = 'users.php?update=add&id=' . $user_id;
 			else
@@ -198,7 +199,7 @@ if ( isset($_GET['update']) ) {
 			$messages[] = __('User added.');
 	}
 }
-?>
+	?>
 <div class="wrap">
 <?php screen_icon(); ?>
 <h2 id="add-new-user"> <?php
@@ -285,7 +286,7 @@ if ( current_user_can( 'create_users') ) {
 <?php wp_nonce_field( 'create-user', '_wpnonce_create-user' ) ?>
 <?php
 // Load up the passed data, else set to a default.
-foreach ( array( 'user_login' => 'login', 'first_name' => 'firstname', 'last_name' => 'lastname',
+foreach ( array( 'user_login' => 'login','ma_tinh_di' => 'ma_tinh_di','yim' => 'yim','jabber' => 'jabber', 'first_name' => 'firstname', 'last_name' => 'lastname','nickname' => 'nickname',
 				'email' => 'email', 'url' => 'uri', 'role' => 'role', 'send_password' => 'send_password', 'noconfirmation' => 'ignore_pass' ) as $post_field => $var ) {
 	$var = "new_user_$var";
 	if( isset( $_POST['createuser'] ) ) {
@@ -319,6 +320,37 @@ foreach ( array( 'user_login' => 'login', 'first_name' => 'firstname', 'last_nam
 		<th scope="row"><label for="url"><?php _e('Website') ?></label></th>
 		<td><input name="url" type="text" id="url" class="code" value="<?php echo esc_attr($new_user_uri); ?>" /></td>
 	</tr>
+	<tr>
+		<th><label for="ma_tinh_di"><?php _e('Tỉnh thành'); ?></label></th>
+		<td>
+			<select id='ma_tinh_di' name="ma_tinh_di">
+			<?
+				global $wpdb;
+				$province = $wpdb->get_results("SELECT `ma_tinh`,`ten_tinh` FROM `gia_tinh_thanh_pho` WHERE  `ma_tinh` in ('tp_hcm','ha_noi') ORDER BY `ten_tinh`");
+				//echo $wpdb->get_var( $wpdb->prepare("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho", $comment_author, $comment_date) );
+				foreach($province as $province2){
+					echo "<option value='".$province2->ma_tinh."'>".$province2->ten_tinh."</option>";
+				}
+			?>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th><label for="nickname"><?php _e('Địa chỉ'); ?></label></th>
+		<td><input type="text" name="nickname" id="nickname" value="<?php echo esc_attr($profileuser->nickname) ?>" class="regular-text" /></td>
+	</tr>
+<?php
+	foreach (_wp_get_user_contactmethods( $profileuser ) as $name => $desc) {
+?>
+
+<tr>
+	<th><label for="<?php echo $name; ?>"><?php echo apply_filters('user_'.$name.'_label', $desc); ?></label></th>
+	<td><input type="text" name="<?php echo $name; ?>" id="<?php echo $name; ?>" value="<?php echo esc_attr($profileuser->$name) ?>" class="regular-text" /></td>
+</tr>
+<?php
+	}
+?>
+
 <?php if ( apply_filters('show_password_fields', true) ) : ?>
 	<tr class="form-field form-required">
 		<th scope="row"><label for="pass1"><?php _e('Password'); ?> <span class="description"><?php /* translators: password input field */_e('(twice, required)'); ?></span></label></th>
