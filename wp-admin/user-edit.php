@@ -130,6 +130,10 @@ if ( !is_multisite() ) {
 
 if ( !is_wp_error( $errors ) ) {
 	$redirect = (IS_PROFILE_PAGE ? "profile.php?" : "user-edit.php?user_id=$user_id&"). "updated=true";
+	$ma_tinh_di=$_POST['ma_tinh_di'];
+	if($ma_tinh_di){
+		$temp = $wpdb->query("UPDATE $wpdb->users SET ma_tinh_di='$ma_tinh_di' WHERE ID=$user_id");
+	}
 	if ( $wp_http_referer )
 		$redirect = add_query_arg('wp_http_referer', urlencode($wp_http_referer), $redirect);
 	wp_redirect($redirect);
@@ -275,7 +279,21 @@ if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_c
 	<th><label for="last_name"><?php _e('Tên công ty') ?></label></th>
 	<td><input type="text" name="last_name" id="last_name" value="<?php echo esc_attr($profileuser->last_name) ?>" class="regular-text" /></td>
 </tr>
-
+<tr>
+		<th><label for="ma_tinh_di"><?php _e('Tỉnh thành'); ?></label></th>
+		<td>
+			<select id='ma_tinh_di'  name="ma_tinh_di">
+			<?
+				global $wpdb;
+				$province = $wpdb->get_results("SELECT `ma_tinh`,`ten_tinh` FROM `gia_tinh_thanh_pho` WHERE `ma_tinh` in ('tp_hcm','ha_noi') ORDER BY `ten_tinh`");
+				//echo $wpdb->get_var( $wpdb->prepare("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho", $comment_author, $comment_date) );
+				foreach($province as $province2){
+					echo "<option value='".$province2->ma_tinh."'".(esc_attr($profileuser->ma_tinh_di)==$province2->ma_tinh ? "selected" : "").">".$province2->ten_tinh."</option>";
+				}
+			?>
+			</select>
+		</td>
+	</tr>
 <tr>
 	<th><label for="nickname"><?php _e('Địa chỉ'); ?></label></th>
 	<td><input type="text" name="nickname" id="nickname" value="<?php echo esc_attr($profileuser->nickname) ?>" class="regular-text" /></td>
