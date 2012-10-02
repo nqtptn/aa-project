@@ -116,7 +116,7 @@ function danh_sach_tinh_den() {
 }
 function danh_sach_dich_vu() {
 	global $wpdb;
-	$temp=$wpdb->get_results("select ma_dich_vu,ten_dich_vu from  gia_dich_vu where la_dich_vu_cong_them=0 order by (case when ma_dich_vu='chuyen_phat_nhanh' then 0 else 1 end)");
+	$temp=$wpdb->get_results("select ma_dich_vu,ten_dich_vu from  gia_dich_vu order by (case when ma_dich_vu='chuyen_phat_nhanh' then 0 else 1 end)");
 	foreach($temp as $temp2){
 		if(!empty($temp2->ma_dich_vu)){
 			echo "<option value='".$temp2->ma_dich_vu."'>".$temp2->ten_dich_vu."</option>";
