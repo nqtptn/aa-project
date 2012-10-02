@@ -7,7 +7,7 @@ $nam = $mysqli->real_escape_string(strip_tags($_GET['nam']));
 $grid->addColumn('stt', 'Stt', 'string', NULL,true);
 $grid->addColumn('ngay', 'Ngày', 'string', NULL,true);
 $grid->addColumn('so_bill', 'Số Bill', 'string', NULL,true);
-$grid->addColumn('ma_dich_vu', 'Dịch vụ', 'string',  fetch_pairs($mysqli,'select ma_dich_vu,ten_dich_vu from  gia_dich_vu where la_dich_vu_cong_them=0'),true);
+$grid->addColumn('ma_dich_vu', 'Dịch vụ', 'string',  fetch_pairs($mysqli,'select ma_dich_vu,ten_dich_vu from gia_dich_vu'),true);
 $grid->addColumn('ma_tinh_den', 'Tỉnh đến', 'string' , fetch_pairs($mysqli,'SELECT ma_tinh as ma_tinh_den, ten_tinh FROM gia_tinh_thanh_pho'),true);
 $grid->addColumn('khoi_luong', 'Trọng lượng', 'integer (tấn)', NULL,true);
 $grid->addColumn('ngoai_thanh', 'Ngoại thành', 'boolean', NULL,true);

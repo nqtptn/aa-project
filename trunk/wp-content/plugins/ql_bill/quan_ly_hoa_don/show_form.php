@@ -380,7 +380,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 					<select id='ma_dich_vu' onchange="load_cuoc_phi();">
 						<?
 							global $wpdb;
-							$temp=$wpdb->get_results("select ma_dich_vu,ten_dich_vu from  gia_dich_vu where la_dich_vu_cong_them=0");
+							$temp=$wpdb->get_results("select ma_dich_vu,ten_dich_vu from  gia_dich_vu");
 							foreach($temp as $temp2){
 								if(!empty($temp2->ma_dich_vu)){
 									if($temp2->ma_dich_vu == 'chuyen_phat_nhanh'){
