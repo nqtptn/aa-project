@@ -14,9 +14,9 @@ global $woocommerce;
 	<table class="shop_table">
 		<thead>
 			<tr>
-				<th><?php _e('Product', 'woocommerce'); ?></th>
-				<th><?php _e('Qty', 'woocommerce'); ?></th>
-				<th><?php _e('Totals', 'woocommerce'); ?></th>
+				<th><?php _e('Sản phẩm', 'woocommerce'); ?></th>
+				<th><?php _e('Số lượng', 'woocommerce'); ?></th>
+				<th><?php _e('Tổng', 'woocommerce'); ?></th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -81,7 +81,7 @@ global $woocommerce;
 
 		<div class="form-row">
 			<?php $woocommerce->nonce_field('pay')?>
-			<input type="submit" class="button alt" id="place_order" value="<?php _e('Pay for order', 'woocommerce'); ?>" />
+			<input type="submit" class="button alt" id="place_order" value="<?php _e('Thanh toán cho đơn hàng', 'woocommerce'); ?>" />
 			<input type="hidden" name="woocommerce_pay" value="1" />
 		</div>
 

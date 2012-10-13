@@ -782,7 +782,7 @@ class WC_Order {
 		elseif ( $this->get_shipping_method() ) :
 			$shipping = $this->get_shipping_method();
 		else :
-			$shipping = __('Free!', 'woocommerce');
+			$shipping = __('Miễn phí!', 'woocommerce');
 		endif;
 
 		return apply_filters( 'woocommerce_order_shipping_to_display', $shipping, $this );
@@ -912,18 +912,18 @@ class WC_Order {
 		} elseif ( get_option( 'woocommerce_display_cart_taxes_if_zero' ) == 'yes' ) {
 			$total_rows['tax'] = array(
 				'label' => $woocommerce->countries->tax_or_vat(),
-				'value'	=> _x( 'N/A', 'Relating to tax', 'woocommerce' )
+				'value'	=> _x( 'N/A', 'Thuế', 'woocommerce' )
 			);
 		}
 
 		if ( $this->get_order_discount() > 0 )
 			$total_rows['order_discount'] = array(
-				'label' => __( 'Order Discount:', 'woocommerce' ),
+				'label' => __( 'Giảm giá:', 'woocommerce' ),
 				'value'	=> '-' . $this->get_order_discount_to_display()
 			);
 
 		$total_rows['order_total'] = array(
-			'label' => __( 'Order Total:', 'woocommerce' ),
+			'label' => __( 'Tổng đơn hàng:', 'woocommerce' ),
 			'value'	=> $this->get_formatted_order_total()
 		);
 
@@ -1088,7 +1088,7 @@ class WC_Order {
 				do_action( 'woocommerce_order_status_' . $new_status->slug , $this->id );
 				do_action( 'woocommerce_order_status_' . $this->status . '_to_' . $new_status->slug, $this->id );
 
-				$this->add_order_note( $note . sprintf( __('Order status changed from %s to %s.', 'woocommerce'), __( $old_status->name, 'woocommerce' ), __( $new_status->name, 'woocommerce' ) ) );
+				$this->add_order_note( $note . sprintf( __('Trạng thái đơn hàng đã được chuyển từ from %s sang %s.', 'woocommerce'), __( $old_status->name, 'woocommerce' ), __( $new_status->name, 'woocommerce' ) ) );
 
 				// Record the completed date of the order
 				if ( $new_status->slug == 'completed' )

@@ -50,7 +50,7 @@ if ( ! function_exists( 'woocommerce_content' ) ) {
 				<?php endif; ?>
 
 				<?php if ( get_query_var( 'paged' ) ) : ?>
-					<?php printf( __( '&nbsp;&ndash; Page %s', 'woocommerce' ), get_query_var( 'paged' ) ); ?>
+					<?php printf( __( '&nbsp;&ndash; Trang %s', 'woocommerce' ), get_query_var( 'paged' ) ); ?>
 				<?php endif; ?>
 			</h1>
 

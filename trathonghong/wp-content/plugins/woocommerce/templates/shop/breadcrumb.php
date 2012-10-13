@@ -201,7 +201,7 @@ if ( ( ! is_home() && ! is_front_page() && ! ( is_post_type_archive() && get_opt
 	}
 
 	if ( get_query_var( 'paged' ) )
-		echo ' (' . __( 'Page', 'woocommerce' ) . ' ' . get_query_var( 'paged' ) . ')';
+		echo ' (' . __( 'TRANG', 'woocommerce' ) . ' ' . get_query_var( 'paged' ) . ')';
 
 	echo $wrap_after;
 

@@ -43,7 +43,7 @@ global $woocommerce;
 
 	else :
 
-		echo '<h2>'.__('Reviews', 'woocommerce').'</h2>';
+		echo '<h2>'.__('Đánh giá', 'woocommerce').'</h2>';
 
 	endif;
 
@@ -72,7 +72,7 @@ global $woocommerce;
 
 		$title_reply = __('Thực hiện đánh giá', 'woocommerce').' &ldquo;'.$post->post_title.'&rdquo;';
 
-		echo '<p>'.__('Chưa có đánh giá, xin mời bạn thực hiện <a href="#review_form" class="inline show_review_form">đánh giá</a>?', 'woocommerce').'</p>';
+		echo '<p>'.__('Chưa có đánh giá cho sản phẩm này, xin mời bạn thực hiện <a href="#review_form" class="inline show_review_form">đánh giá sản phẩm</a>?', 'woocommerce').'</p>';
 
 	endif;
 

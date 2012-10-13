@@ -26,7 +26,7 @@ get_header('shop'); ?>
 				<?php
 					printf( __( 'Search Results: &ldquo;%s&rdquo;', 'woocommerce' ), get_search_query() );
 					if ( get_query_var( 'paged' ) )
-						printf( __( '&nbsp;&ndash; Page %s', 'woocommerce' ), get_query_var( 'paged' ) );
+						printf( __( '&nbsp;&ndash; Trang %s', 'woocommerce' ), get_query_var( 'paged' ) );
 				?>
 			<?php elseif ( is_tax() ) : ?>
 				<?php echo single_term_title( "", false ); ?>

@@ -285,15 +285,15 @@ function woocommerce_view_order() {
 	}
 
 	if ( $order->user_id != $user_id ) {
-		echo '<div class="woocommerce_error">' . __('Invalid order.', 'woocommerce') . ' <a href="'.get_permalink( woocommerce_get_page_id('myaccount') ).'">'. __('My Account &rarr;', 'woocommerce') .'</a>' . '</div>';
+		echo '<div class="woocommerce_error">' . __('Đơn hàng không hợp lệ.', 'woocommerce') . ' <a href="'.get_permalink( woocommerce_get_page_id('myaccount') ).'">'. __('My Account &rarr;', 'woocommerce') .'</a>' . '</div>';
 		return;
 	}
 
 	$status = get_term_by('slug', $order->status, 'shop_order_status');
 
 	echo '<p class="order-info">'
-	. sprintf( __( 'Order <mark class="order-number">%s</mark> made on <mark class="order-date">%s</mark>', 'woocommerce'), $order->get_order_number(), date_i18n( get_option( 'date_format' ), strtotime( $order->order_date ) ) )
-	. '. ' . sprintf( __( 'Order status: <mark class="order-status">%s</mark>', 'woocommerce' ), __( $status->name, 'woocommerce' ) )
+	. sprintf( __( 'Đơn hàng <mark class="order-number">%s</mark> được tạo vào ngày <mark class="order-date">%s</mark>', 'woocommerce'), $order->get_order_number(), date_i18n( get_option( 'date_format' ), strtotime( $order->order_date ) ) )
+	. '. ' . sprintf( __( 'Trạng thái đơn hàng là <mark class="order-status">%s</mark>', 'woocommerce' ), __( $status->name, 'woocommerce' ) )
 	. '.</p>';
 
 	$notes = $order->get_customer_order_notes();

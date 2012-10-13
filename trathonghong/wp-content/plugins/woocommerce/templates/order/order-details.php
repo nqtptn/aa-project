@@ -15,9 +15,9 @@ $order = new WC_Order( $order_id );
 <table class="shop_table order_details">
 	<thead>
 		<tr>
-			<th class="product-name"><?php _e('Product', 'woocommerce'); ?></th>
-			<th class="product-quantity"><?php _e('Qty', 'woocommerce'); ?></th>
-			<th class="product-total"><?php _e('Totals', 'woocommerce'); ?></th>
+			<th class="product-name"><?php _e('Sản phẩm', 'woocommerce'); ?></th>
+			<th class="product-quantity"><?php _e('Số lượng', 'woocommerce'); ?></th>
+			<th class="product-total"><?php _e('Tổng', 'woocommerce'); ?></th>
 		</tr>
 	</thead>
 	<tfoot>
