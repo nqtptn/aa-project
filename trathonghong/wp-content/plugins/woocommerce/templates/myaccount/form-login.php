@@ -21,10 +21,10 @@ global $woocommerce; ?>
 
 <?php endif; ?>
 
-		<h2><?php _e('Login', 'woocommerce'); ?></h2>
+		<h2><?php _e('Đăng nhập', 'woocommerce'); ?></h2>
 		<form method="post" class="login">
 			<p class="form-row form-row-first">
-				<label for="username"><?php _e('Username or email', 'woocommerce'); ?> <span class="required">*</span></label>
+				<label for="username"><?php _e('Tài khoản / E-mail', 'woocommerce'); ?> <span class="required">*</span></label>
 				<input type="text" class="input-text" name="username" id="username" />
 			</p>
 			<p class="form-row form-row-last">
@@ -35,8 +35,8 @@ global $woocommerce; ?>
 
 			<p class="form-row">
 				<?php $woocommerce->nonce_field('login', 'login') ?>
-				<input type="submit" class="button" name="login" value="<?php _e('Login', 'woocommerce'); ?>" />
-				<a class="lost_password" href="<?php echo esc_url( wp_lostpassword_url( home_url() ) ); ?>"><?php _e('Lost Password?', 'woocommerce'); ?></a>
+				<input type="submit" class="button" name="login" value="<?php _e('Đăng nhập', 'woocommerce'); ?>" />
+				<a class="lost_password" href="<?php echo esc_url( wp_lostpassword_url( home_url() ) ); ?>"><?php _e('Quên password?', 'woocommerce'); ?></a>
 			</p>
 		</form>
 
@@ -46,13 +46,13 @@ global $woocommerce; ?>
 
 	<div class="col-2">
 
-		<h2><?php _e('Register', 'woocommerce'); ?></h2>
+		<h2><?php _e('Đăng ký thành viên', 'woocommerce'); ?></h2>
 		<form method="post" class="register">
 
 			<?php if ( get_option( 'woocommerce_registration_email_for_username' ) == 'no' ) : ?>
 
 				<p class="form-row form-row-first">
-					<label for="reg_username"><?php _e('Username', 'woocommerce'); ?> <span class="required">*</span></label>
+					<label for="reg_username"><?php _e('Tài khoản', 'woocommerce'); ?> <span class="required">*</span></label>
 					<input type="text" class="input-text" name="username" id="reg_username" value="<?php if (isset($_POST['username'])) echo esc_attr($_POST['username']); ?>" />
 				</p>
 
@@ -75,7 +75,7 @@ global $woocommerce; ?>
 				<input type="password" class="input-text" name="password" id="reg_password" value="<?php if (isset($_POST['password'])) echo esc_attr($_POST['password']); ?>" />
 			</p>
 			<p class="form-row form-row-last">
-				<label for="reg_password2"><?php _e('Re-enter password', 'woocommerce'); ?> <span class="required">*</span></label>
+				<label for="reg_password2"><?php _e('Nhập lại password mới', 'woocommerce'); ?> <span class="required">*</span></label>
 				<input type="password" class="input-text" name="password2" id="reg_password2" value="<?php if (isset($_POST['password2'])) echo esc_attr($_POST['password2']); ?>" />
 			</p>
 			<div class="clear"></div>
@@ -87,7 +87,7 @@ global $woocommerce; ?>
 
 			<p class="form-row">
 				<?php $woocommerce->nonce_field('register', 'register') ?>
-				<input type="submit" class="button" name="register" value="<?php _e('Register', 'woocommerce'); ?>" />
+				<input type="submit" class="button" name="register" value="<?php _e('Đăng ký', 'woocommerce'); ?>" />
 			</p>
 
 		</form>
