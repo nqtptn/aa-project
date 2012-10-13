@@ -108,7 +108,7 @@ function wp_authenticate_username_password($user, $username, $password) {
 		return $userdata;
 
 	if ( !wp_check_password($password, $userdata->user_pass, $userdata->ID) )
-		return new WP_Error( 'incorrect_password', sprintf( __( '<strong>ERROR</strong>: The password you entered for the username <strong>%1$s</strong> is incorrect. <a href="%2$s" title="Password Lost and Found">Lost your password</a>?' ),
+		return new WP_Error( 'incorrect_password', sprintf( __( '<strong>ERROR</strong>: Password nhập cho tài khoản <strong>%1$s</strong> không đúng. <a href="%2$s" title="Password Lost and Found">Bạn đã quên password</a>?' ),
 		$username, wp_lostpassword_url() ) );
 
 	$user =  new WP_User($userdata->ID);
