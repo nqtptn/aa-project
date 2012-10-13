@@ -369,7 +369,7 @@ case 'retrievepassword' :
 	$redirect_to = apply_filters( 'lostpassword_redirect', !empty( $_REQUEST['redirect_to'] ) ? $_REQUEST['redirect_to'] : '' );
 
 	do_action('lost_password');
-	login_header(__('Lost Password'), '<p class="message">' . __('Please enter your username or email address. You will receive a link to create a new password via email.') . '</p>', $errors);
+	login_header(__('Lost Password'), '<p class="message">' . __('Vui lòng nhập tài khoản hoặc địa chỉ email. Bạn sẽ nhận được đường dẫn để tạo lại password qua email.') . '</p>', $errors);
 
 	$user_login = isset($_POST['user_login']) ? stripslashes($_POST['user_login']) : '';
 
@@ -382,7 +382,7 @@ case 'retrievepassword' :
 	</p>
 <?php do_action('lostpassword_form'); ?>
 	<input type="hidden" name="redirect_to" value="<?php echo esc_attr( $redirect_to ); ?>" />
-	<p class="submit"><input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="<?php esc_attr_e('Get New Password'); ?>" tabindex="100" /></p>
+	<p class="submit"><input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="<?php esc_attr_e('Tạo password mới'); ?>" tabindex="100" /></p>
 </form>
 
 <p id="nav">
