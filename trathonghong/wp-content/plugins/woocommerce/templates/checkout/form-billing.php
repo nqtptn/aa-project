@@ -44,7 +44,7 @@ global $woocommerce;
 
 	<div class="create-account">
 
-		<p><?php _e('Tạo tài khoản với thông tin trên hoặc nếu bạn có tài khoản, xin vui lòng đăng nhập.', 'woocommerce'); ?></p>
+		<p><?php _e('Tạo tài khoản với thông tin trên hoặc nhập thông tin đăng nhập bên dưới.', 'woocommerce'); ?></p>
 
 		<?php foreach ($checkout->checkout_fields['account'] as $key => $field) : ?>
 
