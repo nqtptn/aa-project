@@ -67,6 +67,7 @@ body {
 	float: left;
 	margin: 0 -26.4% 0 0;
 	width: 100%;
+	min-height: 800px;
 }
 #content {
 	margin: 0 34% 0 7.6%;
