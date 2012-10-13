@@ -9,9 +9,9 @@ body.custom-background {
 	padding-bottom: 10px;*/
 	position: relative;
 	z-index: 9999;
-	background-color: #BDD16D;
-	opacity:0.8;
-	filter:alpha(opacity=80); /* For IE8 and earlier */	
+	background-color: #FFF;
+	opacity:1;
+	filter:alpha(opacity=100); /* For IE8 and earlier */	
 }
 #branding hgroup {
 	margin: 0 7.6%;
