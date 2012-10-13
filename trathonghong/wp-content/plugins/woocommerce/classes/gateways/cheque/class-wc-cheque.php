@@ -68,7 +68,7 @@ class WC_Cheque extends WC_Payment_Gateway {
 							'title' => __( 'Customer Message', 'woocommerce' ),
 							'type' => 'textarea',
 							'description' => __( 'Let the customer know the payee and where they should be sending the cheque to and that their order won\'t be shipping until you receive it.', 'woocommerce' ),
-							'default' => __( 'Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.', 'woocommerce' )
+							'default' => __( 'Bạn cần chắc chắn rằng thông tin liên hệ của bạn đã đúng, chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.', 'woocommerce' )
 						)
 			);
 

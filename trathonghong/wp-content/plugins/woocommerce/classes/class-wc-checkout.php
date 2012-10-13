@@ -46,7 +46,7 @@ class WC_Checkout {
 
 			$this->checkout_fields['account']['account_username'] = array(
 				'type' 			=> 'text',
-				'label' 		=> __( 'Account username', 'woocommerce' ),
+				'label' 		=> __( 'Tài khoản', 'woocommerce' ),
 				'placeholder' 	=> _x( 'Username', 'placeholder', 'woocommerce' )
 			);
 
@@ -54,14 +54,14 @@ class WC_Checkout {
 
 		$this->checkout_fields['account']['account_password'] = array(
 			'type' 				=> 'password',
-			'label' 			=> __( 'Account password', 'woocommerce' ),
+			'label' 			=> __( 'Nhập password', 'woocommerce' ),
 			'placeholder' 		=> _x( 'Password', 'placeholder', 'woocommerce' ),
 			'class' 			=> array( 'form-row-first' )
 		);
 
 		$this->checkout_fields['account']['account_password-2'] = array(
 			'type' 				=> 'password',
-			'label' 			=> __( 'Account password', 'woocommerce' ),
+			'label' 			=> __( 'Nhập password', 'woocommerce' ),
 			'placeholder' 		=> _x( 'Password', 'placeholder', 'woocommerce' ),
 			'class' 			=> array( 'form-row-last' ),
 			'label_class' 		=> array( 'hidden' )
@@ -180,7 +180,7 @@ class WC_Checkout {
 				$this->posted[ $key ] = apply_filters( 'woocommerce_process_checkout_field_' . $key, $this->posted[$key] );
 
 				// Validation: Required fields
-				if ( isset( $field['required'] ) && $field['required'] && empty( $this->posted[$key] ) ) $woocommerce->add_error( '<strong>' . $field['label'] . '</strong> ' . __('is a required field.', 'woocommerce') );
+				if ( isset( $field['required'] ) && $field['required'] && empty( $this->posted[$key] ) ) $woocommerce->add_error( '<strong>' . $field['label'] . '</strong> ' . __('là bắt buộc nhập.', 'woocommerce') );
 
 				if ( ! empty( $this->posted[ $key ] ) ) {
 
@@ -309,7 +309,7 @@ class WC_Checkout {
 
 			// Check the e-mail address
 			if ( email_exists( $this->posted['billing_email'] ) )
-				$woocommerce->add_error( __( 'An account is already registered with your email address. Please login.', 'woocommerce' ) );
+				$woocommerce->add_error( __( 'Email này đã được đăng ký, bạn vui lòng đăng nhập!', 'woocommerce' ) );
 
 		}
 

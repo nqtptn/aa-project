@@ -166,7 +166,7 @@ function woocommerce_save_address() {
 		$_POST[$key] = apply_filters('woocommerce_process_myaccount_field_' . $key, $_POST[$key]);
 
 		// Validation: Required fields
-		if ( isset($field['required']) && $field['required'] && empty($_POST[$key]) ) $woocommerce->add_error( $field['label'] . ' ' . __('is a required field.', 'woocommerce') );
+		if ( isset($field['required']) && $field['required'] && empty($_POST[$key]) ) $woocommerce->add_error( $field['label'] . ' ' . __('là bắt buộc nhập.', 'woocommerce') );
 
 		// Postcode
 		if ($key=='billing_postcode' || $key=='shipping_postcode') :

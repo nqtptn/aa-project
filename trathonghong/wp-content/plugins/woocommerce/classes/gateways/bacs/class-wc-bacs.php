@@ -73,7 +73,7 @@ class WC_BACS extends WC_Payment_Gateway {
 							'title' => __( 'Thông báo', 'woocommerce' ),
 							'type' => 'textarea',
 							'description' => __( 'Give the customer instructions for paying via BACS, and let them know that their order won\'t be shipping until the money is received.', 'woocommerce' ),
-							'default' => __('Thông tin tài khoản ngân hàng...', 'woocommerce')
+							'default' => __('Chức năng đang được thực hiện, vui lòng chọn phương thức thanh toán trực tiếp.', 'woocommerce')
 						),
 			'account_details' => array(
 							'title' => __( 'Account Details', 'woocommerce' ),

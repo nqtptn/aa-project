@@ -1046,8 +1046,8 @@ class WC_Countries {
 					'required' 		=> true
 				),
 				'city'	=> array(
-					'label'			=> __('Town/City', 'woocommerce'),
-					'placeholder'	=> __('Town/City', 'woocommerce'),
+					'label'			=> __('Tỉnh / Thành phố', 'woocommerce'),
+					'placeholder'	=> __('Tỉnh / Thành phố', 'woocommerce'),
 					'required' 		=> true
 				),
 				'state'		=> array(
