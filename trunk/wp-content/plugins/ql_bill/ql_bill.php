@@ -11,20 +11,26 @@ License: GPL
 add_action( 'admin_menu', 'ql_bill' );
 function ql_bill() {
 	add_menu_page('Quản lý hóa đơn', 'Nhập hóa đơn', 'administrator','quan_ly_hoa_don', 'ql_bill2',plugins_url('/images/menu-vs.png', __FILE__));
-	//add_submenu_page('quan_ly_hoa_don','XLS Import', 'XLS Import', 'administrator','xls_import','xls_import');
 	add_submenu_page('quan_ly_hoa_don','Upload hoá đơn', 'Upload hoá đơn', 'administrator','xls_import','xls_import');
 	add_submenu_page('quan_ly_hoa_don','Bảng kê nợ', 'Bảng kê nợ', 'administrator','bang_ke_no','bang_ke_no');
+	add_submenu_page('quan_ly_hoa_don','In HĐ GTGT', 'In HĐ GTGT', 'administrator','in_hoa_don_gtgt','in_hoa_don_gtgt');
 	add_submenu_page('quan_ly_hoa_don','Dịch vụ', 'Dịch vụ', 'administrator','quan_ly_dich_vu','quan_ly_dich_vu');
 	add_submenu_page('quan_ly_hoa_don','Tỉnh thành', 'Tỉnh thành', 'administrator','quan_ly_tinh_thanh','quan_ly_tinh_thanh');
-	//add_submenu_page('quan_ly_hoa_don','Dịch vụ & tỉnh thành', 'Dịch vụ & tỉnh thành', 'administrator','quan_ly_dich_vu_tinh_thanh','quan_ly_dich_vu_tinh_thanh');
 	add_submenu_page('quan_ly_hoa_don','Phần chân hoá đơn', 'Phần chân hoá đơn', 'administrator','quan_ly_chan_hoa_don','quan_ly_chan_hoa_don');
 	add_submenu_page('quan_ly_hoa_don','Nhập bảng giá', 'Nhập bảng giá', 'administrator','quan_ly_bang_gia','quan_ly_bang_gia');
 	
+	//Dang ky van chuyen
 	add_menu_page('Quản lý ĐKVC', 'Quản lý ĐKVC', 'administrator','quan_ly_dkvc', 'quan_ly_dkvc2',plugins_url('/images/menu-vs.png', __FILE__));
 	
+	//
+	//add_menu_page('Quản lý ĐKVC', 'Quản lý ĐKVC', 'administrator','quan_ly_dkvc', 'quan_ly_dkvc2',plugins_url('/images/menu-vs.png', __FILE__));
 }
 function xls_import() {
-	require_once ('excel_reader2.php');
+	if($_GET['action']=="load_khach_hang"){
+		require_once("quan_ly_hoa_don/load_khach_hang.php");
+	}else{
+		require_once ('excel_reader2.php');
+	}
 }
 function ql_bill2() {
 	if($_GET['action']=="XML"){
@@ -36,11 +42,36 @@ function ql_bill2() {
 		require_once("quan_ly_hoa_don/load_cuoc_phi.php");
 	}elseif($_GET['action']=="load_tinh_tp"){
 		require_once("quan_ly_hoa_don/load_tinh_tp.php");
+	}elseif($_GET['action']=="load_khach_hang"){
+		require_once("quan_ly_hoa_don/load_khach_hang.php");
 	}elseif($_GET['action']=="export_function"){
 		require_once('pdf/html2pdf.class.php');
 		require_once("quan_ly_hoa_don/export_function.php");
 	}else{
 		require_once("quan_ly_hoa_don/show_form.php");
+	}
+}
+function in_hoa_don_gtgt() {
+	if($_GET['action']=="XML"){
+		require_once('EditableGrid.php');
+		require_once("in_hoa_don_gtgt/xml.php");
+	}elseif($_GET['action']=="luu_hoa_don"){
+		require_once("in_hoa_don_gtgt/luu_hoa_don.php");
+	}elseif($_GET['action']=="tao_moi_hoa_don"){
+		require_once("in_hoa_don_gtgt/tao_moi_hoa_don.php");
+	}elseif($_GET['action']=="load_thong_tin_khach_hang"){
+		require_once("in_hoa_don_gtgt/load_thong_tin_khach_hang.php");
+	}elseif($_GET['action']=="load_noi_dung_hang_hoa"){
+		require_once("in_hoa_don_gtgt/load_noi_dung_hang_hoa.php");
+	}elseif($_GET['action']=="load_khach_hang"){
+		require_once("quan_ly_hoa_don/load_khach_hang.php");
+	}elseif($_GET['action']=="load_hoa_don"){
+		require_once("in_hoa_don_gtgt/load_hoa_don.php");
+	}elseif($_GET['action']=="export_function"){
+		require_once('pdf/html2pdf.class.php');
+		require_once("in_hoa_don_gtgt/export_function.php");
+	}else{
+		require_once("in_hoa_don_gtgt/show_form.php");
 	}
 }
 function bang_ke_no() {

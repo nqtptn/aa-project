@@ -1849,6 +1849,26 @@ function xac_nhan(khachhang)
 	});
 
 }
+
+function load_khach_hang()
+{
+	$.ajax({
+		url: "<? echo get_admin_url()?>admin.php?page=xls_import&action=load_khach_hang&noheader=1&nofooter=1",
+		type: 'POST',
+		dataType: "html",
+		data: {
+			search_khach_hang : $("#search_khach_hang").val()
+		},
+		success: function (response)
+		{
+			// reset old value if failed then highlight row
+			$("#khach_hang").html(response);
+		},
+		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
+		async: true
+	});
+}
+
 var update_url="<? echo get_admin_url()?>admin.php?page=xls_import&action=xacnhan&noheader=1&nofooter=1";
 </script>
 	<div class="wrap">
@@ -1858,10 +1878,16 @@ var update_url="<? echo get_admin_url()?>admin.php?page=xls_import&action=xacnha
 		<p>Chọn file excel (.xls):</p>
 		<form action="admin.php?page=xls_import" method="post" enctype="multipart/form-data">
 			<label for="khach_hang">Chọn khách hàng cần upload hoá đơn:</label>
+			<input type='text' size='12' id='search_khach_hang' onchange="load_khach_hang();" />
 			<select id='khach_hang' name="khach_hang">
 			<?
 				global $wpdb;
-				$province = $wpdb->get_results("select user_login as ma_khach_hang, concat(user_nicename,' - ',(select meta_value from dev_usermeta where user_id=ID and meta_key='last_name')) as ten_khach_hang from dev_users where user_login <> 'admin'");
+				$current_user = wp_get_current_user();
+				if($current_user->user_login == "admin"){
+					$province = $wpdb->get_results("select user_login as ma_khach_hang, concat(user_nicename,' - ',(select meta_value from dev_usermeta where user_id=ID and meta_key='last_name')) as ten_khach_hang from dev_users where user_login <> 'admin' and (select meta_value from dev_usermeta where user_id=ID and meta_key='dev_capabilities') like '%subscriber%' order by ma_khach_hang");
+				}else{
+					$province = $wpdb->get_results("select user_login as ma_khach_hang, concat(user_nicename,' - ',(select meta_value from dev_usermeta where user_id=ID and meta_key='last_name')) as ten_khach_hang from dev_users where user_login <> 'admin' and ma_tinh_di='".($current_user->ma_tinh_di)."' and (select meta_value from dev_usermeta where user_id=ID and meta_key='dev_capabilities') like '%subscriber%' order by ma_khach_hang");
+				}
 				foreach($province as $province2){
 					echo "<option value='".$province2->ma_khach_hang."'>".$province2->ten_khach_hang."</option>";
 				}
