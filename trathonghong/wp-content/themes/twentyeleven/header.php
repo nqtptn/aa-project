@@ -84,8 +84,9 @@ if(isset($_COOKIE["curent_theme"])){
 
 	<header id="branding" role="banner">
 			<hgroup>
-				<h1 id="site-title"><span><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></span></h1>
-				<h2 id="site-description"><?php bloginfo( 'description' ); ?></h2>
+				<img style="width:500px; height:60px; margin-left:-50px;padding: 15px 0 12px 0px;" src="<?php bloginfo('template_url') ?>/images/headers/LogoHeaderThongHong.png" alt="Trà Thông Hồng" title="Trà Thông Hồng"></img>
+				<!--<h1 id="site-title"><span><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></span></h1>
+				<h2 id="site-description"><?php bloginfo( 'description' ); ?></h2>-->
 			</hgroup>
 <div id="change_theme">
 <script type="text/javascript">
@@ -116,10 +117,15 @@ function setCookie(value){
 	</select>
 </div>
 </div>
-			<?php if (function_exists('slideshow')) { 
-				slideshow($output = true, $post_id = false, $gallery_id = false, $params = array()); 
-			} ?>
-
+			<div style="width:1054px; height:282px;">
+           		<div id="top_flash" style="background:url(<?php bloginfo('template_url') ?>/images/headers/LogoThongHong.png) no-repeat; width:360px; height:277px; position:absolute; z-index: 2"></div>
+				<div style="width:764px; height:282px; float:right">
+					<?php if (function_exists('slideshow')) { 
+						slideshow($output = true, $post_id = false, $gallery_id = false, $params = array()); 
+					} ?>
+				</div>
+            </div>
+			
 			<?php
 				// Check to see if the header image has been removed
 				$header_image = get_header_image();

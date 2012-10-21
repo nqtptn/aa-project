@@ -50,6 +50,9 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 
+#access div {
+	margin-left: 3.4%;
+}
 
 /* =Structure
 ----------------------------------------------- */
@@ -67,7 +70,7 @@ body {
 	float: left;
 	margin: 0 -26.4% 0 0;
 	width: 100%;
-	min-height: 800px;
+	min-height: 940px;
 }
 #content {
 	margin: 0 34% 0 7.6%;
@@ -569,16 +572,15 @@ border: 1px solid #DDD;
 ----------------------------------------------- */
 
 .page-title {
-	color: #666;
-	font-size: 10px;
+	color: #030;
+	font-size: 14px;
 	font-weight: 500;
 	letter-spacing: 0.1em;
 	line-height: 2.6em;
 	margin: 0 0 2.6em;
-	text-transform: uppercase;
 }
 .page-title a {
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: bold;
 	letter-spacing: 0;
 	text-transform: none;
@@ -1206,6 +1208,7 @@ blockquote.pull {
 	letter-spacing: 0.1em;
 	line-height: 2.6em;
 	text-transform: uppercase;
+	color: #030;
 }
 
 
@@ -1618,15 +1621,16 @@ section.recent-posts .other-recent-posts li:after {
 ----------------------------------------------- */
 
 .widget-area {
-	font-size: 12px;
+	font-size: 14px;
+	color: #030;
 }
 .widget {
 	clear: both;
 	margin: 0 0 2.2em;
 }
 .widget-title {
-	color: #666;
-	font-size: 10px;
+	color: #030;
+	font-size: 12px;
 	font-weight: 500;
 	letter-spacing: 0.1em;
 	line-height: 2.6em;
@@ -2116,6 +2120,9 @@ p.comment-form-comment {
 	line-height: 2.2em;
 	padding: 2.2em 0.5em;
 	text-align: center;
+	-moz-border-radius: 7px;
+	border-bottom-left-radius: 7px; 
+	border-bottom-right-radius: 7px; 	
 }
 #site-generator a {
 	color: #030;

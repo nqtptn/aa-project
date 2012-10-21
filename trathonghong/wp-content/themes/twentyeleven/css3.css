@@ -12,6 +12,9 @@ body.custom-background {
 	background-color: #F7FDAF;
 	opacity:0.8;
 	filter:alpha(opacity=80); /* For IE8 and earlier */	
+	-moz-border-radius: 7px;
+	border-top-left-radius: 7px; 
+	border-top-right-radius: 7px; 	
 }
 #branding hgroup {
 	margin: 0 7.6%;
@@ -84,7 +87,6 @@ body.custom-background {
 	position: absolute;
 	top: 3.333em;
 	left: 0;
-	width: 188px;
 	z-index: 99999;
 }
 #access ul ul ul {
@@ -100,7 +102,7 @@ body.custom-background {
 	height: auto;
 	line-height: 1.4em;
 	padding: 10px 10px;
-	width: 168px;
+	width: 200px;
 }
 #access li:hover > a,
 #access ul ul :hover > a,
@@ -126,9 +128,6 @@ body.custom-background {
 	font-weight: bold;
 	color: #003300;
 	background: #fff;
-}
-#access div {
-	margin: 0 7.6%;
 }
 
 /* =Content

@@ -39,17 +39,17 @@
 				$utility_text = __( 'This entry was posted by <a href="%6$s">%5$s</a>. Bookmark the <a href="%3$s" title="Permalink to %4$s" rel="bookmark">permalink</a>.', 'twentyeleven' );
 			}
 
-			printf(
-				$utility_text,
-				$categories_list,
-				$tag_list,
-				esc_url( get_permalink() ),
-				the_title_attribute( 'echo=0' ),
-				get_the_author(),
-				esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) )
-			);
+			// printf(
+				// $utility_text,
+				// $categories_list,
+				// $tag_list,
+				// esc_url( get_permalink() ),
+				// the_title_attribute( 'echo=0' ),
+				// get_the_author(),
+				// esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) )
+			// );
 		?>
-		<?php edit_post_link( __( 'Edit', 'twentyeleven' ), '<span class="edit-link">', '</span>' ); ?>
+		
 
 		<?php if ( get_the_author_meta( 'description' ) && ( ! function_exists( 'is_multi_author' ) || is_multi_author() ) ) : // If a user has filled out their description and this is a multi-author blog, show a bio on their entries ?>
 		<div id="author-info">
