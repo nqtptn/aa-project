@@ -89,7 +89,7 @@ function tinh_gia() {
 	$noi_nhan=$_POST['noi_nhan'];
 	$noi_giao=$_POST['noi_giao'];
 	$trong_luong=$_POST['trong_luong'];
-	$province = $wpdb->get_row("select fn_tinh_gia('$dich_vu','$noi_nhan','$noi_giao',$trong_luong,0) as returnvalue");
+	$province = $wpdb->get_row("select fn_tinh_gia('','$dich_vu','$noi_nhan','$noi_giao',$trong_luong,0) as returnvalue");
 	echo "Giá tiền: <b>".($province->returnvalue ? number_format($province->returnvalue,0,'',',') : 0)."đ</b>";
 }
 function tra_cuu() {
