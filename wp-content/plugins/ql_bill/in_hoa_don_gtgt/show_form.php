@@ -11,41 +11,16 @@ if($form==1){
 	function TinhHoaDon()
     {
 		//Remove format
-		document.getElementById('load_so_luong_1').value = document.getElementById('load_so_luong_1').value.replace(",","");
-		document.getElementById('load_so_luong_2').value = document.getElementById('load_so_luong_2').value.replace(",","");
-		document.getElementById('load_so_luong_3').value = document.getElementById('load_so_luong_3').value.replace(",","");
-		document.getElementById('load_don_gia_1').value = document.getElementById('load_don_gia_1').value.replace(",","");
-		document.getElementById('load_don_gia_2').value = document.getElementById('load_don_gia_2').value.replace(",","");
-		document.getElementById('load_don_gia_3').value = document.getElementById('load_don_gia_3').value.replace(",","");
+		document.getElementById('report_content_cong_thanh_toan').value = document.getElementById('report_content_cong_thanh_toan').value.replace(",","");
 		
 		//Caculate number
-		document.getElementById('load_thanh_tien_1').value = document.getElementById('load_so_luong_1').value * document.getElementById('load_don_gia_1').value;
-		document.getElementById('load_thanh_tien_2').value = document.getElementById('load_so_luong_2').value * document.getElementById('load_don_gia_2').value;
-		document.getElementById('load_thanh_tien_3').value = document.getElementById('load_so_luong_3').value * document.getElementById('load_don_gia_3').value;
-		document.getElementById('report_content_cong_tien_hang').value = parseInt(document.getElementById('load_thanh_tien_1').value) + parseInt(document.getElementById('load_thanh_tien_2').value) + parseInt(document.getElementById('load_thanh_tien_3').value);
-		document.getElementById('report_content_cong_tien_thue').value = parseInt(document.getElementById('report_content_cong_tien_hang').value * parseInt(document.getElementById('report_content_tax').value) / 100);
-		document.getElementById('report_content_cong_thanh_toan').value = parseInt(document.getElementById('report_content_cong_tien_hang').value) + parseInt(document.getElementById('report_content_cong_tien_thue').value);
 		document.getElementById('report_content_cong_thanh_toan_bang_chu').value = DocTienBangChu(document.getElementById('report_content_cong_thanh_toan').value) + " đồng";
+		document.getElementById('report_content_cong_tien_hang').value = parseInt(document.getElementById('report_content_cong_thanh_toan').value / (1 + parseInt(document.getElementById('report_content_tax').value) / 100));
+		document.getElementById('report_content_cong_tien_thue').value = parseInt(document.getElementById('report_content_cong_thanh_toan').value) - parseInt(document.getElementById('report_content_cong_tien_hang').value);
+		document.getElementById('load_thanh_tien_1').value = document.getElementById('report_content_cong_tien_hang').value;
 		
 		//Format number
-		if(document.getElementById('load_thanh_tien_1').value == "0"){
-			document.getElementById('load_thanh_tien_1').value = "";
-		}else{
-			document.getElementById('load_thanh_tien_1').value = numberFormat(document.getElementById('load_thanh_tien_1').value);
-		}		
-		if(document.getElementById('load_thanh_tien_2').value == "0"){
-			document.getElementById('load_thanh_tien_2').value = "";
-		}else{
-			document.getElementById('load_thanh_tien_2').value = numberFormat(document.getElementById('load_thanh_tien_2').value);
-		}
-		if(document.getElementById('load_thanh_tien_3').value == "0"){
-			document.getElementById('load_thanh_tien_3').value = "";
-		}else{
-			document.getElementById('load_thanh_tien_3').value = numberFormat(document.getElementById('load_thanh_tien_3').value);
-		}
-		document.getElementById('load_don_gia_1').value = numberFormat(document.getElementById('load_don_gia_1').value);
-		document.getElementById('load_don_gia_2').value = numberFormat(document.getElementById('load_don_gia_2').value);
-		document.getElementById('load_don_gia_3').value = numberFormat(document.getElementById('load_don_gia_3').value);
+		document.getElementById('load_thanh_tien_1').value = numberFormat(document.getElementById('load_thanh_tien_1').value);		
 		document.getElementById('report_content_cong_tien_hang').value = numberFormat(document.getElementById('report_content_cong_tien_hang').value);
 		document.getElementById('report_content_cong_tien_thue').value = numberFormat(document.getElementById('report_content_cong_tien_thue').value);
 		document.getElementById('report_content_cong_thanh_toan').value = numberFormat(document.getElementById('report_content_cong_thanh_toan').value);
@@ -232,8 +207,6 @@ if($form==1){
 			+ document.getElementById('report_content_account_number').value );
 		mywindow.document.write('<font size="4px"><br/><br/></font>');
 		mywindow.document.write('<br/><table><tr><td width="80"></td> <td width="30">1</td><td width="240">'+document.getElementById('load_ten_dich_vu_1').value+'</td><td width="50" align="center">'+document.getElementById('load_don_vi_tinh_1').value+'</td> <td width="70" align="center">'+document.getElementById('load_so_luong_1').value+'</td> <td width="70" align="right">'+document.getElementById('load_don_gia_1').value+'</td> <td width="70" align="right">'+document.getElementById('load_thanh_tien_1').value+'</td> </tr>'
-			+ '<tr><td></td> <td>'+(document.getElementById('load_so_luong_2').value > 0 ? '2' : '')+'</td><td>'+document.getElementById('load_ten_dich_vu_2').value+'</td><td align="center">'+document.getElementById('load_don_vi_tinh_2').value+'</td> <td align="center">'+document.getElementById('load_so_luong_2').value+'</td> <td align="right">'+document.getElementById('load_don_gia_2').value+'</td> <td align="right">'+document.getElementById('load_thanh_tien_2').value+'</td> </tr>'
-			+ '<tr><td></td> <td>'+(document.getElementById('load_so_luong_3').value > 0 ? '3' : '')+'</td><td>'+document.getElementById('load_ten_dich_vu_3').value+'</td><td align="center">'+document.getElementById('load_don_vi_tinh_3').value+'</td> <td align="center">'+document.getElementById('load_so_luong_3').value+'</td> <td align="right">'+document.getElementById('load_don_gia_3').value+'</td> <td align="right">'+document.getElementById('load_thanh_tien_3').value+'</td> </tr>'
 			+ '</table>');
 		mywindow.document.write('<font size="4px"><br/></font>');
 		mywindow.document.write('<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ' 
@@ -551,19 +524,7 @@ function luu_hoa_don()
 			load_don_vi_tinh_1 : $("#load_don_vi_tinh_1").val(),
 			load_so_luong_1 : $("#load_so_luong_1").val(),
 			load_don_gia_1 : $("#load_don_gia_1").val(),
-			load_thanh_tien_1 : $("#load_thanh_tien_1").val(),
-			load_stt_2 : $("#load_stt_2").val(),
-			load_ten_dich_vu_2 : $("#load_ten_dich_vu_2").val(),
-			load_don_vi_tinh_2 : $("#load_don_vi_tinh_2").val(),
-			load_so_luong_2 : $("#load_so_luong_2").val(),
-			load_don_gia_2 : $("#load_don_gia_2").val(),
-			load_thanh_tien_2 : $("#load_thanh_tien_2").val(),
-			load_stt_3 : $("#load_stt_3").val(),
-			load_ten_dich_vu_3 : $("#load_ten_dich_vu_3").val(),
-			load_don_vi_tinh_3 : $("#load_don_vi_tinh_3").val(),
-			load_so_luong_3 : $("#load_so_luong_3").val(),
-			load_don_gia_3 : $("#load_don_gia_3").val(),
-			load_thanh_tien_3 : $("#load_thanh_tien_3").val()
+			load_thanh_tien_1 : $("#load_thanh_tien_1").val()
 		},
 		success: function (response)
 		{
@@ -609,7 +570,6 @@ var update_url="<? echo get_admin_url()?>admin.php?page=in_hoa_don_gtgt&action=u
 		<b>Thông tin hóa đơn <label id="ten_khach_hang"></label></b>
 	</div>
 	<br/>
-
 	<div id="mydiv"></div>
 	<div id="div_noi_dung_hang_hoa"></div>	
 	<br/>
