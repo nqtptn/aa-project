@@ -28,6 +28,7 @@ $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
 		$mysqli->close();
 		echo $result ? "ok" : "error";
 	}elseif($action=="add_record"){
+		$chon_khach_hang = $mysqli->real_escape_string(strip_tags($_POST['chon_khach_hang']));
 		$ma_dich_vu = $mysqli->real_escape_string(strip_tags($_POST['ma_dich_vu']));
 		$ma_tinh_di = $mysqli->real_escape_string(strip_tags($_POST['ma_tinh_di']));
 		$ma_tinh_den = $mysqli->real_escape_string(strip_tags($_POST['ma_tinh_den']));
@@ -43,8 +44,8 @@ $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
 			$co_vuot_khoi_luong=0;
 		}
 		$result =  $mysqli->query("INSERT INTO gia_bang_gia 
-			(ma_dich_vu,ma_tinh_di,ma_tinh_den,khoi_luong_tu,khoi_luong_den,ma_phuong_tien,gia,don_vi_khoi_luong_vuot,gia_cong_them_gui_sau_12h,co_vuot_khoi_luong) value 
-			('$ma_dich_vu','$ma_tinh_di','$ma_tinh_den','$khoi_luong_tu','$khoi_luong_den','$ma_phuong_tien','$cuoc_phi','$don_vi_khoi_luong_vuot','$gia_sau_12h','$co_vuot_khoi_luong')");
+			(ma_dich_vu,ma_tinh_di,ma_tinh_den,khoi_luong_tu,khoi_luong_den,ma_phuong_tien,gia,don_vi_khoi_luong_vuot,gia_cong_them_gui_sau_12h,co_vuot_khoi_luong,ma_khach_hang) value 
+			('$ma_dich_vu','$ma_tinh_di','$ma_tinh_den','$khoi_luong_tu','$khoi_luong_den','$ma_phuong_tien','$cuoc_phi','$don_vi_khoi_luong_vuot','$gia_sau_12h','$co_vuot_khoi_luong','$chon_khach_hang')");
 		$this_id = $mysqli->insert_id;
 		if($this_id){
 			// cap nhat gia

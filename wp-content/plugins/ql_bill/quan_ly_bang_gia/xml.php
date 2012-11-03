@@ -1,6 +1,7 @@
 <?php
 global $mysqli;
 $grid = new EditableGrid();
+$khach_hang = $mysqli->real_escape_string(strip_tags($_GET['khach_hang']));
 $ma_dich_vu = $mysqli->real_escape_string(strip_tags($_GET['ma_dich_vu']));
 $ma_tinh_di = $mysqli->real_escape_string(strip_tags($_GET['ma_tinh_di']));
 $grid->addColumn('stt', 'Stt', 'string', NULL,true);
@@ -28,7 +29,7 @@ $query="
 		gia_cong_them_gui_sau_12h,
 		gia_toi_da_can_tren_gui_sau_12h
 	FROM gia_bang_gia, (SELECT @curRank := 0) r
-	WHERE ma_dich_vu = '$ma_dich_vu' and ma_tinh_di = '$ma_tinh_di'
+	WHERE ma_dich_vu = '$ma_dich_vu' and ma_tinh_di = '$ma_tinh_di' and ma_khach_hang = '$khach_hang'
 	ORDER by ma_tinh_den,khoi_luong_tu";
 $result = $mysqli->query($query);
 $mysqli->close();
