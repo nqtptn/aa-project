@@ -10,20 +10,22 @@ License: GPL
 */
 add_action( 'admin_menu', 'ql_bill' );
 function ql_bill() {
-	add_menu_page('Quản lý hóa đơn', 'Nhập hóa đơn', 'administrator','quan_ly_hoa_don', 'ql_bill2',plugins_url('/images/menu-vs.png', __FILE__));
-	add_submenu_page('quan_ly_hoa_don','Upload hoá đơn', 'Upload hoá đơn', 'administrator','xls_import','xls_import');
+	add_menu_page('Quản lý bill', 'Nhập bill', 'administrator','quan_ly_hoa_don', 'ql_bill2',plugins_url('/images/menu-vs.png', __FILE__));
+	add_submenu_page('quan_ly_hoa_don','Upload bill', 'Upload bill', 'administrator','xls_import','xls_import');
 	add_submenu_page('quan_ly_hoa_don','Bảng kê nợ', 'Bảng kê nợ', 'administrator','bang_ke_no','bang_ke_no');
-	add_submenu_page('quan_ly_hoa_don','In HĐ GTGT', 'In HĐ GTGT', 'administrator','in_hoa_don_gtgt','in_hoa_don_gtgt');
 	add_submenu_page('quan_ly_hoa_don','Dịch vụ', 'Dịch vụ', 'administrator','quan_ly_dich_vu','quan_ly_dich_vu');
 	add_submenu_page('quan_ly_hoa_don','Tỉnh thành', 'Tỉnh thành', 'administrator','quan_ly_tinh_thanh','quan_ly_tinh_thanh');
 	add_submenu_page('quan_ly_hoa_don','Phần chân hoá đơn', 'Phần chân hoá đơn', 'administrator','quan_ly_chan_hoa_don','quan_ly_chan_hoa_don');
 	add_submenu_page('quan_ly_hoa_don','Nhập bảng giá', 'Nhập bảng giá', 'administrator','quan_ly_bang_gia','quan_ly_bang_gia');
+
+	//Hoa don gia tri gia tang
+	add_menu_page('In HĐ GTGT','In HĐ GTGT', 'administrator','in_hoa_don_gtgt','in_hoa_don_gtgt',plugins_url('/images/menu-vs.png', __FILE__));
 	
 	//Dang ky van chuyen
 	add_menu_page('Quản lý ĐKVC', 'Quản lý ĐKVC', 'administrator','quan_ly_dkvc', 'quan_ly_dkvc2',plugins_url('/images/menu-vs.png', __FILE__));
 	
-	//
-	//add_menu_page('Quản lý ĐKVC', 'Quản lý ĐKVC', 'administrator','quan_ly_dkvc', 'quan_ly_dkvc2',plugins_url('/images/menu-vs.png', __FILE__));
+	//Nhap van don
+	add_menu_page('Nhập vận đơn', 'Nhập vận đơn', 'administrator','quan_ly_van_don', 'quan_ly_van_don2',plugins_url('/images/menu-vs.png', __FILE__));
 }
 function xls_import() {
 	if($_GET['action']=="load_khach_hang"){
@@ -95,6 +97,16 @@ function quan_ly_dkvc2() {
 		require_once("quan_ly_dkvc/update2.php");
 	}else{
 		require_once("quan_ly_dkvc/show_form.php");
+	}
+}
+function quan_ly_van_don2() {
+	if($_GET['action']=="XML"){
+		require_once('EditableGrid.php');
+		require_once("quan_ly_van_don/xml.php");
+	}elseif($_GET['action']=="update_record"){
+		require_once("quan_ly_van_don/update2.php");
+	}else{
+		require_once("quan_ly_van_don/show_form.php");
 	}
 }
 function quan_ly_dich_vu() {

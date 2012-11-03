@@ -15,18 +15,6 @@ $load_don_vi_tinh_1 = $_POST['load_don_vi_tinh_1'];
 $load_so_luong_1 = str_replace (",","",$_POST['load_so_luong_1']);
 $load_don_gia_1 = str_replace (",","",$_POST['load_don_gia_1']);
 $load_thanh_tien_1 = str_replace (",","",$_POST['load_thanh_tien_1']);
-$load_stt_2 = $_POST['load_stt_2'];
-$load_ten_dich_vu_2 = $_POST['load_ten_dich_vu_2'];
-$load_don_vi_tinh_2 = $_POST['load_don_vi_tinh_2'];
-$load_so_luong_2 = str_replace (",","",$_POST['load_so_luong_2']);
-$load_don_gia_2 = str_replace (",","",$_POST['load_don_gia_2']);
-$load_thanh_tien_2 = str_replace (",","",$_POST['load_thanh_tien_2']);
-$load_stt_3 = $_POST['load_stt_3'];
-$load_ten_dich_vu_3 = $_POST['load_ten_dich_vu_3'];
-$load_don_vi_tinh_3 = $_POST['load_don_vi_tinh_3'];
-$load_so_luong_3 = str_replace (",","",$_POST['load_so_luong_3']);
-$load_don_gia_3 = str_replace (",","",$_POST['load_don_gia_3']);
-$load_thanh_tien_3 = str_replace (",","",$_POST['load_thanh_tien_3']);
 
 $cap_nhat_hoa_don = $wpdb->get_results("update gia_hoa_don_gtgt set hinh_thuc_thanh_toan='$report_content_payment_method'
 	,so_tai_khoan='$report_content_account_number'

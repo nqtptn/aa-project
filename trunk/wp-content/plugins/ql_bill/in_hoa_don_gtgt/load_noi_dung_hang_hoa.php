@@ -32,11 +32,11 @@ if($ma_hoa_don_gtgt > 0){
 	foreach($hoa_don as $hoa_don2){
 		echo 	'<tr>
 					<td><input type="text" size="2" id="load_stt_'.$hoa_don2->stt.'" value="'.$hoa_don2->id.'" readonly="readonly"/></td>
-					<td><input type="text" size="40" id="load_ten_dich_vu_'.$hoa_don2->stt.'" value="'.$hoa_don2->ten_dich_vu.'"/></td>
-					<td><input type="text" size="13" id="load_don_vi_tinh_'.$hoa_don2->stt.'" value="'.$hoa_don2->don_vi_tinh.'"/></td>
-					<td><input type="text" size="10" id="load_so_luong_'.$hoa_don2->stt.'" value="'.$hoa_don2->so_luong.'" onblur="TinhHoaDon()" /></td>
-					<td><input type="text" id="load_don_gia_'.$hoa_don2->stt.'" value="'.$hoa_don2->don_gia.'" onblur="TinhHoaDon()"/></td> 
-					<td><input type="text" id="load_thanh_tien_'.$hoa_don2->stt.'" value="'.$hoa_don2->thanh_tien.'" readonly="readonly"/></td>
+					<td><TEXTAREA id="load_ten_dich_vu_'.$hoa_don2->stt.'" ROWS="4" COLS="50" value="'.$hoa_don2->ten_dich_vu.'"></TEXTAREA></td>
+					<td><input type="text" size="10" id="load_don_vi_tinh_'.$hoa_don2->stt.'" value="'.$hoa_don2->don_vi_tinh.'"/></td>
+					<td><input type="text" size="8" id="load_so_luong_'.$hoa_don2->stt.'" value="'.$hoa_don2->so_luong.'" onblur="TinhHoaDon()" /></td>
+					<td><input type="text" size="13" id="load_don_gia_'.$hoa_don2->stt.'" value="'.$hoa_don2->don_gia.'" onblur="TinhHoaDon()"/></td> 
+					<td><input type="text" size="13" id="load_thanh_tien_'.$hoa_don2->stt.'" value="'.$hoa_don2->thanh_tien.'" onblur="TinhHoaDon()"/></td>
 				</tr>';
 	}
 	echo 	'</table>
@@ -46,7 +46,7 @@ if($ma_hoa_don_gtgt > 0){
 			</td><td>
 				Cộng tiền hàng:
 			</td><td>
-				<input type="text" id="report_content_cong_tien_hang" value="'.$hd->cong_tien_hang.'" readonly="readonly"/>
+				<input type="text" id="report_content_cong_tien_hang" value="'.number_format($hd->cong_tien_hang).'" readonly="readonly"/>
 		</td></tr>
 		<tr><td>
 				Thuế suất GTGT (%):
@@ -55,14 +55,14 @@ if($ma_hoa_don_gtgt > 0){
 			</td><td>
 				Tiền thuế GTGT:			
 			</td><td>
-				<input type="text" id="report_content_cong_tien_thue" value="'.$hd->tien_thue_gtgt.'" readonly="readonly"/>
+				<input type="text" id="report_content_cong_tien_thue" value="'.number_format($hd->tien_thue_gtgt).'" readonly="readonly"/>
 		</td></tr>
 		<tr><td>		
 			</td><td>
 			</td><td>
 				Tổng cộng tiền thanh toán:
 			</td><td>
-				<input type="text" id="report_content_cong_thanh_toan" value="'.$hd->tong_cong.'" readonly="readonly"/>
+				<input type="text" id="report_content_cong_thanh_toan" value="'.number_format($hd->tong_cong).'" onblur="TinhHoaDon()"/>
 		</td></tr>
 		<tr><td>
 				Tổng cộng tiền thanh toán bằng chữ:
