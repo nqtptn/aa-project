@@ -38,6 +38,7 @@ function DatabaseGrid(XML_link,field_id,filter_id,update_url)
 }
 function post_data(xml_link){
 	var input_value=new Array();
+	input_value['chon_khach_hang'] = $("#chon_khach_hang").val();
 	input_value['ma_dich_vu'] = $("#ma_dich_vu").val();
 	input_value['ma_tinh_di'] = $("#ma_tinh_di").val();
 	input_value['ma_tinh_den'] = Get_ma_tinh_den();
@@ -75,6 +76,7 @@ function post_data(xml_link){
 			type: 'POST',
 			dataType: "html",
 			data: {
+				chon_khach_hang : input_value['chon_khach_hang'],
 				ma_dich_vu : input_value['ma_dich_vu'],
 				ma_tinh_di : input_value['ma_tinh_di'],
 				ma_tinh_den : input_value['ma_tinh_den'],
@@ -212,6 +214,7 @@ function load_tinh_tp()
 function get_xml_link()
 {
 	var link='<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&noheader=1&nofooter=1&action=XML';
+	link = link + "&khach_hang=" + $("#khach_hang").val();
 	link = link + "&ma_dich_vu=" + $("#ma_dich_vu").val();
 	link = link + "&ma_tinh_di=" + $("#ma_tinh_di").val();
 	return link;
@@ -241,6 +244,22 @@ function Get_ma_tinh_den()
 var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&action=update_record&noheader=1&nofooter=1";
 </script>
 <br/>
+<label for="khach_hang">Bảng giá:</label>
+<select id='khach_hang' onchange="load_content()">
+<?
+	global $wpdb;
+	$current_user = wp_get_current_user();
+	if($current_user->user_login == "admin"){
+		$province = $wpdb->get_results("select user_login as ma_khach_hang, concat(user_nicename,' - ',(select meta_value from dev_usermeta where user_id=ID and meta_key='last_name')) as ten_khach_hang from dev_users where user_login <> 'admin' and (select meta_value from dev_usermeta where user_id=ID and meta_key='dev_capabilities') like '%subscriber%' and user_login in (select distinct ma_khach_hang from gia_bang_gia) order by ma_khach_hang");
+	}else{
+		$province = $wpdb->get_results("select user_login as ma_khach_hang, concat(user_nicename,' - ',(select meta_value from dev_usermeta where user_id=ID and meta_key='last_name')) as ten_khach_hang from dev_users where user_login <> 'admin' and ma_tinh_di='".($current_user->ma_tinh_di)."' and (select meta_value from dev_usermeta where user_id=ID and meta_key='dev_capabilities') like '%subscriber%' and user_login in (select distinct ma_khach_hang from gia_bang_gia) order by ma_khach_hang");
+	}
+	echo "<option value=''>Bảng giá mặc định</option>";
+	foreach($province as $province2){
+		echo "<option value='".$province2->ma_khach_hang."'>".$province2->ten_khach_hang."</option>";
+	}
+?>
+</select>
 <label for="ma_tinh_di">Tỉnh đi:</label>
 <select id='ma_tinh_di'  onchange="load_content();">
 <?
@@ -271,7 +290,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&action=
 	?>
 </select>
 
-<label for="pagesize">Số dòng trên trang:</label>
+<label for="pagesize">Số dòng:</label>
 <select id="pagesize" name="pagesize">
 	<option value="10">10</option>
 	<option value="20">20</option>
@@ -281,7 +300,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&action=
 	<option value="100">100</option>
 </select>
 <label for="filter">Tìm kiếm:</label>
-<input type="text" id="filter"/>
+<input type="text" id="filter" size='15'/>
 
 <div id="tablecontent"></div>
 <div id="paginator"></div>
@@ -294,6 +313,9 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&action=
 				<td>
 					<label for="ma_tinh_den">Tỉnh đến</label>
 				</td>
+				<td>
+					<label for="chon_khach_hang">Khách hàng</label>
+				</td>				
 				<td>
 					<label for="khoi_luong_tu">KL từ</label>
 				</td>
@@ -327,6 +349,23 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&action=
 					?>
 					</select>
 					<br /><i>Nhấn Ctrl hoặc Shift để chọn nhiều giá trị</i>
+				</td>
+				<td valign="top">
+					<select id='chon_khach_hang'>
+					<?
+						global $wpdb;
+						$current_user = wp_get_current_user();
+						if($current_user->user_login == "admin"){
+							$province = $wpdb->get_results("select user_login as ma_khach_hang, concat(user_nicename,' - ',(select meta_value from dev_usermeta where user_id=ID and meta_key='last_name')) as ten_khach_hang from dev_users where user_login <> 'admin' and (select meta_value from dev_usermeta where user_id=ID and meta_key='dev_capabilities') like '%subscriber%' order by ma_khach_hang");
+						}else{
+							$province = $wpdb->get_results("select user_login as ma_khach_hang, concat(user_nicename,' - ',(select meta_value from dev_usermeta where user_id=ID and meta_key='last_name')) as ten_khach_hang from dev_users where user_login <> 'admin' and ma_tinh_di='".($current_user->ma_tinh_di)."' and (select meta_value from dev_usermeta where user_id=ID and meta_key='dev_capabilities') like '%subscriber%' order by ma_khach_hang");
+						}
+						echo "<option value=''>Bảng giá mặc định</option>";
+						foreach($province as $province2){
+							echo "<option value='".$province2->ma_khach_hang."'>".$province2->ten_khach_hang."</option>";
+						}
+					?>
+					</select>				
 				</td>
 				<td valign="top">
 					<input type='text' size='8' id='khoi_luong_tu' value=''/>
