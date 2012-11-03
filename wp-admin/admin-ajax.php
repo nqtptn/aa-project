@@ -78,7 +78,11 @@ if ( ! empty( $_POST['action'] ) && $_POST['action']=="tinh_gia"){
 }elseif ( ! empty( $_POST['action'] ) && $_POST['action']=="danh_sach_dich_vu"){
 	add_action( 'wp_ajax_nopriv_danh_sach_dich_vu', 'danh_sach_dich_vu', 1 );
 	do_action( 'wp_ajax_nopriv_danh_sach_dich_vu');
+}elseif ( ! empty( $_POST['action'] ) && $_POST['action']=="tra_cuu"){
+	add_action( 'wp_ajax_nopriv_tra_cuu', 'tra_cuu', 1 );
+	do_action( 'wp_ajax_nopriv_tra_cuu');
 }
+	
 function tinh_gia() {
 	global $wpdb;
 	$dich_vu=$_POST['dich_vu'];
@@ -87,6 +91,17 @@ function tinh_gia() {
 	$trong_luong=$_POST['trong_luong'];
 	$province = $wpdb->get_row("select fn_tinh_gia('$dich_vu','$noi_nhan','$noi_giao',$trong_luong,0) as returnvalue");
 	echo "Giá tiền: <b>".($province->returnvalue ? number_format($province->returnvalue,0,'',',') : 0)."đ</b>";
+}
+function tra_cuu() {
+	global $wpdb;
+	$so_bill=$_POST['so_bill'];
+	$province = $wpdb->get_row("SELECT ten_khach_hang,noi_nhan,noi_phat,trang_thai FROM gia_van_don WHERE ma_van_don='$so_bill'");
+	if($province->ten_khach_hang == "" || $province->ten_khach_hang == null)
+	{
+		echo "Không tìm thấy vận đơn.";
+	}else{
+		echo "Khách hàng: <b>".$province->ten_khach_hang."</b></br>Nơi nhận: <b>".$province->noi_nhan."</b></br>Nơi giao: <b>".$province->noi_phat."</b></br>Trạng thái vận đơn: <b>".$province->trang_thai."</b>";
+	}
 }
 function danh_sach_tinh_di() {
 	global $wpdb;
