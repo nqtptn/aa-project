@@ -1,5 +1,12 @@
 <?php
 global $mysqli;
+$current_user = wp_get_current_user();
+if($current_user->user_login == "admin"){
+	$tinh_di = "'ha_noi','tp_hcm'";
+}else{
+	$tinh_di = "'".$current_user->ma_tinh_di."'";
+}
+
 $grid = new EditableGrid();
 $so_van_don = $mysqli->real_escape_string(strip_tags($_GET['so_van_don']));
 if ($so_van_don == ""){
@@ -25,7 +32,7 @@ $query="
 		ghi_chu,
 		ngay_tao
 	FROM gia_van_don
-	WHERE ma_van_don like '$so_van_don'
+	WHERE ma_van_don like '$so_van_don' and  ma_tinh_di in (".$tinh_di.")
 	ORDER by ngay_tao desc
 	LIMIT 100";
 $result = $mysqli->query($query);
