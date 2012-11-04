@@ -763,14 +763,35 @@ function wp_dropdown_roles( $selected = false ) {
 		$name = translate_user_role($details['name'] );
 		//Nha
 		if($name == 'Administrator'){
-			$name = 'QUẢN TRỊ WEBSITE';
+			$name = 'QUAN TRI WEBSITE';
 			if ( $selected == $role ) // preselect specified role
 				$p = "\n\t<option selected='selected' value='" . esc_attr($role) . "'>$name</option>";
 			else
 				$r .= "\n\t<option value='" . esc_attr($role) . "'>$name</option>";
 		}
+		if($name == 'Editor'){
+			$name = 'NHAP BILL';
+			if ( $selected == $role ) // preselect specified role
+				$p = "\n\t<option selected='selected' value='" . esc_attr($role) . "'>$name</option>";
+			else
+				$r .= "\n\t<option value='" . esc_attr($role) . "'>$name</option>";
+		}		
+		if($name == 'Author'){
+			$name = 'NHAP VAN DON';
+			if ( $selected == $role ) // preselect specified role
+				$p = "\n\t<option selected='selected' value='" . esc_attr($role) . "'>$name</option>";
+			else
+				$r .= "\n\t<option value='" . esc_attr($role) . "'>$name</option>";
+		}		
+		if($name == 'Contributor'){
+			$name = 'IN HD GTGT';
+			if ( $selected == $role ) // preselect specified role
+				$p = "\n\t<option selected='selected' value='" . esc_attr($role) . "'>$name</option>";
+			else
+				$r .= "\n\t<option value='" . esc_attr($role) . "'>$name</option>";
+		}				
 		if($name == 'Subscriber'){
-			$name = 'KHÁCH HÀNG';
+			$name = 'KHACH HANG';
 			if ( $selected == $role ) // preselect specified role
 				$p = "\n\t<option selected='selected' value='" . esc_attr($role) . "'>$name</option>";
 			else
