@@ -163,8 +163,7 @@ class WP_Users_List_Table extends WP_List_Table {
 			'username' => __( 'Username' ),
 			'name'     => __( 'Name' ),
 			'email'    => __( 'E-mail' ),
-			'role'     => __( 'Role' ),
-			'posts'    => __( 'Posts' )
+			'role'     => __( 'Role' )
 		);
 
 		if ( $this->is_site_users )
@@ -261,7 +260,25 @@ class WP_Users_List_Table extends WP_List_Table {
 		} else {
 			$edit = '<strong>' . $user_object->user_login . '</strong>';
 		}
+		
+		//Nha
 		$role_name = isset( $wp_roles->role_names[$role] ) ? translate_user_role( $wp_roles->role_names[$role] ) : __( 'None' );
+		if($role_name == 'Administrator'){
+			$role_name = 'QUAN TRI WEBSITE';
+		}
+		if($role_name == 'Editor'){
+			$role_name = 'NHAP BILL';
+		}		
+		if($role_name == 'Author'){
+			$role_name = 'NHAP VAN DON';
+		}		
+		if($role_name == 'Contributor'){
+			$role_name = 'IN HD GTGT';
+		}				
+		if($role_name == 'Subscriber'){
+			$role_name = 'KHACH HANG';
+		}
+		
 		$avatar = get_avatar( $user_object->ID, 32 );
 
 		$r = "<tr id='user-$user_object->ID'$style>";
