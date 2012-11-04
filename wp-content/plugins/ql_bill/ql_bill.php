@@ -11,6 +11,7 @@ License: GPL
 add_action( 'admin_menu', 'ql_bill' );
 function ql_bill() {
 	add_menu_page('Quản lý bill', 'Nhập bill', 'administrator','quan_ly_hoa_don', 'ql_bill2',plugins_url('/images/menu-vs.png', __FILE__));
+	add_menu_page('Quản lý bill', 'Nhập bill', 'editor','quan_ly_hoa_don2', 'ql_bill2',plugins_url('/images/menu-vs.png', __FILE__));
 	add_submenu_page('quan_ly_hoa_don','Upload bill', 'Upload bill', 'administrator','xls_import','xls_import');
 	add_submenu_page('quan_ly_hoa_don','Bảng kê nợ', 'Bảng kê nợ', 'administrator','bang_ke_no','bang_ke_no');
 	add_submenu_page('quan_ly_hoa_don','Dịch vụ', 'Dịch vụ', 'administrator','quan_ly_dich_vu','quan_ly_dich_vu');
@@ -20,12 +21,14 @@ function ql_bill() {
 
 	//Hoa don gia tri gia tang
 	add_menu_page('In HĐ GTGT','In HĐ GTGT', 'administrator','in_hoa_don_gtgt','in_hoa_don_gtgt',plugins_url('/images/menu-vs.png', __FILE__));
+	add_menu_page('In HĐ GTGT','In HĐ GTGT', 'contributor','in_hoa_don_gtgt2','in_hoa_don_gtgt',plugins_url('/images/menu-vs.png', __FILE__));
 	
 	//Dang ky van chuyen
 	add_menu_page('Quản lý ĐKVC', 'Quản lý ĐKVC', 'administrator','quan_ly_dkvc', 'quan_ly_dkvc2',plugins_url('/images/menu-vs.png', __FILE__));
 	
 	//Nhap van don
 	add_menu_page('Nhập vận đơn', 'Nhập vận đơn', 'administrator','quan_ly_van_don', 'quan_ly_van_don2',plugins_url('/images/menu-vs.png', __FILE__));
+	add_menu_page('Nhập vận đơn', 'Nhập vận đơn', 'author','quan_ly_van_don2', 'quan_ly_van_don2',plugins_url('/images/menu-vs.png', __FILE__));
 }
 function xls_import() {
 	if($_GET['action']=="load_khach_hang"){
