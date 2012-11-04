@@ -180,6 +180,7 @@ function load_cuoc_phi()
 		type: 'POST',
 		dataType: "html",
 		data: {
+			khach_hang : $("#chon_khach_hang").val(),
 			ma_dich_vu : $("#ma_dich_vu").val(),
 			ma_tinh_den : $("#ma_tinh_den").val(),
 			khoi_luong : $("#khoi_luong").val()
@@ -264,7 +265,14 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_bang_gia&action=
 <select id='ma_tinh_di'  onchange="load_content();">
 <?
 	global $wpdb;
-	$province = $wpdb->get_results("select ma_tinh,ten_tinh from gia_tinh_thanh_pho where ma_tinh in ('ha_noi','tp_hcm')");
+	$current_user = wp_get_current_user();
+	if($current_user->user_login == "admin"){
+		$tinh_di = "'ha_noi','tp_hcm'";
+	}else{
+		$tinh_di = "'".$current_user->ma_tinh_di."'";
+	}
+
+	$province = $wpdb->get_results("select ma_tinh,ten_tinh from gia_tinh_thanh_pho where ma_tinh in (".$tinh_di.")");
 	foreach($province as $province2){
 		if(!empty($province2->ma_tinh)){
 			echo "<option value='".$province2->ma_tinh."'>".$province2->ten_tinh."</option>";

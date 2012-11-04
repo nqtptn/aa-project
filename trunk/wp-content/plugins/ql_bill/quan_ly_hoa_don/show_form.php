@@ -190,6 +190,7 @@ function load_cuoc_phi()
 		type: 'POST',
 		dataType: "html",
 		data: {
+			khach_hang : $("#khach_hang").val(),
 			ma_dich_vu : $("#ma_dich_vu").val(),
 			ma_tinh_den : $("#ma_tinh_den").val(),
 			don_vi_kg : temp2,
