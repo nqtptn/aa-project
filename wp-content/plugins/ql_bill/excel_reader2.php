@@ -1853,7 +1853,7 @@ function xac_nhan(khachhang)
 function load_khach_hang()
 {
 	$.ajax({
-		url: "<? echo get_admin_url()?>admin.php?page=xls_import&action=load_khach_hang&noheader=1&nofooter=1",
+		url: "<? echo get_admin_url()?>admin.php?page=xls_import2&action=load_khach_hang&noheader=1&nofooter=1",
 		type: 'POST',
 		dataType: "html",
 		data: {
@@ -1869,7 +1869,7 @@ function load_khach_hang()
 	});
 }
 
-var update_url="<? echo get_admin_url()?>admin.php?page=xls_import&action=xacnhan&noheader=1&nofooter=1";
+var update_url="<? echo get_admin_url()?>admin.php?page=xls_import2&action=xacnhan&noheader=1&nofooter=1";
 </script>
 	<div class="wrap">
 		<?php echo $html_update; ?>
