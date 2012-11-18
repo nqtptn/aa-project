@@ -131,8 +131,10 @@ if ( !is_multisite() ) {
 if ( !is_wp_error( $errors ) ) {
 	$redirect = (IS_PROFILE_PAGE ? "profile.php?" : "user-edit.php?user_id=$user_id&"). "updated=true";
 	$ma_tinh_di=$_POST['ma_tinh_di'];
+	$ti_le_phu_phi=$_POST['ti_le_phu_phi'];
+	$ti_le_phu_phi_ngoai_thanh=$_POST['ti_le_phu_phi_ngoai_thanh'];	
 	if($ma_tinh_di){
-		$temp = $wpdb->query("UPDATE $wpdb->users SET ma_tinh_di='$ma_tinh_di' WHERE ID=$user_id");
+		$temp = $wpdb->query("UPDATE $wpdb->users SET ma_tinh_di='$ma_tinh_di',ti_le_phu_phi='$ti_le_phu_phi',ti_le_phu_phi_ngoai_thanh='$ti_le_phu_phi_ngoai_thanh' WHERE ID=$user_id");
 	}
 	if ( $wp_http_referer )
 		$redirect = add_query_arg('wp_http_referer', urlencode($wp_http_referer), $redirect);
@@ -285,7 +287,12 @@ if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_c
 			<select id='ma_tinh_di'  name="ma_tinh_di">
 			<?
 				global $wpdb;
-				$province = $wpdb->get_results("SELECT `ma_tinh`,`ten_tinh` FROM `gia_tinh_thanh_pho` WHERE `ma_tinh` in ('tp_hcm','ha_noi') ORDER BY `ten_tinh`");
+				$current_user = wp_get_current_user();
+				if($current_user->user_login == "admin"){
+					$province = $wpdb->get_results("SELECT `ma_tinh`,`ten_tinh` FROM `gia_tinh_thanh_pho` WHERE  `ma_tinh` in ('tp_hcm','ha_noi') ORDER BY `ten_tinh`");
+				}else{
+					$province = $wpdb->get_results("SELECT `ma_tinh`,`ten_tinh` FROM `gia_tinh_thanh_pho` WHERE  `ma_tinh` = '".($current_user->ma_tinh_di)."' ORDER BY `ten_tinh`");
+				}
 				//echo $wpdb->get_var( $wpdb->prepare("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho", $comment_author, $comment_date) );
 				foreach($province as $province2){
 					echo "<option value='".$province2->ma_tinh."'".(esc_attr($profileuser->ma_tinh_di)==$province2->ma_tinh ? "selected" : "").">".$province2->ten_tinh."</option>";
@@ -293,7 +300,15 @@ if ( is_multisite() && is_network_admin() && ! IS_PROFILE_PAGE && current_user_c
 			?>
 			</select>
 		</td>
-	</tr>
+</tr>
+<tr>
+	<th><label for="ti_le_phu_phi"><?php _e('Tỉ lệ phụ phí (%)'); ?></label></th>
+	<td>
+		<input size="3" type="text" id="ti_le_phu_phi" name="ti_le_phu_phi" value="<?php echo esc_attr($profileuser->ti_le_phu_phi) ?>"/> 
+		<label for="ti_le_phu_phi_ngoai_thanh"> Tỉ lệ phụ phí ngoại thành (%)</label> 
+		<input size="3" type="text" id="ti_le_phu_phi_ngoai_thanh" name="ti_le_phu_phi_ngoai_thanh" value="<?php echo esc_attr($profileuser->ti_le_phu_phi_ngoai_thanh) ?>"/>
+	</td>
+</tr>
 <tr>
 	<th><label for="nickname"><?php _e('Địa chỉ'); ?></label></th>
 	<td><input type="text" name="nickname" id="nickname" value="<?php echo esc_attr($profileuser->nickname) ?>" class="regular-text" /></td>
