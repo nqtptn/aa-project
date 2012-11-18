@@ -47,11 +47,6 @@ function post_data(xml_link){
 	if(input_value['gia_cong_them']==""){
 		input_value['gia_cong_them']=0;
 	}
-	input_value['ti_le_phu_phi'] = parseInt($("#ti_le_phu_phi").val());
-	input_value['ti_le_phu_phi_ngoai_thanh'] = parseInt($("#ti_le_phu_phi_ngoai_thanh").val());
-	if(input_value['ti_le_phu_phi']==""){
-		input_value['ti_le_phu_phi']=0;
-	}
 	input_value['vat'] = parseInt($("#vat").val());
 	if(input_value['vat']==""){
 		input_value['vat']=0;
@@ -59,13 +54,7 @@ function post_data(xml_link){
 	
 	if(isNaN(input_value['gia_cong_them'])){
 		alert("Giá cộng thêm phải là số!");
-		$("#gia_cong_them").focus();
-	}else if(isNaN(input_value['ti_le_phu_phi'])){
-		alert("Tỉ lệ phụ phí phải là số!");
-		$("#ti_le_phu_phi").focus();
-	}else if(isNaN(input_value['ti_le_phu_phi_ngoai_thanh'])){
-		alert("Tỉ lệ phụ phí ngoại thành phải là số!");
-		$("#ti_le_phu_phi_ngoai_thanh").focus();		
+		$("#gia_cong_them").focus();		
 	}else if(isNaN(input_value['vat'])){
 		alert("Thuế phải là số!");
 		$("#vat").focus();
@@ -81,8 +70,6 @@ function post_data(xml_link){
 				mo_ta : input_value['mo_ta'],
 				la_dich_vu_cong_them : input_value['la_dich_vu_cong_them'],
 				gia_cong_them : input_value['gia_cong_them'],
-				ti_le_phu_phi : input_value['ti_le_phu_phi'],
-				ti_le_phu_phi_ngoai_thanh : input_value['ti_le_phu_phi_ngoai_thanh'],
 				vat : input_value['vat'],
 				action: "add_record",
 			},
@@ -99,8 +86,6 @@ function post_data(xml_link){
 						$("#mo_ta").val("");
 						$("#la_dich_vu_cong_them").removeAttr("checked");
 						$("#gia_cong_them").val("");
-						$("#ti_le_phu_phi").val("15");
-						$("#ti_le_phu_phi_ngoai_thanh").val("10");
 						$("#vat").val("10");
 						$("#ma_dich_vu").focus();
 					}
@@ -229,12 +214,6 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_dich_vu&action=u
 					<label for="gia_cong_them">Giá cộng thêm</label>
 				</td>
 				<td>
-					<label for="ti_le_phu_phi">Tỉ lệ phụ phí (%)</label>
-				</td>
-				<td>
-					<label for="ti_le_phu_phi_ngoai_thanh">Tỉ lệ phụ phí ngoại thành (%)</label>
-				</td>				
-				<td>
 					<label for="vat">Thuế VAT (%)</label>
 				</td>
 				<td></td>
@@ -258,12 +237,6 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_dich_vu&action=u
 				<td>
 					<input type='text' size='12' id='gia_cong_them' value='0' />
 				</td>
-				<td>
-					<input type='text' size='8' id='ti_le_phu_phi' value='15' />
-				</td>
-				<td>
-					<input type='text' size='8' id='ti_le_phu_phi_ngoai_thanh' value='10' />
-				</td>				
 				<td>
 					<input type='text' size='8' id='vat' value='10' />
 				</td>
