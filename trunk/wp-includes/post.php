@@ -1230,6 +1230,9 @@ function _post_type_meta_capabilities( $capabilities = null ) {
  * @return object object with all the labels as member variables
  */
 function get_post_type_labels( $post_type_object ) {
+	//Nha
+	$user_id = 'no-admin';
+	if($user_id == 'admin'){
 	$nohier_vs_hier_defaults = array(
 		'name' => array( _x('Posts', 'post type general name'), _x('Pages', 'post type general name') ),
 		'singular_name' => array( _x('Post', 'post type singular name'), _x('Page', 'post type singular name') ),
@@ -1244,6 +1247,7 @@ function get_post_type_labels( $post_type_object ) {
 		'parent_item_colon' => array( null, __('Parent Page:') ),
 		'all_items' => array( __( 'All Posts' ), __( 'All Pages' ) )
 	);
+	}
 	$nohier_vs_hier_defaults['menu_name'] = $nohier_vs_hier_defaults['name'];
 	return _get_custom_object_labels( $post_type_object, $nohier_vs_hier_defaults );
 }
