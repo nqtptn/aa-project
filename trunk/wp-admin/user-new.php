@@ -96,8 +96,10 @@ Please click the following link to confirm the invite:
 			$add_user_errors = $user_id;
 		} else {
 			$ma_tinh_di=$_POST['ma_tinh_di'];
+			$ti_le_phu_phi=$_POST['ti_le_phu_phi'];
+			$ti_le_phu_phi_ngoai_thanh=$_POST['ti_le_phu_phi_ngoai_thanh'];
 			if($ma_tinh_di){
-				$temp = $wpdb->query("UPDATE $wpdb->users SET ma_tinh_di='$ma_tinh_di' WHERE ID=$user_id");
+				$temp = $wpdb->query("UPDATE $wpdb->users SET ma_tinh_di='$ma_tinh_di',ti_le_phu_phi='$ti_le_phu_phi',ti_le_phu_phi_ngoai_thanh='$ti_le_phu_phi_ngoai_thanh' WHERE ID=$user_id");
 			}
 			if ( current_user_can( 'list_users' ) )
 				$redirect = 'users.php?update=add&id=' . $user_id;
@@ -286,7 +288,7 @@ if ( current_user_can( 'create_users') ) {
 <?php wp_nonce_field( 'create-user', '_wpnonce_create-user' ) ?>
 <?php
 // Load up the passed data, else set to a default.
-foreach ( array( 'user_login' => 'login','ma_tinh_di' => 'ma_tinh_di','yim' => 'yim','jabber' => 'jabber', 'first_name' => 'firstname', 'last_name' => 'lastname','nickname' => 'nickname',
+foreach ( array( 'user_login' => 'login','ma_tinh_di' => 'ma_tinh_di','ti_le_phu_phi' => 'ti_le_phu_phi','ti_le_phu_phi_ngoai_thanh' => 'ti_le_phu_phi_ngoai_thanh','yim' => 'yim','jabber' => 'jabber', 'first_name' => 'firstname', 'last_name' => 'lastname','nickname' => 'nickname',
 				'email' => 'email', 'url' => 'uri', 'role' => 'role', 'send_password' => 'send_password', 'noconfirmation' => 'ignore_pass' ) as $post_field => $var ) {
 	$var = "new_user_$var";
 	if( isset( $_POST['createuser'] ) ) {
@@ -326,7 +328,12 @@ foreach ( array( 'user_login' => 'login','ma_tinh_di' => 'ma_tinh_di','yim' => '
 			<select id='ma_tinh_di' name="ma_tinh_di">
 			<?
 				global $wpdb;
-				$province = $wpdb->get_results("SELECT `ma_tinh`,`ten_tinh` FROM `gia_tinh_thanh_pho` WHERE  `ma_tinh` in ('tp_hcm','ha_noi') ORDER BY `ten_tinh`");
+				$current_user = wp_get_current_user();
+				if($current_user->user_login == "admin"){
+					$province = $wpdb->get_results("SELECT `ma_tinh`,`ten_tinh` FROM `gia_tinh_thanh_pho` WHERE  `ma_tinh` in ('tp_hcm','ha_noi') ORDER BY `ten_tinh`");
+				}else{
+					$province = $wpdb->get_results("SELECT `ma_tinh`,`ten_tinh` FROM `gia_tinh_thanh_pho` WHERE  `ma_tinh` = '".($current_user->ma_tinh_di)."' ORDER BY `ten_tinh`");
+				}
 				//echo $wpdb->get_var( $wpdb->prepare("SELECT ma_tinh, ten_tinh FROM gia_tinh_thanh_pho", $comment_author, $comment_date) );
 				foreach($province as $province2){
 					echo "<option value='".$province2->ma_tinh."'>".$province2->ten_tinh."</option>";
@@ -335,6 +342,14 @@ foreach ( array( 'user_login' => 'login','ma_tinh_di' => 'ma_tinh_di','yim' => '
 			</select>
 		</td>
 	</tr>
+	<tr>
+		<th><label for="ti_le_phu_phi"><?php _e('Tỉ lệ phụ phí (%)'); ?></label></th>
+		<td>
+			<input size="3" type="text" id="ti_le_phu_phi" name="ti_le_phu_phi" value="15"/> 
+			<label for="ti_le_phu_phi_ngoai_thanh"> Tỉ lệ phụ phí ngoại thành (%)</label> 
+			<input size="3" type="text" id="ti_le_phu_phi_ngoai_thanh" name="ti_le_phu_phi_ngoai_thanh" value="10"/>
+		</td>
+	</tr>	
 	<tr>
 		<th><label for="nickname"><?php _e('Địa chỉ'); ?></label></th>
 		<td><input type="text" name="nickname" id="nickname" value="<?php echo esc_attr($profileuser->nickname) ?>" class="regular-text" /></td>

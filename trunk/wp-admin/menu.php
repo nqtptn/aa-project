@@ -40,6 +40,10 @@
 
 // $menu[4] = array( '', 'read', 'separator1', '', 'wp-menu-separator' );
 
+//Nha
+$current_user = wp_get_current_user();
+if($current_user->user_login == 'admin'){
+
 	$menu[5] = array( __('Tin tức'), 'edit_posts', 'edit.php', '', 'open-if-no-js menu-top menu-icon-post', 'menu-posts', 'div' );
 	$submenu['edit.php'][5]  = array( __('Tất cả tin tức'), 'edit_posts', 'edit.php' );
 	/* translators: add new post */
@@ -59,47 +63,45 @@
 	/* translators: add new file */
 	$submenu['upload.php'][10] = array( _x('Thêm mới', 'file'), 'upload_files', 'media-new.php');
 
-$_wp_last_object_menu = 25; // The index of the last top-level menu in the object menu group
+	$_wp_last_object_menu = 25; // The index of the last top-level menu in the object menu group
 
-foreach ( (array) get_post_types( array('show_ui' => true, '_builtin' => false, 'show_in_menu' => true ) ) as $ptype ) {
-	$ptype_obj = get_post_type_object( $ptype );
-	// Check if it should be a submenu.
-	if ( $ptype_obj->show_in_menu !== true )
-		continue;
-	$ptype_menu_position = is_int( $ptype_obj->menu_position ) ? $ptype_obj->menu_position : ++$_wp_last_object_menu; // If we're to use $_wp_last_object_menu, increment it first.
-	$ptype_for_id = sanitize_html_class( $ptype );
-	if ( is_string( $ptype_obj->menu_icon ) ) {
-		$menu_icon   = esc_url( $ptype_obj->menu_icon );
-		$ptype_class = $ptype_for_id;
-	} else {
-		$menu_icon   = 'div';
-		$ptype_class = 'post';
-	}
-
-	// if $ptype_menu_position is already populated or will be populated by a hard-coded value below, increment the position.
-	$core_menu_positions = array(59, 60, 65, 70, 75, 80, 85, 99);
-	while ( isset($menu[$ptype_menu_position]) || in_array($ptype_menu_position, $core_menu_positions) )
-		$ptype_menu_position++;
-
-	$menu[$ptype_menu_position] = array( esc_attr( $ptype_obj->labels->menu_name ), $ptype_obj->cap->edit_posts, "edit.php?post_type=$ptype", '', 'menu-top menu-icon-' . $ptype_class, 'menu-posts-' . $ptype_for_id, $menu_icon );
-	$submenu["edit.php?post_type=$ptype"][5]  = array( $ptype_obj->labels->all_items, $ptype_obj->cap->edit_posts,  "edit.php?post_type=$ptype");
-	$submenu["edit.php?post_type=$ptype"][10]  = array( $ptype_obj->labels->add_new, $ptype_obj->cap->edit_posts, "post-new.php?post_type=$ptype" );
-
-	$i = 15;
-	foreach ( get_taxonomies( array(), 'objects' ) as $tax ) {
-		if ( ! $tax->show_ui || ! in_array($ptype, (array) $tax->object_type, true) )
+	foreach ( (array) get_post_types( array('show_ui' => true, '_builtin' => false, 'show_in_menu' => true ) ) as $ptype ) {
+		$ptype_obj = get_post_type_object( $ptype );
+		// Check if it should be a submenu.
+		if ( $ptype_obj->show_in_menu !== true )
 			continue;
+		$ptype_menu_position = is_int( $ptype_obj->menu_position ) ? $ptype_obj->menu_position : ++$_wp_last_object_menu; // If we're to use $_wp_last_object_menu, increment it first.
+		$ptype_for_id = sanitize_html_class( $ptype );
+		if ( is_string( $ptype_obj->menu_icon ) ) {
+			$menu_icon   = esc_url( $ptype_obj->menu_icon );
+			$ptype_class = $ptype_for_id;
+		} else {
+			$menu_icon   = 'div';
+			$ptype_class = 'post';
+		}
 
-		$submenu["edit.php?post_type=$ptype"][$i++] = array( esc_attr( $tax->labels->menu_name ), $tax->cap->manage_terms, "edit-tags.php?taxonomy=$tax->name&amp;post_type=$ptype" );
+		// if $ptype_menu_position is already populated or will be populated by a hard-coded value below, increment the position.
+		$core_menu_positions = array(59, 60, 65, 70, 75, 80, 85, 99);
+		while ( isset($menu[$ptype_menu_position]) || in_array($ptype_menu_position, $core_menu_positions) )
+			$ptype_menu_position++;
+
+		$menu[$ptype_menu_position] = array( esc_attr( $ptype_obj->labels->menu_name ), $ptype_obj->cap->edit_posts, "edit.php?post_type=$ptype", '', 'menu-top menu-icon-' . $ptype_class, 'menu-posts-' . $ptype_for_id, $menu_icon );
+		$submenu["edit.php?post_type=$ptype"][5]  = array( $ptype_obj->labels->all_items, $ptype_obj->cap->edit_posts,  "edit.php?post_type=$ptype");
+		$submenu["edit.php?post_type=$ptype"][10]  = array( $ptype_obj->labels->add_new, $ptype_obj->cap->edit_posts, "post-new.php?post_type=$ptype" );
+
+		$i = 15;
+		foreach ( get_taxonomies( array(), 'objects' ) as $tax ) {
+			if ( ! $tax->show_ui || ! in_array($ptype, (array) $tax->object_type, true) )
+				continue;
+
+			$submenu["edit.php?post_type=$ptype"][$i++] = array( esc_attr( $tax->labels->menu_name ), $tax->cap->manage_terms, "edit-tags.php?taxonomy=$tax->name&amp;post_type=$ptype" );
+		}
 	}
-}
-unset($ptype, $ptype_obj, $ptype_class, $ptype_for_id, $ptype_menu_position, $menu_icon, $i, $tax);
+	unset($ptype, $ptype_obj, $ptype_class, $ptype_for_id, $ptype_menu_position, $menu_icon, $i, $tax);
 
-$menu[59] = array( '', 'read', 'separator2', '', 'wp-menu-separator' );
+	$menu[59] = array( '', 'read', 'separator2', '', 'wp-menu-separator' );
 
-//Nha
-$current_user = wp_get_current_user();
-if($current_user->user_login == 'admin'){
+
 	if ( current_user_can( 'switch_themes') ) {
 		$menu[60] = array( __('Appearance'), 'switch_themes', 'themes.php', '', 'menu-top menu-icon-appearance', 'menu-appearance', 'div' );
 			$submenu['themes.php'][5]  = array(__('Themes'), 'switch_themes', 'themes.php');
@@ -112,14 +114,14 @@ if($current_user->user_login == 'admin'){
 				$submenu['themes.php'][10] = array(__('Menus'), 'edit_theme_options', 'nav-menus.php' );
 	}
 
-//Nha
+	//Nha
 	// $menu[15] = array( __('Links'), 'manage_links', 'link-manager.php', '', 'menu-top menu-icon-links', 'menu-links', 'div' );
 	// $submenu['link-manager.php'][5] = array( _x('All Links', 'admin menu'), 'manage_links', 'link-manager.php' );
 	/* translators: add new links */
 	// $submenu['link-manager.php'][10] = array( _x('Add New', 'link'), 'manage_links', 'link-add.php' );
 	// $submenu['link-manager.php'][15] = array( __('Link Categories'), 'manage_categories', 'edit-tags.php?taxonomy=link_category' );
 
-//Nha
+	//Nha
 	$menu[20] = array( __('Pages'), 'edit_pages', 'edit.php?post_type=page', '', 'menu-top menu-icon-page', 'menu-pages', 'div' );
 	$submenu['edit.php?post_type=page'][5] = array( __('All Pages'), 'edit_pages', 'edit.php?post_type=page' );
 	/* translators: add new page */
