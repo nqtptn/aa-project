@@ -10,9 +10,27 @@ License: GPL
 */
 add_action( 'admin_menu', 'ql_bill' );
 function ql_bill() {
-	add_menu_page('Quản lý bill', 'Nhập bill', 'administrator','quan_ly_hoa_don', 'ql_bill2',plugins_url('/images/menu-vs.png', __FILE__));
-	add_menu_page('Quản lý bill', 'Nhập bill', 'editor','quan_ly_hoa_don2', 'ql_bill2',plugins_url('/images/menu-vs.png', __FILE__));
-	add_submenu_page('quan_ly_hoa_don','Upload bill', 'Upload bill', 'administrator','xls_import','xls_import');
+
+	global $wpdb;
+	$current_user = wp_get_current_user();
+	$temp = $wpdb->get_row("select (select meta_value from dev_usermeta where user_id=ID and meta_key='dev_capabilities') as role from dev_users where user_login='$current_user->user_login'");
+	$role = "subscriber";//Khach hang
+	if( $temp->role == "a:1:{s:13:\"administrator\";s:1:\"1\";}" ){
+		$role = "administrator";//Quan tri
+	}elseif ( $temp->role == "a:1:{s:6:\"editor\";s:1:\"1\";}" ){
+		$role = "editor";//Nhap bill
+	}elseif ( $temp->role == "a:1:{s:6:\"author\";s:1:\"1\";}" ){
+		$role = "author";//Nhap van don
+	}elseif ( $temp->role == "a:1:{s:11:\"contributor\";s:1:\"1\";}" ){
+		$role = "contributor";//In hoa don
+	}
+	
+	if($role == "administrator" || $role == 'editor'){
+		add_menu_page('Quản lý bill', 'Nhập bill', $role,'quan_ly_hoa_don', 'ql_bill2',plugins_url('/images/menu-vs.png', __FILE__));
+		add_submenu_page('quan_ly_hoa_don','Upload bill', 'Upload bill', $role,'xls_import','xls_import');
+	}
+	//add_menu_page('Quản lý bill', 'Nhập bill', 'editor','quan_ly_hoa_don2', 'ql_bill2',plugins_url('/images/menu-vs.png', __FILE__));
+	//add_submenu_page('quan_ly_hoa_don','Upload bill', 'Upload bill', 'administrator','xls_import','xls_import');
 	add_submenu_page('quan_ly_hoa_don','Bảng kê nợ', 'Bảng kê nợ', 'administrator','bang_ke_no','bang_ke_no');
 	add_submenu_page('quan_ly_hoa_don','Dịch vụ', 'Dịch vụ', 'administrator','quan_ly_dich_vu','quan_ly_dich_vu');
 	add_submenu_page('quan_ly_hoa_don','Tỉnh thành', 'Tỉnh thành', 'administrator','quan_ly_tinh_thanh','quan_ly_tinh_thanh');
@@ -20,15 +38,21 @@ function ql_bill() {
 	add_submenu_page('quan_ly_hoa_don','Nhập bảng giá', 'Nhập bảng giá', 'administrator','quan_ly_bang_gia','quan_ly_bang_gia');
 
 	//Hoa don gia tri gia tang
-	add_menu_page('In HĐ GTGT','In HĐ GTGT', 'administrator','in_hoa_don_gtgt','in_hoa_don_gtgt',plugins_url('/images/menu-vs.png', __FILE__));
-	add_menu_page('In HĐ GTGT','In HĐ GTGT', 'contributor','in_hoa_don_gtgt2','in_hoa_don_gtgt',plugins_url('/images/menu-vs.png', __FILE__));
+	if($role == "administrator" || $role == 'contributor'){
+		add_menu_page('In HĐ GTGT','In HĐ GTGT', $role,'in_hoa_don_gtgt','in_hoa_don_gtgt',plugins_url('/images/menu-vs.png', __FILE__));
+	}	
+	//add_menu_page('In HĐ GTGT','In HĐ GTGT', 'administrator','in_hoa_don_gtgt','in_hoa_don_gtgt',plugins_url('/images/menu-vs.png', __FILE__));
+	//add_menu_page('In HĐ GTGT','In HĐ GTGT', 'contributor','in_hoa_don_gtgt2','in_hoa_don_gtgt',plugins_url('/images/menu-vs.png', __FILE__));
 	
 	//Dang ky van chuyen
 	add_menu_page('Quản lý ĐKVC', 'Quản lý ĐKVC', 'administrator','quan_ly_dkvc', 'quan_ly_dkvc2',plugins_url('/images/menu-vs.png', __FILE__));
 	
 	//Nhap van don
-	add_menu_page('Nhập vận đơn', 'Nhập vận đơn', 'administrator','quan_ly_van_don', 'quan_ly_van_don2',plugins_url('/images/menu-vs.png', __FILE__));
-	add_menu_page('Nhập vận đơn', 'Nhập vận đơn', 'author','quan_ly_van_don2', 'quan_ly_van_don2',plugins_url('/images/menu-vs.png', __FILE__));
+	if($role == "administrator" || $role == 'author'){
+		add_menu_page('Nhập vận đơn', 'Nhập vận đơn', $role,'quan_ly_van_don', 'quan_ly_van_don2',plugins_url('/images/menu-vs.png', __FILE__));
+	}	
+	//add_menu_page('Nhập vận đơn', 'Nhập vận đơn', 'administrator','quan_ly_van_don', 'quan_ly_van_don2',plugins_url('/images/menu-vs.png', __FILE__));
+	//add_menu_page('Nhập vận đơn', 'Nhập vận đơn', 'author','quan_ly_van_don2', 'quan_ly_van_don2',plugins_url('/images/menu-vs.png', __FILE__));
 }
 function xls_import() {
 	if($_GET['action']=="load_khach_hang"){
@@ -49,6 +73,8 @@ function ql_bill2() {
 		require_once("quan_ly_hoa_don/load_tinh_tp.php");
 	}elseif($_GET['action']=="load_khach_hang"){
 		require_once("quan_ly_hoa_don/load_khach_hang.php");
+	}elseif($_GET['action']=="load_thong_tin_khach_hang"){
+		require_once("quan_ly_hoa_don/load_thong_tin_khach_hang.php");		
 	}elseif($_GET['action']=="export_function"){
 		require_once('pdf/html2pdf.class.php');
 		require_once("quan_ly_hoa_don/export_function.php");
@@ -209,4 +235,3 @@ function add_header() {
 <script type="text/javascript" src="<?php echo plugins_url('/jquery-ui-1.8.16.custom.min.js', __FILE__) ?>"></script>
 <?
 }
-

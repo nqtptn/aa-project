@@ -31,13 +31,15 @@ $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
 		$current_user = wp_get_current_user();
 		$ma_van_don = $mysqli->real_escape_string(strip_tags($_POST['ma_van_don']));
 		$ten_khach_hang = $mysqli->real_escape_string(strip_tags($_POST['ten_khach_hang']));
+		$ten_nguoi_nhan = $mysqli->real_escape_string(strip_tags($_POST['ten_nguoi_nhan']));
+		$thoi_gian_nhan = $mysqli->real_escape_string(strip_tags($_POST['thoi_gian_nhan']));
+		$noi_gui = $mysqli->real_escape_string(strip_tags($_POST['noi_gui']));
 		$noi_nhan = $mysqli->real_escape_string(strip_tags($_POST['noi_nhan']));
-		$noi_phat = $mysqli->real_escape_string(strip_tags($_POST['noi_phat']));
 		$trang_thai = $mysqli->real_escape_string(strip_tags($_POST['trang_thai']));
 		$ghi_chu = $mysqli->real_escape_string(strip_tags($_POST['ghi_chu']));
 		$result =  $mysqli->query("INSERT INTO gia_van_don 
-			(ma_van_don,ten_khach_hang,noi_nhan,noi_phat,trang_thai,ghi_chu,ngay_tao,ma_tinh_di) value 
-			('$ma_van_don','$ten_khach_hang','$noi_nhan','$noi_phat','$trang_thai','$ghi_chu',NOW(),'".$current_user->ma_tinh_di."')");
+			(ma_van_don,ten_khach_hang,ten_nguoi_nhan,thoi_gian_nhan,noi_gui,noi_nhan,trang_thai,ghi_chu,ngay_tao,ma_tinh_di) value 
+			('$ma_van_don','$ten_khach_hang','$ten_nguoi_nhan','$thoi_gian_nhan','$noi_gui','$noi_nhan','$trang_thai','$ghi_chu',NOW(),'".$current_user->ma_tinh_di."')");
 		echo $result ? "true" : "false";
 		$mysqli->close();
 	}

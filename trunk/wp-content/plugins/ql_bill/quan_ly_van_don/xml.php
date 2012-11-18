@@ -14,8 +14,10 @@ if ($so_van_don == ""){
 }
 $grid->addColumn('id', 'Số vận đơn', 'string', NULL,true);
 $grid->addColumn('ten_khach_hang', 'Tên khách hàng', 'string', NULL,true);
-$grid->addColumn('noi_nhan', 'Nơi nhận', 'string',  NULL,true);
-$grid->addColumn('noi_phat', 'Nơi phát', 'string' , NULL,true);
+$grid->addColumn('ten_nguoi_nhan', 'Tên người nhận', 'string', NULL,true);
+$grid->addColumn('noi_gui', 'Nơi gửi', 'string',  NULL,true);
+$grid->addColumn('noi_nhan', 'Nơi nhận', 'string' , NULL,true);
+$grid->addColumn('thoi_gian_nhan', 'Thời gian nhận', 'string' , NULL,true);
 $grid->addColumn('trang_thai', 'Trạng thái', 'string', NULL,true);
 $grid->addColumn('da_giao', 'Đã giao hàng', 'boolean', NULL,true);
 $grid->addColumn('ghi_chu', 'Ghi chú', 'string', NULL,true);
@@ -25,8 +27,10 @@ $query="
 	SELECT 
 		ma_van_don as id,
 		ten_khach_hang,
+		ten_nguoi_nhan,
+		noi_gui,
 		noi_nhan,
-		noi_phat,
+		thoi_gian_nhan,
 		trang_thai,
 		(case when trang_thai='Đã giao' then 1 else 0 end) as da_giao,
 		ghi_chu,

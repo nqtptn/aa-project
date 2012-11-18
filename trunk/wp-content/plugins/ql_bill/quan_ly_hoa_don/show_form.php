@@ -139,7 +139,7 @@ function updateCellValue(editableGrid, rowIndex, columnIndex, oldValue, newValue
 				if(editableGrid.getColumnName(columnIndex)=="phu_thu" || editableGrid.getColumnName(columnIndex)=="cuoc_phi"){
 					total = editableGrid.getValueAt(rowIndex, cot_cuoc_phi) + editableGrid.getValueAt(rowIndex, cot_phu_thu);
 					editableGrid.setValueAt(rowIndex, cot_tong, total);
-				}else if(editableGrid.getColumnName(columnIndex)=="khoi_luong"){
+				}else if(editableGrid.getColumnName(columnIndex)=="khoi_luong" || editableGrid.getColumnName(columnIndex)=="ngoai_thanh"){
 					editableGrid.setValueAt(rowIndex, cot_cuoc_phi, response);
 					total = editableGrid.getValueAt(rowIndex, cot_cuoc_phi) + editableGrid.getValueAt(rowIndex, cot_phu_thu);
 					editableGrid.setValueAt(rowIndex, cot_tong, total);
@@ -191,6 +191,8 @@ function load_cuoc_phi()
 		dataType: "html",
 		data: {
 			khach_hang : $("#khach_hang").val(),
+			ti_le_phu_phi : $("#ti_le_phu_phi").val(),
+			ti_le_phu_phi_ngoai_thanh : $("#ti_le_phu_phi_ngoai_thanh").val(),			
 			ma_dich_vu : $("#ma_dich_vu").val(),
 			ma_tinh_den : $("#ma_tinh_den").val(),
 			don_vi_kg : temp2,
@@ -219,8 +221,28 @@ function load_khach_hang()
 		{
 			// reset old value if failed then highlight row
 			$("#khach_hang").html(response);
+			load_thong_tin_khach_hang();
 		},
 		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
+		async: true
+	});
+}
+function load_thong_tin_khach_hang()
+{
+	$("#ket_qua").html("");
+	$.ajax({
+		url: "<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=load_thong_tin_khach_hang&noheader=1&nofooter=1",
+		type: 'POST',
+		dataType: "html",
+		data: {
+			khach_hang : $("#khach_hang").val()
+		},
+		success: function (response)
+		{
+			// reset old value if failed then highlight row
+			$("#mydiv").html(response);
+		},
+		error: function(XMLHttpRequest, textStatus, exception) { alert("Thực hiện lỗi, vui lòng thực hiện lại. \n" + errortext); },
 		async: true
 	});
 }
@@ -262,8 +284,9 @@ function get_report_link()
 function load_content()
 {
 	$("#tablecontent").html("Loading...");
-	$ten_kh = $('#khach_hang').find(":selected").text();
-	$("#ten_khach_hang").html(" ( "  + $ten_kh + " )");
+	load_thong_tin_khach_hang();
+	//$ten_kh = $('#khach_hang').find(":selected").text();
+	//$("#ten_khach_hang").html(" ( "  + $ten_kh + " )");
 	var xml_link=get_xml_link();
 	DatabaseGrid(xml_link,"tablecontent","filter",update_url);
 	$("#report").html("<img src='<? echo plugins_url('ql_bill/images/icon_16.gif')?>' border='0' style='vertical-align: middle' /> <a href='" + get_report_link() +"' target=_blank>Xuất Báo Cáo</a>");
@@ -340,7 +363,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 </div>
 <div id='posting' style='margin-top:10px;border: 1px solid #ccc;-moz-border-radius: 5px;-webkit-border-radius: 5px;padding:10px'>
 	<div style='border-bottom:1px dotted #999;color:#588eaf'>
-		<b>Thêm mới <label id="ten_khach_hang"></label>
+		<b><div id="mydiv"></div>
 		</b>
 	</div>
 	<form name="post_form" method="post" onsubmit='return post_data(update_url)'>

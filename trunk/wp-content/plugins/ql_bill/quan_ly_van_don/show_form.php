@@ -40,8 +40,10 @@ function post_data(xml_link){
 	var input_value=new Array();
 	input_value['id'] = $("#ma_van_don").val();
 	input_value['ten_khach_hang'] = $("#ten_khach_hang").val();
+	input_value['ten_nguoi_nhan'] = $("#ten_nguoi_nhan").val();
+	input_value['noi_gui'] = $("#noi_gui").val();
 	input_value['noi_nhan'] = $("#noi_nhan").val();
-	input_value['noi_phat'] = $("#noi_phat").val();
+	input_value['thoi_gian_nhan'] = $("#thoi_gian_nhan").val();
 	input_value['trang_thai'] = ($("#da_giao").is(':checked') ? "Đã giao" : $("#trang_thai").val());
 	input_value['ghi_chu'] = $("#ghi_chu").val();
 	if(input_value['id']==""){
@@ -55,8 +57,10 @@ function post_data(xml_link){
 			data: {
 				ma_van_don : input_value['id'],
 				ten_khach_hang : input_value['ten_khach_hang'],
+				ten_nguoi_nhan : input_value['ten_nguoi_nhan'],
+				noi_gui : input_value['noi_gui'],
 				noi_nhan : input_value['noi_nhan'],
-				noi_phat : input_value['noi_phat'],
+				thoi_gian_nhan : input_value['thoi_gian_nhan'],
 				trang_thai : input_value['trang_thai'],
 				ghi_chu : input_value['ghi_chu'],
 				action: "add_record",
@@ -70,6 +74,7 @@ function post_data(xml_link){
 						editableGrid.insert(editableGrid.getRowId(editableGrid.getRowCount() - 1),input_value['id'],input_value);
 						//$("#ma_van_don").val("");
 						$("#ten_khach_hang").val("");
+						$("#ten_nguoi_nhan").val("");
 						$("#ghi_chu").val("");
 						$("#ma_van_don").focus();
 					}
@@ -188,16 +193,22 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_van_don&action=u
 					<label for="ten_khach_hang">Tên khách hàng</label>
 				</td>				
 				<td>
+					<label for="ten_nguoi_nhan">Tên người nhận</label>
+				</td>				
+				<td>
+					<label for="noi_gui">Nơi gửi</label>
+				</td>
+				<td>
 					<label for="noi_nhan">Nơi nhận</label>
 				</td>
 				<td>
-					<label for="noi_phat">Nơi phát</label>
-				</td>
+					<label for="thoi_gian_nhan">Thời gian nhận</label>
+				</td>				
 				<td>
 					<label for="trang_thai">Trạng thái</label>
 				</td>
 				<td>
-					<label for="da_giao">Đã giao hàng</label>
+					<label for="da_giao">Đã giao</label>
 				</td>				
 				<td>
 					<label for="ghi_chu">Ghi chú</label>
@@ -206,19 +217,25 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_van_don&action=u
 			</tr>
 			<tr>
 				<td>
-					<input type='text' size='12' id='ma_van_don' value=''  />	
+					<input type='text' size='10' id='ma_van_don' value=''  />	
 				</td>
 				<td>
-					<input type='text' size='20' id='ten_khach_hang' value=''  />
+					<input type='text' size='18' id='ten_khach_hang' value=''  />
 				</td>				
 				<td>
-					<input type='text' size='15' id='noi_nhan' value=''  />
+					<input type='text' size='18' id='ten_nguoi_nhan' value=''  />
+				</td>				
+				<td>
+					<input type='text' size='13' id='noi_gui' value=''  />
 				</td>
 				<td>
-					<input type='text' size='15' id='noi_phat' value=''  />				
+					<input type='text' size='13' id='noi_nhan' value=''  />				
+				</td>
+				<td>
+					<input type='text' size='10' id='thoi_gian_nhan' value=''  />				
 				</td>
 				<td align="center">
-					<input type='text' id='trang_thai' value='Đang vận chuyển' />
+					<input type='text' size='12' id='trang_thai' value='Đang vận chuyển' />
 				</td>
 				<td>
 					<input type='checkbox' id='da_giao' value='0' />					
