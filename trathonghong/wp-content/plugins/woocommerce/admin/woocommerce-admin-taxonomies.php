@@ -20,12 +20,12 @@ function woocommerce_add_category_thumbnail_field() {
 	global $woocommerce;
 	?>
 	<div class="form-field">
-		<label><?php _e('Thumbnail', 'woocommerce'); ?></label>
+		<label><?php _e('Hình ảnh', 'woocommerce'); ?></label>
 		<div id="product_cat_thumbnail" style="float:left;margin-right:10px;"><img src="<?php echo woocommerce_placeholder_img_src(); ?>" width="60px" height="60px" /></div>
 		<div style="line-height:60px;">
 			<input type="hidden" id="product_cat_thumbnail_id" name="product_cat_thumbnail_id" />
-			<button type="submit" class="upload_image_button button"><?php _e('Upload/Add image', 'woocommerce'); ?></button>
-			<button type="submit" class="remove_image_button button"><?php _e('Remove image', 'woocommerce'); ?></button>
+			<button type="submit" class="upload_image_button button"><?php _e('Upload/Thêm hình', 'woocommerce'); ?></button>
+			<button type="submit" class="remove_image_button button"><?php _e('Xóa hình', 'woocommerce'); ?></button>
 		</div>
 		<script type="text/javascript">
 			
@@ -101,13 +101,13 @@ function woocommerce_edit_category_thumbnail_field( $term, $taxonomy ) {
 	endif;
 	?>
 	<tr class="form-field">
-		<th scope="row" valign="top"><label><?php _e('Thumbnail', 'woocommerce'); ?></label></th>
+		<th scope="row" valign="top"><label><?php _e('Hình ảnh', 'woocommerce'); ?></label></th>
 		<td>
 			<div id="product_cat_thumbnail" style="float:left;margin-right:10px;"><img src="<?php echo $image; ?>" width="60px" height="60px" /></div>
 			<div style="line-height:60px;">
 				<input type="hidden" id="product_cat_thumbnail_id" name="product_cat_thumbnail_id" value="<?php echo $thumbnail_id; ?>" />
-				<button type="submit" class="upload_image_button button"><?php _e('Upload/Add image', 'woocommerce'); ?></button>
-				<button type="submit" class="remove_image_button button"><?php _e('Remove image', 'woocommerce'); ?></button>
+				<button type="submit" class="upload_image_button button"><?php _e('Upload/Thêm ảnh', 'woocommerce'); ?></button>
+				<button type="submit" class="remove_image_button button"><?php _e('Xóa ảnh', 'woocommerce'); ?></button>
 			</div>
 			<script type="text/javascript">
 
@@ -176,7 +176,7 @@ add_action( 'edit_term', 'woocommerce_category_thumbnail_field_save', 10,3 );
  */
 function woocommerce_product_cat_description() {
 
-	echo wpautop( __( 'Product categories for your store can be managed here. To change the order of categories on the front-end you can drag and drop to sort them. To see more categories listed click the "screen options" link at the top of the page.', 'woocommerce' ) );
+	//echo wpautop( __( 'Product categories for your store can be managed here. To change the order of categories on the front-end you can drag and drop to sort them. To see more categories listed click the "screen options" link at the top of the page.', 'woocommerce' ) );
 
 }
 
@@ -251,7 +251,7 @@ add_filter( 'edit_posts_per_page', 'woocommerce_fix_edit_posts_per_page', 1, 2 )
 function woocommerce_product_cat_columns( $columns ) {
 	$new_columns = array();
 	$new_columns['cb'] = $columns['cb'];
-	$new_columns['thumb'] = __('Image', 'woocommerce');
+	$new_columns['thumb'] = __('Hình ảnh', 'woocommerce');
 
 	unset( $columns['cb'] );
 

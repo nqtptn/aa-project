@@ -771,7 +771,7 @@ class Woocommerce {
 	                    'add_new_item' 		=> __( 'Add New Product Tag', 'woocommerce'),
 	                    'new_item_name' 	=> __( 'New Product Tag Name', 'woocommerce')
 	            	),
-	            'show_ui' 				=> true,
+	            'show_ui' 				=> false,
 	            'query_var' 			=> true,
 				'capabilities'			=> array(
 					'manage_terms' 		=> 'manage_woocommerce_products',

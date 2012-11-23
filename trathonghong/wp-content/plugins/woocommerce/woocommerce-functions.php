@@ -135,7 +135,7 @@ function woocommerce_list_pages( $pages ){
  */
 function woocommerce_nav_menu_items( $items, $args ) {
 	if ( get_option('woocommerce_menu_logout_link')=='yes' && strstr($items, get_permalink(woocommerce_get_page_id('myaccount'))) && is_user_logged_in() )
-		$items .= '<li class="logout"><a href="'. wp_logout_url(home_url()) .'">'.__('Logout', 'woocommerce').'</a></li>';
+		$items .= '<li class="logout"><a href="'. wp_logout_url(home_url()) .'">'.__('Thoát', 'woocommerce').'</a></li>';
 
     return $items;
 }
@@ -167,7 +167,7 @@ function woocommerce_update_cart_action() {
 
 		$woocommerce->cart->set_quantity( $_GET['remove_item'], 0 );
 
-		$woocommerce->add_message( __('Cart updated.', 'woocommerce') );
+		$woocommerce->add_message( __('Giỏ hàng đã được cập nhật.', 'woocommerce') );
 
 		$referer = ( wp_get_referer() ) ? wp_get_referer() : $woocommerce->cart->get_cart_url();
 		wp_safe_redirect( $referer );
@@ -196,7 +196,7 @@ function woocommerce_update_cart_action() {
 	    		// Check downloadable items
 				if ( get_option('woocommerce_limit_downloadable_product_qty') == 'yes' ) {
 					if ( $_product->is_downloadable() && $_product->is_virtual() && $quantity > 1 ) {
-						$woocommerce->add_error( sprintf(__('You can only have 1 %s in your cart.', 'woocommerce'), $_product->get_title()) );
+						$woocommerce->add_error( sprintf(__('Bạn đã chọn 1 %s trong giỏ hàng.', 'woocommerce'), $_product->get_title()) );
 						$passed_validation = false;
 					}
 				}
@@ -211,7 +211,7 @@ function woocommerce_update_cart_action() {
 			wp_safe_redirect( $woocommerce->cart->get_checkout_url() );
 			exit;
 		} else {
-			$woocommerce->add_message( __('Cart updated.', 'woocommerce') );
+			$woocommerce->add_message( __('Giỏ hàng đã được cập nhật.', 'woocommerce') );
 
 			$referer = ( wp_get_referer() ) ? wp_get_referer() : $woocommerce->cart->get_cart_url();
 			$referer = remove_query_arg( 'remove_discounts', $referer );
@@ -246,7 +246,7 @@ function woocommerce_add_to_cart_action( $url = false ) {
 
     		// Only allow integer variation ID - if its not set, redirect to the product page
     		if (empty($_REQUEST['variation_id']) || !is_numeric($_REQUEST['variation_id']) || $_REQUEST['variation_id']<1) {
-    			$woocommerce->add_error( __('Please choose product options&hellip;', 'woocommerce') );
+    			$woocommerce->add_error( __('Vui lòng tùy chọn sản phẩm &hellip;', 'woocommerce') );
     			wp_redirect(apply_filters('woocommerce_add_to_cart_product_id', get_permalink($_REQUEST['product_id'])));
     			exit;
     		}
@@ -286,7 +286,7 @@ function woocommerce_add_to_cart_action( $url = false ) {
 					}
 				}
             } else {
-                $woocommerce->add_error( __('Please choose product options&hellip;', 'woocommerce') );
+                $woocommerce->add_error( __('Vui lòng tùy chọn sản phẩm &hellip;', 'woocommerce') );
                 wp_redirect(apply_filters('woocommerce_add_to_cart_product_id', get_permalink($_REQUEST['product_id'])));
                 exit;
            }
@@ -317,7 +317,7 @@ function woocommerce_add_to_cart_action( $url = false ) {
 				}
 
 				if (!$added_to_cart && !$quantity_set) {
-					$woocommerce->add_error( __('Please choose a quantity&hellip;', 'woocommerce') );
+					$woocommerce->add_error( __('Vui lòng chọn số lượng &hellip;', 'woocommerce') );
 					wp_redirect(apply_filters('woocommerce_add_to_cart_product_id', get_permalink($_REQUEST['product_id'])));
 					exit;
 				}
@@ -325,7 +325,7 @@ function woocommerce_add_to_cart_action( $url = false ) {
 			} elseif ($_REQUEST['product_id']) {
 
 				/* Link on product archives */
-				$woocommerce->add_error( __('Please choose a product&hellip;', 'woocommerce') );
+				$woocommerce->add_error( __('Vui lòng chọn sản phẩm &hellip;', 'woocommerce') );
 				wp_redirect( get_permalink( $_REQUEST['product_id'] ) );
 				exit;
 
@@ -394,11 +394,11 @@ function woocommerce_add_to_cart_message() {
 
 		$return_to 	= (wp_get_referer()) ? wp_get_referer() : home_url();
 
-		$message 	= sprintf('<a href="%s" class="button">%s</a> %s', $return_to, __('Continue Shopping &rarr;', 'woocommerce'), __('Product successfully added to your cart.', 'woocommerce') );
+		$message 	= sprintf('<a href="%s" class="button">%s</a> %s', $return_to, __('Tiếp tục mua hàng &rarr;', 'woocommerce'), __('Thêm sản phẩm vào giỏ hàng thành công.', 'woocommerce') );
 
 	else :
 
-		$message 	= sprintf('<a href="%s" class="button">%s</a> %s', get_permalink(woocommerce_get_page_id('cart')), __('View Cart &rarr;', 'woocommerce'), __('Product successfully added to your cart.', 'woocommerce') );
+		$message 	= sprintf('<a href="%s" class="button">%s</a> %s', get_permalink(woocommerce_get_page_id('cart')), __('Xem giỏ hàng &rarr;', 'woocommerce'), __('Thêm sản phẩm vào giỏ hàng thành công.', 'woocommerce') );
 
 	endif;
 
@@ -549,8 +549,8 @@ function woocommerce_process_login() {
 
 		$woocommerce->verify_nonce('login');
 
-		if ( !isset($_POST['username']) || empty($_POST['username']) ) $woocommerce->add_error( __('Username is required.', 'woocommerce') );
-		if ( !isset($_POST['password']) || empty($_POST['password']) ) $woocommerce->add_error( __('Password is required.', 'woocommerce') );
+		if ( !isset($_POST['username']) || empty($_POST['username']) ) $woocommerce->add_error( __('Tên đăng nhập là bắc buộc.', 'woocommerce') );
+		if ( !isset($_POST['password']) || empty($_POST['password']) ) $woocommerce->add_error( __('Password là bắc buộc.', 'woocommerce') );
 
 		if ($woocommerce->error_count()==0) :
 
@@ -611,12 +611,12 @@ function woocommerce_process_registration() {
 
 			// Check the username
 			if ( $sanitized_user_login == '' ) {
-				$woocommerce->add_error( '<strong>' . __('ERROR', 'woocommerce') . '</strong>: ' . __( 'Please enter a username.', 'woocommerce' ) );
+				$woocommerce->add_error( '<strong>' . __('ERROR', 'woocommerce') . '</strong>: ' . __( 'Vùi lòng nhập Tên đăng nhập.', 'woocommerce' ) );
 			} elseif ( ! validate_username( $username ) ) {
-				$woocommerce->add_error( '<strong>' . __('ERROR', 'woocommerce') . '</strong>: ' . __( 'This username is invalid because it uses illegal characters. Please enter a valid username.', 'woocommerce' ) );
+				$woocommerce->add_error( '<strong>' . __('ERROR', 'woocommerce') . '</strong>: ' . __( 'Tên đăng nhập không được có ký tự đặc biệt.', 'woocommerce' ) );
 				$sanitized_user_login = '';
 			} elseif ( username_exists( $sanitized_user_login ) ) {
-				$woocommerce->add_error( '<strong>' . __('ERROR', 'woocommerce') . '</strong>: ' . __( 'This username is already registered, please choose another one.', 'woocommerce' ) );
+				$woocommerce->add_error( '<strong>' . __('ERROR', 'woocommerce') . '</strong>: ' . __( 'Tên đăng nhập đã được đăng ký, vui lòng chọn tên đăng nhập khác.', 'woocommerce' ) );
 			}
 
 		} else {
@@ -628,18 +628,18 @@ function woocommerce_process_registration() {
 
 		// Check the e-mail address
 		if ( $user_email == '' ) {
-			$woocommerce->add_error( '<strong>' . __('ERROR', 'woocommerce') . '</strong>: ' . __( 'Please type your e-mail address.', 'woocommerce' ) );
+			$woocommerce->add_error( '<strong>' . __('ERROR', 'woocommerce') . '</strong>: ' . __( 'Vui lòng nhập email.', 'woocommerce' ) );
 		} elseif ( ! is_email( $user_email ) ) {
-			$woocommerce->add_error( '<strong>' . __('ERROR', 'woocommerce') . '</strong>: ' . __( 'The email address isn&#8217;t correct.', 'woocommerce' ) );
+			$woocommerce->add_error( '<strong>' . __('ERROR', 'woocommerce') . '</strong>: ' . __( 'Email không đúng.', 'woocommerce' ) );
 			$user_email = '';
 		} elseif ( email_exists( $user_email ) ) {
-			$woocommerce->add_error( '<strong>' . __('ERROR', 'woocommerce') . '</strong>: ' . __( 'This email is already registered, please choose another one.', 'woocommerce' ) );
+			$woocommerce->add_error( '<strong>' . __('ERROR', 'woocommerce') . '</strong>: ' . __( 'Email đã được đăng ký, vui lòng sử dụng email khác.', 'woocommerce' ) );
 		}
 
 		// Password
-		if ( !$password ) $woocommerce->add_error( __('Password is required.', 'woocommerce') );
-		if ( !$password2 ) $woocommerce->add_error( __('Re-enter your password.', 'woocommerce') );
-		if ( $password != $password2 ) $woocommerce->add_error( __('Passwords do not match.', 'woocommerce') );
+		if ( !$password ) $woocommerce->add_error( __('Yêu cầu nhập Password.', 'woocommerce') );
+		if ( !$password2 ) $woocommerce->add_error( __('Nhập lại Password.', 'woocommerce') );
+		if ( $password != $password2 ) $woocommerce->add_error( __('Passwords không đúng.', 'woocommerce') );
 
 		// Spam trap
 		if (isset($_POST['email_2']) && $_POST['email_2']) $woocommerce->add_error( __('Anti-spam field was filled in.', 'woocommerce') );
@@ -765,20 +765,20 @@ function woocommerce_cancel_order() {
 		if ($order->id == $order_id && $order->order_key == $order_key && in_array($order->status, array('pending', 'failed')) && $woocommerce->verify_nonce('cancel_order', '_GET')) :
 
 			// Cancel the order + restore stock
-			$order->cancel_order( __('Order cancelled by customer.', 'woocommerce') );
+			$order->cancel_order( __('Khách hàng hủy đơn hàng.', 'woocommerce') );
 
 			// Message
-			$woocommerce->add_message( __('Your order was cancelled.', 'woocommerce') );
+			$woocommerce->add_message( __('Đơn hàng của bạn đã được hủy.', 'woocommerce') );
 
 			do_action( 'woocommerce_cancelled_order', $order->id );
 
 		elseif ($order->status!='pending') :
 
-			$woocommerce->add_error( __('Your order is no longer pending and could not be cancelled. Please contact us if you need assistance.', 'woocommerce') );
+			$woocommerce->add_error( __('Đơn hàng của bạn bị trì hoãn trong thời gian dài, vui lòng liên hệ chúng tôi để được hỗ trợ.', 'woocommerce') );
 
 		else :
 
-			$woocommerce->add_error( __('Invalid order.', 'woocommerce') );
+			$woocommerce->add_error( __('Đơn hàng không hợp lệ.', 'woocommerce') );
 
 		endif;
 
@@ -806,7 +806,7 @@ function woocommerce_download_product() {
 		$email = str_replace( ' ', '+', urldecode( $_GET['email'] ) );
 
 		if (!is_email($email)) :
-			wp_die( __('Invalid email address.', 'woocommerce') . ' <a href="'.home_url().'">' . __('Go to homepage &rarr;', 'woocommerce') . '</a>' );
+			wp_die( __('Email không hợp lệ.', 'woocommerce') . ' <a href="'.home_url().'">' . __('Về trang chủ &rarr;', 'woocommerce') . '</a>' );
 		endif;
 
 		$download_result = $wpdb->get_row( $wpdb->prepare("
@@ -818,7 +818,7 @@ function woocommerce_download_product() {
 		;", $email, $order_key, $download_file ) );
 
 		if (!$download_result) :
-			wp_die( __('Invalid download.', 'woocommerce') . ' <a href="'.home_url().'">' . __('Go to homepage &rarr;', 'woocommerce') . '</a>' );
+			wp_die( __('Download không hợp lệ.', 'woocommerce') . ' <a href="'.home_url().'">' . __('Về trang chủ &rarr;', 'woocommerce') . '</a>' );
 			exit;
 		endif;
 
@@ -830,12 +830,12 @@ function woocommerce_download_product() {
 
 		if ($user_id && get_option('woocommerce_downloads_require_login')=='yes'):
 			if (!is_user_logged_in()):
-				wp_die( __('You must be logged in to download files.', 'woocommerce') . ' <a href="'.wp_login_url(get_permalink(woocommerce_get_page_id('myaccount'))).'">' . __('Login &rarr;', 'woocommerce') . '</a>' );
+				wp_die( __('Bạn phải đăng nhập để download files.', 'woocommerce') . ' <a href="'.wp_login_url(get_permalink(woocommerce_get_page_id('myaccount'))).'">' . __('Login &rarr;', 'woocommerce') . '</a>' );
 				exit;
 			else:
 				$current_user = wp_get_current_user();
 				if($user_id != $current_user->ID):
-					wp_die( __('This is not your download link.', 'woocommerce'));
+					wp_die( __('Không phải đường dẫn download.', 'woocommerce'));
 					exit;
 				endif;
 			endif;
@@ -844,7 +844,7 @@ function woocommerce_download_product() {
 		if ($order_id) :
 			$order = new WC_Order( $order_id );
 			if ($order->status!='completed' && $order->status!='processing' && $order->status!='publish') :
-				wp_die( __('Invalid order.', 'woocommerce') . ' <a href="'.home_url().'">' . __('Go to homepage &rarr;', 'woocommerce') . '</a>' );
+				wp_die( __('Invalid order.', 'woocommerce') . ' <a href="'.home_url().'">' . __('Về trang chủ &rarr;', 'woocommerce') . '</a>' );
 				exit;
 			endif;
 		endif;
@@ -858,7 +858,7 @@ function woocommerce_download_product() {
 
 		if ($access_expires > 0 && strtotime($access_expires) < current_time('timestamp')) :
 
-			wp_die( __('Sorry, this download has expired', 'woocommerce') . ' <a href="'.home_url().'">' . __('Go to homepage &rarr;', 'woocommerce') . '</a>' );
+			wp_die( __('Sorry, this download has expired', 'woocommerce') . ' <a href="'.home_url().'">' . __('Về trang chủ &rarr;', 'woocommerce') . '</a>' );
 			exit;
 
 		endif;
@@ -1031,7 +1031,7 @@ function woocommerce_download_product() {
 
         else :
 
-        	@readfile_chunked("$file_path") or wp_die( __('File not found', 'woocommerce') . ' <a href="'.home_url().'">' . __('Go to homepage &rarr;', 'woocommerce') . '</a>' );
+        	@readfile_chunked("$file_path") or wp_die( __('File không tìm thấy', 'woocommerce') . ' <a href="'.home_url().'">' . __('Về trang chủ &rarr;', 'woocommerce') . '</a>' );
 
         endif;
 
@@ -1107,7 +1107,7 @@ function woocommerce_products_rss_feed() {
 
 		$feed = get_post_type_archive_feed_link( 'product' );
 
-		echo '<link rel="alternate" type="application/rss+xml"  title="' . __('New products', 'woocommerce') . '" href="' . $feed . '" />';
+		echo '<link rel="alternate" type="application/rss+xml"  title="' . __('Sản phẩm mới', 'woocommerce') . '" href="' . $feed . '" />';
 
 	elseif ( is_tax( 'product_cat' ) ) :
 
@@ -1115,7 +1115,7 @@ function woocommerce_products_rss_feed() {
 
 		$feed = add_query_arg('product_cat', $term->slug, get_post_type_archive_feed_link( 'product' ));
 
-		echo '<link rel="alternate" type="application/rss+xml"  title="' . sprintf(__('New products added to %s', 'woocommerce'), urlencode($term->name)) . '" href="' . $feed . '" />';
+		echo '<link rel="alternate" type="application/rss+xml"  title="' . sprintf(__('Sản phẩm mới đã được thêm %s', 'woocommerce'), urlencode($term->name)) . '" href="' . $feed . '" />';
 
 	elseif ( is_tax( 'product_tag' ) ) :
 
@@ -1158,10 +1158,10 @@ function woocommerce_check_comment_rating($comment_data) {
 
 	// If posting a comment (not trackback etc) and not logged in
 	if ( isset( $_POST['rating'] ) && ! $woocommerce->verify_nonce('comment_rating') )
-		wp_die( __('You have taken too long. Please go back and refresh the page.', 'woocommerce') );
+		wp_die( __('Bạn đã thực hiện quá thời gian cho phép, vui lòng làm mới trang.', 'woocommerce') );
 
 	elseif ( isset( $_POST['rating'] ) && empty( $_POST['rating'] ) && $comment_data['comment_type'] == '' && get_option('woocommerce_review_rating_required') == 'yes' ) {
-		wp_die( __('Please rate the product.', 'woocommerce') );
+		wp_die( __('Xin mời bạn đánh giá sản phẩm.', 'woocommerce') );
 		exit;
 	}
 	return $comment_data;

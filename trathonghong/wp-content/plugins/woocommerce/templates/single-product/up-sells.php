@@ -26,9 +26,9 @@ $products = new WP_Query( $args );
 
 if ( $products->have_posts() ) : ?>
 
-	<div class="upsells products">
+	<div class="products">
 
-		<h2><?php _e('You may also like&hellip;', 'woocommerce') ?></h2>
+		<h2><b><?php _e('Sản phẩm liên quan', 'woocommerce'); ?></b></h2><br/>
 
 		<ul class="products">
 

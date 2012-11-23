@@ -28,8 +28,6 @@ $woocommerce_loop['columns'] 	= $columns;
 
 if ( $products->have_posts() ) : ?>
 
-	<div class="related products">
-
 		<h2><b><?php _e('Sản phẩm tham khảo', 'woocommerce'); ?></b></h2><br/>
 
 		<ul class="products">
@@ -41,8 +39,6 @@ if ( $products->have_posts() ) : ?>
 			<?php endwhile; // end of the loop. ?>
 
 		</ul>
-
-	</div>
 
 <?php endif;
 

@@ -27,8 +27,8 @@ function woocommerce_duplicate_product_link_row($actions, $post) {
 	if ( $post->post_type != 'product' )
 		return $actions;
 
-	$actions['duplicate'] = '<a href="' . wp_nonce_url( admin_url( 'admin.php?action=duplicate_product&amp;post=' . $post->ID ), 'woocommerce-duplicate-product_' . $post->ID ) . '" title="' . __("Make a duplicate from this product", 'woocommerce')
-		. '" rel="permalink">' .  __("Duplicate", 'woocommerce') . '</a>';
+	$actions['duplicate'] = '<a href="' . wp_nonce_url( admin_url( 'admin.php?action=duplicate_product&amp;post=' . $post->ID ), 'woocommerce-duplicate-product_' . $post->ID ) . '" title="' . __("Tạo sản phẩm mới giống sản phẩm này", 'woocommerce')
+		. '" rel="permalink">' .  __("Tạo sản phẩm copy", 'woocommerce') . '</a>';
 
 	return $actions;
 }
@@ -78,23 +78,23 @@ function woocommerce_edit_product_columns($columns){
 	$columns = array();
 
 	$columns["cb"] = "<input type=\"checkbox\" />";
-	$columns["thumb"] = __("Image", 'woocommerce');
+	$columns["thumb"] = __("Hình", 'woocommerce');
 
-	$columns["name"] = __("Name", 'woocommerce');
+	$columns["name"] = __("Tên sản phẩm", 'woocommerce');
 
 	if (get_option('woocommerce_enable_sku', true) == 'yes')
-		$columns["sku"] = __("SKU", 'woocommerce');
+		$columns["sku"] = __("Mã kho", 'woocommerce');
 
 	if (get_option('woocommerce_manage_stock')=='yes')
-		$columns["is_in_stock"] = __("Stock", 'woocommerce');
+		$columns["is_in_stock"] = __("Còn hàng", 'woocommerce');
 
-	$columns["price"] = __("Price", 'woocommerce');
+	$columns["price"] = __("Giá", 'woocommerce');
 
-	$columns["product_cat"] = __("Categories", 'woocommerce');
-	$columns["product_tag"] = __("Tags", 'woocommerce');
+	$columns["product_cat"] = __("Danh mục", 'woocommerce');
+	//$columns["product_tag"] = __("Tags", 'woocommerce');
 	$columns["featured"] = '<img src="' . $woocommerce->plugin_url() . '/assets/images/featured.png" alt="' . __("Featured", 'woocommerce') . '" class="tips" data-tip="' . __("Featured", 'woocommerce') . '" width="12" height="12" />';
 	$columns["product_type"] = '<img src="' . $woocommerce->plugin_url() . '/assets/images/product_type_head.png" alt="' . __("Type", 'woocommerce') . '" class="tips" data-tip="' . __("Type", 'woocommerce') . '" width="14" height="12" />';
-	$columns["date"] = __("Date", 'woocommerce');
+	$columns["date"] = __("Ngày tạo", 'woocommerce');
 
 	return $columns;
 }
@@ -141,22 +141,22 @@ function woocommerce_custom_product_columns( $column ) {
 			$actions['id'] = 'ID: ' . $post->ID;
 
 			if ( $can_edit_post && 'trash' != $post->post_status ) {
-				$actions['inline hide-if-no-js'] = '<a href="#" class="editinline" title="' . esc_attr( __( 'Edit this item inline', 'woocommerce' ) ) . '">' . __( 'Quick&nbsp;Edit', 'woocommerce' ) . '</a>';
+				$actions['inline hide-if-no-js'] = '<a href="#" class="editinline" title="' . esc_attr( __( 'Sửa nhanh sản phẩm', 'woocommerce' ) ) . '">' . __( 'Sửa nhanh', 'woocommerce' ) . '</a>';
 			}
 			if ( current_user_can( $post_type_object->cap->delete_post, $post->ID ) ) {
 				if ( 'trash' == $post->post_status )
-					$actions['untrash'] = "<a title='" . esc_attr( __( 'Restore this item from the Trash', 'woocommerce' ) ) . "' href='" . wp_nonce_url( admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $post->ID ) ), 'untrash-' . $post->post_type . '_' . $post->ID ) . "'>" . __( 'Restore', 'woocommerce' ) . "</a>";
+					$actions['untrash'] = "<a title='" . esc_attr( __( 'Khôi phục sản phẩm', 'woocommerce' ) ) . "' href='" . wp_nonce_url( admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $post->ID ) ), 'untrash-' . $post->post_type . '_' . $post->ID ) . "'>" . __( 'Khôi phục', 'woocommerce' ) . "</a>";
 				elseif ( EMPTY_TRASH_DAYS )
-					$actions['trash'] = "<a class='submitdelete' title='" . esc_attr( __( 'Move this item to the Trash', 'woocommerce' ) ) . "' href='" . get_delete_post_link( $post->ID ) . "'>" . __( 'Trash', 'woocommerce' ) . "</a>";
+					$actions['trash'] = "<a class='submitdelete' title='" . esc_attr( __( 'Xóa tạm thời sản phẩm', 'woocommerce' ) ) . "' href='" . get_delete_post_link( $post->ID ) . "'>" . __( 'Xóa tạm thời', 'woocommerce' ) . "</a>";
 				if ( 'trash' == $post->post_status || !EMPTY_TRASH_DAYS )
-					$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Delete this item permanently', 'woocommerce' ) ) . "' href='" . get_delete_post_link( $post->ID, '', true ) . "'>" . __( 'Delete Permanently', 'woocommerce' ) . "</a>";
+					$actions['delete'] = "<a class='submitdelete' title='" . esc_attr( __( 'Xóa vĩnh viễn sản phẩm', 'woocommerce' ) ) . "' href='" . get_delete_post_link( $post->ID, '', true ) . "'>" . __( 'Xóa vĩnh viễn', 'woocommerce' ) . "</a>";
 			}
 			if ( $post_type_object->public ) {
 				if ( in_array( $post->post_status, array( 'pending', 'draft' ) ) ) {
 					if ( $can_edit_post )
-						$actions['view'] = '<a href="' . esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) . '" title="' . esc_attr( sprintf( __( 'Preview &#8220;%s&#8221;', 'woocommerce' ), $title ) ) . '" rel="permalink">' . __( 'Preview', 'woocommerce' ) . '</a>';
+						$actions['view'] = '<a href="' . esc_url( add_query_arg( 'preview', 'true', get_permalink( $post->ID ) ) ) . '" title="' . esc_attr( sprintf( __( 'Xem lại sản phẩm', 'woocommerce' ), $title ) ) . '" rel="permalink">' . __( 'Xem', 'woocommerce' ) . '</a>';
 				} elseif ( 'trash' != $post->post_status ) {
-					$actions['view'] = '<a href="' . get_permalink( $post->ID ) . '" title="' . esc_attr( sprintf( __( 'View &#8220;%s&#8221;', 'woocommerce' ), $title ) ) . '" rel="permalink">' . __( 'View', 'woocommerce' ) . '</a>';
+					$actions['view'] = '<a href="' . get_permalink( $post->ID ) . '" title="' . esc_attr( sprintf( __( 'Xem lại sản phẩm', 'woocommerce' ), $title ) ) . '" rel="permalink">' . __( 'Xem', 'woocommerce' ) . '</a>';
 				}
 			}
 			$actions = apply_filters( 'post_row_actions', $actions, $post );
@@ -544,12 +544,12 @@ function woocommerce_admin_product_quick_edit( $column_name, $post_type ) {
     <fieldset class="inline-edit-col-left">
 		<div id="woocommerce-fields" class="inline-edit-col">
 
-			<h4><?php _e('Product Data', 'woocommerce'); ?></h4>
+			<h4><?php _e('Thông tin sản phẩm', 'woocommerce'); ?></h4>
 
 			<?php if( get_option('woocommerce_enable_sku', true) !== 'no' ) : ?>
 
 				<label>
-				    <span class="title"><?php _e('SKU', 'woocommerce'); ?></span>
+				    <span class="title"><?php _e('Mã kho', 'woocommerce'); ?></span>
 				    <span class="input-text-wrap">
 						<input type="text" name="_sku" class="text sku" value="">
 					</span>
@@ -605,7 +605,7 @@ function woocommerce_admin_product_quick_edit( $column_name, $post_type ) {
 			<?php endif; ?>
 
 			<label class="alignleft">
-			    <span class="title"><?php _e('Visibility', 'woocommerce'); ?></span>
+			    <span class="title"><?php _e('Hiển thị', 'woocommerce'); ?></span>
 			    <span class="input-text-wrap">
 			    	<select class="visibility" name="_visibility">
 					<?php

@@ -711,14 +711,11 @@ if ( ! function_exists( 'woocommerce_comments' ) ) {
 if ( ! function_exists( 'woocommerce_output_related_products' ) ) {
 
 	/**
-	 * Output the related products.
-	 *
-	 * @access public
-	 * @subpackage	Product
-	 * @return void
+	Nha replace for "Related product"
+	woocommerce_related_products( 2, 2 );
 	 */
 	function woocommerce_output_related_products() {
-		woocommerce_related_products( 2, 2  );
+		woocommerce_related_products( 4, 4  );
 	}
 }
 

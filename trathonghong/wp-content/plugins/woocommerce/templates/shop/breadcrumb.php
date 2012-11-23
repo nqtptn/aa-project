@@ -10,7 +10,7 @@
 global $post, $wp_query;
 
 if( ! $home ) 
-	$home = _x( 'TRANG CHỦ', 'breadcrumb', 'woocommerce' );
+	$home = _x( 'Trang chủ', 'breadcrumb', 'woocommerce' );
 
 $home_link = home_url();
 
@@ -201,7 +201,7 @@ if ( ( ! is_home() && ! is_front_page() && ! ( is_post_type_archive() && get_opt
 	}
 
 	if ( get_query_var( 'paged' ) )
-		echo ' (' . __( 'TRANG', 'woocommerce' ) . ' ' . get_query_var( 'paged' ) . ')';
+		echo ' (' . __( 'Trang', 'woocommerce' ) . ' ' . get_query_var( 'paged' ) . ')';
 
 	echo $wrap_after;
 
