@@ -50,6 +50,7 @@ function ql_bill() {
 	//Nhap van don
 	if($role == "administrator" || $role == 'author'){
 		add_menu_page('Nhập vận đơn', 'Nhập vận đơn', $role,'quan_ly_van_don', 'quan_ly_van_don2',plugins_url('/images/menu-vs.png', __FILE__));
+		add_submenu_page('quan_ly_van_don','Upload vận đơn', 'Upload vận đơn', $role,'xls_import_van_don','xls_import_van_don');
 	}	
 	//add_menu_page('Nhập vận đơn', 'Nhập vận đơn', 'administrator','quan_ly_van_don', 'quan_ly_van_don2',plugins_url('/images/menu-vs.png', __FILE__));
 	//add_menu_page('Nhập vận đơn', 'Nhập vận đơn', 'author','quan_ly_van_don2', 'quan_ly_van_don2',plugins_url('/images/menu-vs.png', __FILE__));
@@ -60,6 +61,9 @@ function xls_import() {
 	}else{
 		require_once ('excel_reader2.php');
 	}
+}
+function xls_import_van_don() {
+	require_once ('excel_reader_van_don.php');
 }
 function ql_bill2() {
 	if($_GET['action']=="XML"){
