@@ -88,7 +88,7 @@ case 'dodelete':
 	}
 
 	if ( ! current_user_can( 'delete_users' ) )
-		wp_die(__('You can&#8217;t delete users.'));
+		wp_die(__('Bạn không thể xoá.'));
 
 	$userids = $_REQUEST['users'];
 	$update = 'del';
@@ -98,7 +98,7 @@ case 'dodelete':
 		$id = (int) $id;
 
 		if ( ! current_user_can( 'delete_user', $id ) )
-			wp_die(__( 'You can&#8217;t delete that user.' ) );
+			wp_die(__( 'Bạn không thể xoá.' ) );
 
 		if ( $id == $current_user->ID ) {
 			$update = 'err_admin_del';
@@ -135,7 +135,7 @@ case 'delete':
 	}
 
 	if ( ! current_user_can( 'delete_users' ) )
-		$errors = new WP_Error( 'edit_users', __( 'You can&#8217;t delete users.' ) );
+		$errors = new WP_Error( 'edit_users', __( 'Bạn không thể xoá.' ) );
 
 	if ( empty($_REQUEST['users']) )
 		$userids = array(intval($_REQUEST['user']));
@@ -150,8 +150,8 @@ case 'delete':
 
 <div class="wrap">
 <?php screen_icon(); ?>
-<h2><?php _e('Delete Users'); ?></h2>
-<p><?php echo _n( 'You have specified this user for deletion:', 'You have specified these users for deletion:', count( $userids ) ); ?></p>
+<h2><?php _e('Xoá khách hàng'); ?></h2>
+<p><?php echo _n( 'Bạn muốn xoá khách hàng:', 'Bạn đã xác định khách hàng để xoá:', count( $userids ) ); ?></p>
 <ul>
 <?php
 	$go_delete = 0;
@@ -168,18 +168,18 @@ case 'delete':
 	?>
 	</ul>
 <?php if ( $go_delete ) : ?>
-	<fieldset><p><legend><?php echo _n( 'What should be done with posts and links owned by this user?', 'What should be done with posts and links owned by these users?', $go_delete ); ?></legend></p>
+	<fieldset><p><legend><?php echo _n( 'Bạn sẽ?', 'Bạn có nên lưu trữ lại thông tin của khách hàng?', $go_delete ); ?></legend></p>
 	<ul style="list-style:none;">
 		<li><label><input type="radio" id="delete_option0" name="delete_option" value="delete" checked="checked" />
-		<?php _e('Delete all posts and links.'); ?></label></li>
+		<?php _e('Xoá tất cả thông tin.'); ?></label></li>
 		<li><input type="radio" id="delete_option1" name="delete_option" value="reassign" />
-		<?php echo '<label for="delete_option1">'.__('Attribute all posts and links to:').'</label>';
+		<?php echo '<label for="delete_option1">'.__('Chuyển thông tin qua:').'</label>';
 		wp_dropdown_users( array( 'name' => 'reassign_user', 'exclude' => array_diff( $userids, array($current_user->ID) ) ) ); ?></li>
 	</ul></fieldset>
 	<input type="hidden" name="action" value="dodelete" />
-	<?php submit_button( __('Confirm Deletion'), 'secondary' ); ?>
+	<?php submit_button( __('Xác nhận xoá'), 'secondary' ); ?>
 <?php else : ?>
-	<p><?php _e('There are no valid users selected for deletion.'); ?></p>
+	<p><?php _e('Không tìm thấy khách hàng này để xoá.'); ?></p>
 <?php endif; ?>
 </div>
 </form>
@@ -307,7 +307,7 @@ default:
 			break;
 		case 'add':
 			if ( isset( $_GET['id'] ) && ( $user_id = $_GET['id'] ) && current_user_can( 'edit_user', $user_id ) ) {
-				$messages[] = '<div id="message" class="updated"><p>' . sprintf( __( 'New user created. <a href="%s">Edit user</a>' ),
+				$messages[] = '<div id="message" class="updated"><p>' . sprintf( __( 'Đã thêm mới khách hàng. <a href="%s">Sửa thông tin</a>' ),
 					esc_url( add_query_arg( 'wp_http_referer', urlencode( stripslashes( $_SERVER['REQUEST_URI'] ) ),
 						self_admin_url( 'user-edit.php?user_id=' . $user_id ) ) ) ) . '</p></div>';
 			} else {
