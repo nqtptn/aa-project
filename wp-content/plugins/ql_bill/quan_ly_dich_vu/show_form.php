@@ -43,6 +43,7 @@ function post_data(xml_link){
 	input_value['thoi_gian_van_chuyen'] = $("#thoi_gian_van_chuyen").val();
 	input_value['mo_ta'] = $("#mo_ta").val();
 	input_value['la_dich_vu_cong_them'] = ($("#la_dich_vu_cong_them").is(':checked') ? 1 : 0);
+	input_value['co_phu_phi'] = ($("#co_phu_phi").is(':checked') ? 1 : 0);
 	input_value['gia_cong_them'] = parseInt($("#gia_cong_them").val());
 	if(input_value['gia_cong_them']==""){
 		input_value['gia_cong_them']=0;
@@ -69,6 +70,7 @@ function post_data(xml_link){
 				thoi_gian_van_chuyen : input_value['thoi_gian_van_chuyen'],
 				mo_ta : input_value['mo_ta'],
 				la_dich_vu_cong_them : input_value['la_dich_vu_cong_them'],
+				co_phu_phi : input_value['co_phu_phi'],
 				gia_cong_them : input_value['gia_cong_them'],
 				vat : input_value['vat'],
 				action: "add_record",
@@ -85,7 +87,6 @@ function post_data(xml_link){
 						$("#thoi_gian_van_chuyen").val("");
 						$("#mo_ta").val("");
 						$("#la_dich_vu_cong_them").removeAttr("checked");
-						$("#gia_cong_them").val("");
 						$("#vat").val("10");
 						$("#ma_dich_vu").focus();
 					}
@@ -206,9 +207,11 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_dich_vu&action=u
 				<td>
 					<label for="mo_ta">Mô tả</label>
 				</td>
-
 				<td>
 					<label for="la_dich_vu_cong_them">D/V cộng thêm</label>
+				</td>
+				<td>
+					<label for="co_phu_phi">Có tính phụ phí</label>
 				</td>
 				<td>
 					<label for="gia_cong_them">Giá cộng thêm</label>
@@ -233,6 +236,9 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_dich_vu&action=u
 				</td>
 				<td align="center">
 					<input type='checkbox' id='la_dich_vu_cong_them' value='1' />
+				</td>
+				<td align="center">
+					<input type='checkbox' id='co_phu_phi' value='1' />
 				</td>
 				<td>
 					<input type='text' size='12' id='gia_cong_them' value='0' />

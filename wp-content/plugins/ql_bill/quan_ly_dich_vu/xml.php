@@ -6,6 +6,7 @@ $grid->addColumn('ten_dich_vu', 'Tên dịch vụ', 'string', NULL,true);
 $grid->addColumn('thoi_gian_van_chuyen', 'Thời gian vận chuyển', 'string',  NULL,true);
 $grid->addColumn('mo_ta', 'Mô tả', 'string' , NULL,true);
 $grid->addColumn('la_dich_vu_cong_them', 'Là dịch vụ cộng thêm', 'boolean', NULL,true);
+$grid->addColumn('co_phu_phi', 'Có tính phụ phí', 'boolean', NULL,true);
 $grid->addColumn('gia_cong_them', 'Giá cộng thêm', 'integer', NULL,true);
 //$grid->addColumn('ti_le_phu_phi', 'Tỉ lệ phụ phí', 'double(%)', NULL,true);
 //$grid->addColumn('ti_le_phu_phi_ngoai_thanh', 'Tỉ lệ phụ phí ngoại thành', 'double(%)', NULL,true);
@@ -18,6 +19,7 @@ $query="
 		thoi_gian_van_chuyen,
 		mo_ta,
 		la_dich_vu_cong_them,
+		co_phu_phi,
 		gia_cong_them,
 		vat
 	FROM gia_dich_vu
