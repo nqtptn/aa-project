@@ -347,7 +347,7 @@ foreach ( array( 'user_login' => 'login','ma_tinh_di' => 'ma_tinh_di','ti_le_phu
 		<td>
 			<input size="3" type="text" id="ti_le_phu_phi" name="ti_le_phu_phi" value="15"/> 
 			<label for="ti_le_phu_phi_ngoai_thanh"> Tỉ lệ phụ phí ngoại thành (%)</label> 
-			<input size="3" type="text" id="ti_le_phu_phi_ngoai_thanh" name="ti_le_phu_phi_ngoai_thanh" value="10"/>
+			<input size="3" type="text" id="ti_le_phu_phi_ngoai_thanh" name="ti_le_phu_phi_ngoai_thanh" value="20"/>
 		</td>
 	</tr>	
 	<tr>
