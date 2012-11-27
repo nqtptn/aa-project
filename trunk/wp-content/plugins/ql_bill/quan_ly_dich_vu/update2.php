@@ -39,10 +39,11 @@ $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
 		$thoi_gian_van_chuyen = $mysqli->real_escape_string(strip_tags($_POST['thoi_gian_van_chuyen']));
 		$mo_ta = $mysqli->real_escape_string(strip_tags($_POST['mo_ta']));
 		$la_dich_vu_cong_them = $mysqli->real_escape_string(strip_tags($_POST['la_dich_vu_cong_them']));
+		$co_phu_phi = $mysqli->real_escape_string(strip_tags($_POST['co_phu_phi']));
 		$gia_cong_them = $mysqli->real_escape_string(strip_tags($_POST['gia_cong_them']));
 		$result =  $mysqli->query("INSERT INTO gia_dich_vu 
-			(ma_dich_vu,ten_dich_vu,thoi_gian_van_chuyen,mo_ta,la_dich_vu_cong_them,gia_cong_them) value 
-			('$ma_dich_vu','$ten_dich_vu','$thoi_gian_van_chuyen','$mo_ta','$la_dich_vu_cong_them','$gia_cong_them')");
+			(ma_dich_vu,ten_dich_vu,thoi_gian_van_chuyen,mo_ta,la_dich_vu_cong_them,co_phu_phi,gia_cong_them) value 
+			('$ma_dich_vu','$ten_dich_vu','$thoi_gian_van_chuyen','$mo_ta','$la_dich_vu_cong_them','$co_phu_phi','$gia_cong_them')");
 		echo $result ? "true" : "false";
 		$mysqli->close();
 	}
