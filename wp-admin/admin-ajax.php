@@ -95,12 +95,16 @@ function tinh_gia() {
 function tra_cuu() {
 	global $wpdb;
 	$so_bill=$_POST['so_bill'];
-	$province = $wpdb->get_row("SELECT ten_khach_hang,ten_nguoi_nhan,noi_gui,noi_nhan,thoi_gian_nhan,trang_thai FROM gia_van_don WHERE ma_van_don='$so_bill'");
+	$province = $wpdb->get_row("SELECT ten_khach_hang,ten_nguoi_nhan,noi_gui,noi_nhan,thoi_gian_nhan,trang_thai,ghi_chu FROM gia_van_don WHERE ma_van_don='$so_bill'");
 	if($province->ten_khach_hang == "" || $province->ten_khach_hang == null)
 	{
 		echo "Không tìm thấy vận đơn.";
 	}else{
-		echo "Khách hàng: <b>".$province->ten_khach_hang."</b></br>Người nhận: <b>".$province->ten_nguoi_nhan."</b></br>Nơi gửi: <b>".$province->noi_nhan."</b></br>Nơi nhận: <b>".$province->noi_phat."</b></br>Thời gian nhận: <b>".$province->thoi_gian_nhan."</b></br>Trạng thái vận đơn: <b>".$province->trang_thai."</b>";
+		echo "Khách hàng: <b>".$province->ten_khach_hang."</b></br>Người nhận: <b>".$province->ten_nguoi_nhan."</b></br>Nơi gửi: <b>".$province->noi_gui."</b></br>Nơi nhận: <b>".$province->noi_nhan."</b></br>Thời gian nhận: <b>".$province->thoi_gian_nhan."</b></br>Trạng thái: <b>".$province->trang_thai."</b>";
+		if($province->ghi_chu != "")
+		{
+			echo "</br>Ghi chú: <b>".$province->ghi_chu."</b>";
+		}
 	}
 }
 function danh_sach_tinh_di() {
