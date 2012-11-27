@@ -339,7 +339,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 		}
 	?>
 </select>
-<label for="pagesize">Số dòng trên trang:</label>
+<label for="pagesize">Số dòng:</label>
 <select id="pagesize" name="pagesize">
 	<option value="10">10</option>
 	<option value="20">20</option>
@@ -398,7 +398,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 					<label for="phu_thu">Phụ thu</label>
 				</td>
 				<td>
-					<label for="ghi_chu">Ghi chú:</label>
+					<label for="ghi_chu">Ghi chú</label>
 				</td>
 			</tr>
 			<tr>
@@ -457,20 +457,20 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 					<input type='checkbox' id='don_vi_kg' value='1' CHECKED onclick="load_cuoc_phi();"/>
 				</td>
 				<td>
-					<input type='text' size='8' id='khoi_luong' value=''  onchange="load_cuoc_phi();" />
+					<input type='text' size='6' id='khoi_luong' value=''  onchange="load_cuoc_phi();" />
 				</td>
 				<td align="right">
 					<input type='checkbox' id='ngoai_thanh' value='0' onclick="load_cuoc_phi();"/>
 				</td>
 				<td>
-					<input type='text' size='12' id='cuoc_phi' value='' />
+					<input type='text' size='10' id='cuoc_phi' value='' />
 				</td>
 				<td>
-					<input type='text' size='12' id='phu_thu' value='' />
+					<input type='text' size='10' id='phu_thu' value='' />
 				</td>
 				<td>
 					<input type='text' id='ghi_chu' value='' />
-					<input type='submit' value='    Save    ' />
+					<input type='submit' value=' Save ' />
 				</td>
 			</tr>			
 		</table>

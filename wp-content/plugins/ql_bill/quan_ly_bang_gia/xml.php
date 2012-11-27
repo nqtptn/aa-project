@@ -12,7 +12,7 @@ $grid->addColumn('ma_phuong_tien', 'Phương tiện', 'string',  fetch_pairs($my
 $grid->addColumn('gia', 'Giá cước', 'integer', NULL,true);
 $grid->addColumn('don_vi_khoi_luong_vuot', 'KL vượt', 'integer (tấn)', NULL,true);
 $grid->addColumn('gia_toi_da_can_tren', 'Giá tối đa', 'integer', NULL,false);
-$grid->addColumn('gia_cong_them_gui_sau_12h', 'Giá sau 12h', 'integer', NULL,false);
+$grid->addColumn('gia_cong_them_gui_sau_12h', 'Giá sau 12h', 'integer', NULL,true);
 $grid->addColumn('gia_toi_da_can_tren_gui_sau_12h', 'Giá tối đa sau 12h', 'integer', NULL,false);
 $grid->addColumn('action', 'Xóa', 'string', NULL,false);
 $query="
