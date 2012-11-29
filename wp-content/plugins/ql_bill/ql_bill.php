@@ -54,6 +54,7 @@ function ql_bill() {
 	}	
 	//add_menu_page('Nhập vận đơn', 'Nhập vận đơn', 'administrator','quan_ly_van_don', 'quan_ly_van_don2',plugins_url('/images/menu-vs.png', __FILE__));
 	//add_menu_page('Nhập vận đơn', 'Nhập vận đơn', 'author','quan_ly_van_don2', 'quan_ly_van_don2',plugins_url('/images/menu-vs.png', __FILE__));
+	add_menu_page('In hóa đơn', 'In hóa đơn', 'level_0','in_hoa_don', 'in_hoa_don2',plugins_url('/images/icon_16.gif', __FILE__));
 }
 function xls_import() {
 	if($_GET['action']=="load_khach_hang"){
@@ -206,6 +207,17 @@ function quan_ly_bang_gia() {
 		require_once("quan_ly_bang_gia/export_function.php");
 	}else{
 		require_once("quan_ly_bang_gia/show_form.php");
+	}
+}
+function in_hoa_don2() {
+	if($_GET['action']=="XML"){
+		require_once('EditableGrid.php');
+		require_once("in_hoa_don/xml.php");
+	}elseif($_GET['action']=="export_function"){
+		require_once('pdf/html2pdf.class.php');
+		require_once("quan_ly_hoa_don/export_function.php");
+	}else{
+		require_once("in_hoa_don/show_form.php");
 	}
 }
 function fetch_pairs($mysqli,$query){
