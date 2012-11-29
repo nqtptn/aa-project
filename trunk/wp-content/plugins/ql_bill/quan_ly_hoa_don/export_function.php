@@ -2,6 +2,9 @@
 	global $wpdb;
 	$current_user = wp_get_current_user();
 	$khach_hang= $_GET['khach_hang'];
+	if($khach_hang == ""){
+		$khach_hang = $current_user->user_login;
+	}
 	$report_content= $_GET['content'];
 	$temp2=$wpdb->get_row("
 		select user_login as
@@ -42,17 +45,7 @@
 	//pack("CCC",0xef,0xbb,0xbf).
 	$html_content='
 		<page style="font-family: freeserif">
-		<table>
-			<tr>
-				<td width="350" text-align="center">
-					CTY CP TM - DV TIẾP VẬN TOÀN CẦU<br />
-					tEL: (08) 9480323 - 9480324
-				</td>
-				<td width="350" text-align="center">
-				CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM<br />
-				Độc lập - Tự do - Hạnh phúc
-				</td></tr>
-		</table>
+		<img style="padding-left:20px" src="http://aa-express.net/wp-content/uploads/2012/11/ReportHeader.jpg?ver=20120216" alt="" class="llm-images llm-images7">
 		<br/>
 		<div align="center"><span style="font-weight: bold; font-size: 15pt">BẢNG KÊ NỢ CHI TIẾT THÁNG '.$thang. ' NĂM ' .$nam.'</span></div>
 		<br/>
