@@ -53,6 +53,7 @@ function post_data(xml_link){
 	input_value['don_vi_kg'] = ($("#don_vi_kg").attr('checked') ? 1000 : 1);
 	input_value['khoi_luong'] = $("#khoi_luong").val() * input_value['don_vi_kg'];
 	input_value['ngoai_thanh'] = ($("#ngoai_thanh").is(':checked') ? 1 : 0);
+	input_value['sau12h'] = ($("#sau12h").is(':checked') ? 1 : 0);
 	input_value['tong'] = parseInt(input_value['cuoc_phi']) + parseInt(input_value['phu_thu']);
 	input_value['stt'] = editableGrid.getRowCount() + 1;
 	input_value['so_bill'] = $("#so_bill").val();
@@ -80,6 +81,7 @@ function post_data(xml_link){
 				don_vi_kg : input_value['don_vi_kg'],				
 				khoi_luong : input_value['khoi_luong'],
 				ngoai_thanh : input_value['ngoai_thanh'],
+				sau12h : input_value['sau12h'],
 				khach_hang : $("#khach_hang").val(),
 				so_bill : $("#so_bill").val(),
 				tong : parseInt(input_value['cuoc_phi']) + parseInt(input_value['phu_thu']),
@@ -133,13 +135,13 @@ function updateCellValue(editableGrid, rowIndex, columnIndex, oldValue, newValue
 			var success = onResponse ? onResponse(response) : (response == "ok" || !isNaN(parseInt(response))); // by default, a sucessfull reponse can be "ok" or a database id
 			if (!success) editableGrid.setValueAt(rowIndex, columnIndex, oldValue)
 			else{
-				var cot_cuoc_phi=7;
-				var cot_phu_thu=8;
-				var cot_tong=9;
+				var cot_cuoc_phi=8;
+				var cot_phu_thu=9;
+				var cot_tong=10;
 				if(editableGrid.getColumnName(columnIndex)=="phu_thu" || editableGrid.getColumnName(columnIndex)=="cuoc_phi"){
 					total = editableGrid.getValueAt(rowIndex, cot_cuoc_phi) + editableGrid.getValueAt(rowIndex, cot_phu_thu);
 					editableGrid.setValueAt(rowIndex, cot_tong, total);
-				}else if(editableGrid.getColumnName(columnIndex)=="khoi_luong" || editableGrid.getColumnName(columnIndex)=="ngoai_thanh"){
+				}else if(editableGrid.getColumnName(columnIndex)=="khoi_luong" || editableGrid.getColumnName(columnIndex)=="ngoai_thanh" || editableGrid.getColumnName(columnIndex)=="sau12h"){
 					editableGrid.setValueAt(rowIndex, cot_cuoc_phi, response);
 					total = editableGrid.getValueAt(rowIndex, cot_cuoc_phi) + editableGrid.getValueAt(rowIndex, cot_phu_thu);
 					editableGrid.setValueAt(rowIndex, cot_tong, total);
@@ -185,6 +187,7 @@ function load_cuoc_phi()
 {
 	var temp2 = ($("#don_vi_kg").attr('checked') ? 1 : -1);
 	var temp3 = ($("#ngoai_thanh").attr('checked') ? 1 : 0);
+	var temp4 = ($("#sau12h").attr('checked') ? 1 : 0);
 	$.ajax({
 		url: "<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=load_cuoc_phi&noheader=1&nofooter=1",
 		type: 'POST',
@@ -195,14 +198,34 @@ function load_cuoc_phi()
 			ti_le_phu_phi_ngoai_thanh : $("#ti_le_phu_phi_ngoai_thanh").val(),			
 			ma_dich_vu : $("#ma_dich_vu").val(),
 			ma_tinh_den : $("#ma_tinh_den").val(),
+			ma_phuong_tien : $("#ma_phuong_tien").val(),
 			don_vi_kg : temp2,
 			ngoai_thanh : temp3,
+			sau12h : temp4,
 			khoi_luong : $("#khoi_luong").val()
 		},
 		success: function (response)
 		{
 			// reset old value if failed then highlight row
 			$("#cuoc_phi").val(response);
+		},
+		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
+		async: true
+	});
+}
+function check_so_bill()
+{
+	$.ajax({
+		url: "<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=check_so_bill&noheader=1&nofooter=1",
+		type: 'POST',
+		dataType: "html",
+		data: {
+			so_bill : $("#so_bill").val()
+		},
+		success: function (response)
+		{
+			// reset old value if failed then highlight row
+			$("#div_check_so_bill").html(response);
 		},
 		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
 		async: true
@@ -222,6 +245,7 @@ function load_khach_hang()
 			// reset old value if failed then highlight row
 			$("#khach_hang").html(response);
 			load_thong_tin_khach_hang();
+			load_content();
 		},
 		error: function(XMLHttpRequest, textStatus, exception) { alert("Ajax failure\n" + errortext); },
 		async: true
@@ -281,22 +305,30 @@ function get_report_link()
 	link = link + "&content=" + $("#report_content").val();
 	return link;
 }
+function get_report_link_csv()
+{
+	var link='<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&noheader=1&nofooter=1&action=export_function_csv';
+	link = link + "&khach_hang=" + $("#khach_hang").val();
+	link = link + "&thang=" + $("#thang").val();
+	link = link + "&nam=" + $("#nam").val();
+	link = link + "&content=" + $("#report_content").val();
+	return link;
+}
 function load_content()
 {
 	$("#tablecontent").html("Loading...");
 	load_thong_tin_khach_hang();
-	//$ten_kh = $('#khach_hang').find(":selected").text();
-	//$("#ten_khach_hang").html(" ( "  + $ten_kh + " )");
 	var xml_link=get_xml_link();
 	DatabaseGrid(xml_link,"tablecontent","filter",update_url);
-	$("#report").html("<img src='<? echo plugins_url('ql_bill/images/icon_16.gif')?>' border='0' style='vertical-align: middle' /> <a href='" + get_report_link() +"' target=_blank>Xuất Báo Cáo</a>");
+	$("#report").html("<img src='<? echo plugins_url('ql_bill/images/icon_16.gif')?>' border='0' style='vertical-align: middle' /> <a href='" + get_report_link() +"' target=_blank>Xuất ra PDF</a>");
+	$("#report_csv").html("<img src='<? echo plugins_url('ql_bill/images/ex.png')?>' border='0' style='vertical-align: middle' /> <a href='" + get_report_link_csv() +"' target=_blank>Xuất ra excel</a>");
 }
 var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=update_record&noheader=1&nofooter=1";
 </script>
 <br/>
 <label for="khach_hang">Khách hàng:</label>
 <input type='text' size='12' id='search_khach_hang' onchange="load_khach_hang();" />
-<select id='khach_hang' onchange="load_content()">
+<select id='khach_hang' style="width:250px" onchange="load_content()">
 <?
 	global $wpdb;
 	$current_user = wp_get_current_user();
@@ -349,7 +381,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 	<option value="100">100</option>
 </select>
 <label for="filter">Tìm kiếm:</label>
-<input type="text" id="filter"/>
+<input type="text" size='15' id="filter"/>
 
 <div id="tablecontent"></div>
 <div id="paginator"></div>
@@ -359,12 +391,12 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 	</div>
 	Nội dung footer báo cáo:
 	<input type="text" id="report_content" size="107" onchange="load_content()" value="Đề nghị Quý cơ quan kiểm tra và thanh toán bảng kê trên trước ngày" />
-	<span id='report'></span>
+	<br /><span id='report'></span>
+	<span id='report_csv'></span>
 </div>
 <div id='posting' style='margin-top:10px;border: 1px solid #ccc;-moz-border-radius: 5px;-webkit-border-radius: 5px;padding:10px'>
 	<div style='border-bottom:1px dotted #999;color:#588eaf'>
-		<b><div id="mydiv"></div>
-		</b>
+		<b><div id="mydiv"></div></b>
 	</div>
 	<form name="post_form" method="post" onsubmit='return post_data(update_url)'>
 		<table>
@@ -381,15 +413,20 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 				<td>
 					<label for="ma_tinh_den">Tỉnh đến</label>
 				</td>
-
 				<td>
-					<label for="khoi_luong">Nhập KG</label>
+					<label for="ma_phuong_tien">Vận chuyển</label>
+				</td>
+				<td>
+					<label for="khoi_luong">KG</label>
 				</td>
 				<td>
 					<label for="khoi_luong">Trọng lượng</label>
 				</td>				
 				<td>
-					<label for="ngoai_thanh">Ngoại thành</label>
+					<label for="ngoai_thanh">VSâu</label>
+				</td>
+				<td>
+					<label for="sau12h">Sau12h</label>
 				</td>
 				<td>
 					<label for="cuoc_phi">Cước phí</label>
@@ -421,10 +458,10 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 					</select>				
 				</td>
 				<td>
-					<input type='text' size='10' id='so_bill' value=''  />
+					<input type='text' size='10' id='so_bill' value='' onchange="check_so_bill();"/>					
 				</td>				
 				<td>
-					<select id='ma_dich_vu' onchange="load_cuoc_phi();">
+					<select id='ma_dich_vu' style="width:160px" onchange="load_cuoc_phi();">
 						<?
 							global $wpdb;
 							$temp=$wpdb->get_results("select ma_dich_vu,ten_dich_vu from  gia_dich_vu");
@@ -441,7 +478,7 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 					</select>
 				</td>
 				<td>
-					<select id="ma_tinh_den" onchange="load_cuoc_phi();">
+					<select id="ma_tinh_den" style="width:100px" onchange="load_cuoc_phi();">
 					<?
 						global $wpdb;
 						$province = $wpdb->get_results("select ma_tinh,ten_tinh from gia_tinh_thanh_pho a where a.ma_tinh not in ('den_300km','tren_300km') order by ma_tinh");
@@ -453,6 +490,13 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 					?>
 					</select>				
 				</td>
+				<td>
+					<select id="ma_phuong_tien" style="width:75px" onchange="load_cuoc_phi();">
+						<option value=""></option>
+						<option value="xe_container">Xe tải</option>
+						<option value="tau_hoa">Tàu hỏa</option>
+					</select>				
+				</td>
 				<td align="right">
 					<input type='checkbox' id='don_vi_kg' value='1' CHECKED onclick="load_cuoc_phi();"/>
 				</td>
@@ -462,6 +506,9 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 				<td align="right">
 					<input type='checkbox' id='ngoai_thanh' value='0' onclick="load_cuoc_phi();"/>
 				</td>
+				<td align="right">
+					<input type='checkbox' id='sau12h' value='0' onclick="load_cuoc_phi();"/>
+				</td>
 				<td>
 					<input type='text' size='10' id='cuoc_phi' value='' />
 				</td>
@@ -469,12 +516,12 @@ var update_url="<? echo get_admin_url()?>admin.php?page=quan_ly_hoa_don&action=u
 					<input type='text' size='10' id='phu_thu' value='' />
 				</td>
 				<td>
-					<input type='text' id='ghi_chu' value='' />
+					<input type='text' size='15' id='ghi_chu' value='' />
 					<input type='submit' value=' Save ' />
 				</td>
 			</tr>			
 		</table>
-		
+		<b><div id="div_check_so_bill"></div></b>
 	</form>
 </div>
 <script type='text/javascript'>

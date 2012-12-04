@@ -79,7 +79,7 @@ table.testgrid .selected_row {
 #paginator a:focus { outline: 1px; }
 
 #filter { 
-	width: 250px;
+	width: 150px;
 	margin-bottom: 10px; 
 }
 

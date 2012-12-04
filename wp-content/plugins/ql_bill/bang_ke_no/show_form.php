@@ -53,8 +53,19 @@ function updateCellValue(editableGrid, rowIndex, columnIndex, oldValue, newValue
 		{
 			// reset old value if failed then highlight row
 			var success = onResponse ? onResponse(response) : (response == "ok" || !isNaN(parseInt(response))); // by default, a sucessfull reponse can be "ok" or a database id
-			if (!success) editableGrid.setValueAt(rowIndex, columnIndex, oldValue)
+			if (!success) editableGrid.setValueAt(rowIndex, columnIndex, oldValue)			
 			else{
+				var da_thu=6;
+				var chua_thu=7;
+				if(editableGrid.getValueAt(rowIndex,columnIndex)==1){
+					total = editableGrid.getValueAt(rowIndex, da_thu) + editableGrid.getValueAt(rowIndex, chua_thu);
+					editableGrid.setValueAt(rowIndex, da_thu, total);
+					editableGrid.setValueAt(rowIndex, chua_thu, 0);
+				}else{
+					total = editableGrid.getValueAt(rowIndex, da_thu) + editableGrid.getValueAt(rowIndex, chua_thu);
+					editableGrid.setValueAt(rowIndex, da_thu, 0);
+					editableGrid.setValueAt(rowIndex, chua_thu, total);
+				}
 			}
 		    highlight(row.id, success ? "ok" : "error");
 		},
@@ -79,12 +90,20 @@ function get_report_link()
 	link = link + "&nam=" + $("#nam").val();
 	return link;
 }
+function get_report_link_csv()
+{
+	var link='<? echo get_admin_url()?>admin.php?page=bang_ke_no&noheader=1&nofooter=1&action=export_function_csv';
+	link = link + "&thang=" + $("#thang").val();
+	link = link + "&nam=" + $("#nam").val();
+	return link;
+}
 function load_content()
 {
 	$("#tablecontent").html("Loading...");
 	var xml_link=get_xml_link();
 	DatabaseGrid(xml_link,"tablecontent","filter",update_url);
-	$("#report").html("<img src='<? echo plugins_url('ql_bill/images/icon_16.gif')?>' border='0' style='vertical-align: middle' /> <a href='" + get_report_link() +"' target=_blank>Xuất Báo Cáo</a>");
+	$("#report").html("<img src='<? echo plugins_url('ql_bill/images/icon_16.gif')?>' border='0' style='vertical-align: middle' /> <a href='" + get_report_link() +"' target=_blank>Xuất PDF</a>");
+	$("#report_csv").html("<img src='<? echo plugins_url('ql_bill/images/ex.png')?>' border='0' style='vertical-align: middle' /> <a href='" + get_report_link_csv() +"' target=_blank>Xuất ra excel</a>");
 }
 var update_url="<? echo get_admin_url()?>admin.php?page=bang_ke_no&action=update_record&noheader=1&nofooter=1";
 </script>
@@ -137,7 +156,8 @@ var update_url="<? echo get_admin_url()?>admin.php?page=bang_ke_no&action=update
 
 <div id="tablecontent"></div>
 <div id="paginator"></div>
-<div id='report'></div>
+<br /><span id='report'></span>
+<span id='report_csv'></span>
 
 <script type='text/javascript'>
 load_content();
