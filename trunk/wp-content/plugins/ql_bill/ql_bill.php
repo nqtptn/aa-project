@@ -80,9 +80,13 @@ function ql_bill2() {
 		require_once("quan_ly_hoa_don/load_khach_hang.php");
 	}elseif($_GET['action']=="load_thong_tin_khach_hang"){
 		require_once("quan_ly_hoa_don/load_thong_tin_khach_hang.php");		
+	}elseif($_GET['action']=="check_so_bill"){
+		require_once("quan_ly_hoa_don/check_so_bill.php");		
 	}elseif($_GET['action']=="export_function"){
 		require_once('pdf/html2pdf.class.php');
 		require_once("quan_ly_hoa_don/export_function.php");
+	}elseif($_GET['action']=="export_function_csv"){
+		require_once("quan_ly_hoa_don/export_function_csv.php");
 	}else{
 		require_once("quan_ly_hoa_don/show_form.php");
 	}
@@ -119,6 +123,8 @@ function bang_ke_no() {
 	}elseif($_GET['action']=="export_function"){
 		require_once('pdf/html2pdf.class.php');
 		require_once("bang_ke_no/export_function.php");
+	}elseif($_GET['action']=="export_function_csv"){
+		require_once("bang_ke_no/export_function_csv.php");
 	}else{
 		require_once("bang_ke_no/show_form.php");
 	}

@@ -15,7 +15,7 @@ $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
 		}else{
 			$field=$colname;
 		}
-		if($colname=="ma_dich_vu" || $colname=="ma_tinh_den" || $colname=="khoi_luong" || $colname=="cuoc_phi" || $colname=="phu_thu" || $colname=="ngoai_thanh"){
+		if($colname=="ma_dich_vu" || $colname=="ma_tinh_den" || $colname=="khoi_luong" || $colname=="cuoc_phi" || $colname=="phu_thu" || $colname=="ngoai_thanh" || $colname=="sau12h"){
 			if($colname=="cuoc_phi"){
 				if(empty($value)){
 					$value=0;
@@ -27,35 +27,46 @@ $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
 				}
 				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET phu_thu='$value',tong = $value + cuoc_phi WHERE ma_van_chuyen = '$id'");
 			}elseif($colname=="ma_dich_vu"){
-				$temp1 = $wpdb->get_row("SELECT ma_tinh_den,khoi_luong,ngoai_thanh,ma_khach_hang,ti_le_phu_phi,ti_le_phu_phi_ngoai_thanh FROM gia_van_chuyen_dn left join dev_users on ma_khach_hang=user_login where ma_van_chuyen = '$id'");
+				$temp1 = $wpdb->get_row("SELECT ma_tinh_den,khoi_luong,ngoai_thanh,sau12h,ma_khach_hang,ti_le_phu_phi,ti_le_phu_phi_ngoai_thanh FROM gia_van_chuyen_dn left join dev_users on ma_khach_hang=user_login where ma_van_chuyen = '$id'");
 				$ngoai_thanh = $temp1->ngoai_thanh;
+				$sau12h = $temp1->sau12h;
 				$ti_le_phu_phi = $temp1->ti_le_phu_phi;
 				$ti_le_phu_phi_ngoai_thanh = $temp1->ti_le_phu_phi_ngoai_thanh;
-				$temp2 = $wpdb->get_row("select round((select (1+vat/100)*(1+((case when $ngoai_thanh=1 then $ti_le_phu_phi*co_phu_phi else 0 end)+($ti_le_phu_phi_ngoai_thanh*$ngoai_thanh*co_phu_phi))/100) from gia_dich_vu where ma_dich_vu='".$value."') * fn_tinh_gia('".$temp1->ma_khach_hang."','".$value."','".($current_user->ma_tinh_di)."','".$temp1->ma_tinh_den."',".$temp1->khoi_luong.",0),0) as returnvalue");
+				$temp2 = $wpdb->get_row("select round((select (1+vat/100)*(case when $ngoai_thanh=0 then 1+$ti_le_phu_phi*co_phu_phi/100 else 1+$ti_le_phu_phi_ngoai_thanh*co_phu_phi/100 end) from gia_dich_vu where ma_dich_vu='".$value."') * fn_tinh_gia('".$temp1->ma_khach_hang."','".$value."','".($current_user->ma_tinh_di)."','".$temp1->ma_tinh_den."','',".$temp1->khoi_luong.",$sau12h),0) as returnvalue");
 				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET ma_dich_vu = '$value', cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
 			}elseif($colname=="ma_tinh_den"){
-				$temp1 = $wpdb->get_row("SELECT ma_dich_vu,khoi_luong,ngoai_thanh,ma_khach_hang,ti_le_phu_phi,ti_le_phu_phi_ngoai_thanh FROM gia_van_chuyen_dn left join dev_users on ma_khach_hang=user_login where ma_van_chuyen = '$id'");
+				$temp1 = $wpdb->get_row("SELECT ma_dich_vu,khoi_luong,ngoai_thanh,sau12h,ma_khach_hang,ti_le_phu_phi,ti_le_phu_phi_ngoai_thanh FROM gia_van_chuyen_dn left join dev_users on ma_khach_hang=user_login where ma_van_chuyen = '$id'");
 				$ngoai_thanh = $temp1->ngoai_thanh;
+				$sau12h = $temp1->sau12h;
 				$ti_le_phu_phi = $temp1->ti_le_phu_phi;
 				$ti_le_phu_phi_ngoai_thanh = $temp1->ti_le_phu_phi_ngoai_thanh;
-				$temp2 = $wpdb->get_row("select round((select (1+vat/100)*(1+((case when $ngoai_thanh=1 then $ti_le_phu_phi*co_phu_phi else 0 end)+($ti_le_phu_phi_ngoai_thanh*$ngoai_thanh*co_phu_phi))/100) from gia_dich_vu where ma_dich_vu='".$temp1->ma_dich_vu."') * fn_tinh_gia('".$temp1->ma_khach_hang."','".$temp1->ma_dich_vu."','".($current_user->ma_tinh_di)."','".$value."',".$temp1->khoi_luong.",0),0) as returnvalue");
+				$temp2 = $wpdb->get_row("select round((select (1+vat/100)*(case when $ngoai_thanh=0 then 1+$ti_le_phu_phi*co_phu_phi/100 else 1+$ti_le_phu_phi_ngoai_thanh*co_phu_phi/100 end) from gia_dich_vu where ma_dich_vu='".$temp1->ma_dich_vu."') * fn_tinh_gia('".$temp1->ma_khach_hang."','".$temp1->ma_dich_vu."','".($current_user->ma_tinh_di)."','".$value."','',".$temp1->khoi_luong.",$sau12h),0) as returnvalue");
 				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET ma_tinh_den = '$value', cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
 			}elseif($colname=="ngoai_thanh"){
-				$temp1 = $wpdb->get_row("SELECT ma_dich_vu,khoi_luong,ma_tinh_den,ma_khach_hang,ti_le_phu_phi,ti_le_phu_phi_ngoai_thanh FROM gia_van_chuyen_dn left join dev_users on ma_khach_hang=user_login where ma_van_chuyen = '$id'");
+				$temp1 = $wpdb->get_row("SELECT ma_dich_vu,khoi_luong,sau12h,ma_tinh_den,ma_khach_hang,ti_le_phu_phi,ti_le_phu_phi_ngoai_thanh FROM gia_van_chuyen_dn left join dev_users on ma_khach_hang=user_login where ma_van_chuyen = '$id'");
+				$ti_le_phu_phi = $temp1->ti_le_phu_phi;
+				$sau12h = $temp1->sau12h;
+				$ti_le_phu_phi_ngoai_thanh = $temp1->ti_le_phu_phi_ngoai_thanh;				
+				$temp2 = $wpdb->get_row("select round((select (1+vat/100)*(case when $value=0 then 1+$ti_le_phu_phi*co_phu_phi/100 else 1+$ti_le_phu_phi_ngoai_thanh*co_phu_phi/100 end) from gia_dich_vu where ma_dich_vu='".$temp1->ma_dich_vu."') * fn_tinh_gia('".$temp1->ma_khach_hang."','".$temp1->ma_dich_vu."','".($current_user->ma_tinh_di)."','".$temp1->ma_tinh_den."','',".$temp1->khoi_luong.",$sau12h),0) as returnvalue");
+				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET ngoai_thanh = $value, cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
+			}elseif($colname=="sau12h"){
+				$temp1 = $wpdb->get_row("SELECT ma_dich_vu,khoi_luong,ngoai_thanh,ma_tinh_den,ma_khach_hang,ti_le_phu_phi,ti_le_phu_phi_ngoai_thanh FROM gia_van_chuyen_dn left join dev_users on ma_khach_hang=user_login where ma_van_chuyen = '$id'");
+				$ngoai_thanh = $temp1->ngoai_thanh;
 				$ti_le_phu_phi = $temp1->ti_le_phu_phi;
 				$ti_le_phu_phi_ngoai_thanh = $temp1->ti_le_phu_phi_ngoai_thanh;				
-				$temp2 = $wpdb->get_row("select round((select (1+vat/100)*(1+((case when $value=1 then $ti_le_phu_phi*co_phu_phi else 0 end)+($ti_le_phu_phi_ngoai_thanh*$value*co_phu_phi))/100) from gia_dich_vu where ma_dich_vu='".$temp1->ma_dich_vu."') * fn_tinh_gia('".$temp1->ma_khach_hang."','".$temp1->ma_dich_vu."','".($current_user->ma_tinh_di)."','".$temp1->ma_tinh_den."',".$temp1->khoi_luong.",0),0) as returnvalue");
-				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET ngoai_thanh = $value, cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
+				$temp2 = $wpdb->get_row("select round((select (1+vat/100)*(case when $ngoai_thanh=0 then 1+$ti_le_phu_phi*co_phu_phi/100 else 1+$ti_le_phu_phi_ngoai_thanh*co_phu_phi/100 end) from gia_dich_vu where ma_dich_vu='".$temp1->ma_dich_vu."') * fn_tinh_gia('".$temp1->ma_khach_hang."','".$temp1->ma_dich_vu."','".($current_user->ma_tinh_di)."','".$temp1->ma_tinh_den."','',".$temp1->khoi_luong.",$value),0) as returnvalue");
+				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET sau12h = $value, cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
 			}else{
 				//Neu cot khoi luong dc cap nhat, tinh lai cuoc phi
 				if(empty($value)){
 					$value=0;
 				}
-				$temp1 = $wpdb->get_row("SELECT ma_dich_vu,ma_tinh_den,ngoai_thanh,ma_khach_hang,ti_le_phu_phi,ti_le_phu_phi_ngoai_thanh FROM gia_van_chuyen_dn left join dev_users on ma_khach_hang=user_login where ma_van_chuyen = '$id'");
+				$temp1 = $wpdb->get_row("SELECT ma_dich_vu,ma_tinh_den,ngoai_thanh,sau12h,ma_khach_hang,ti_le_phu_phi,ti_le_phu_phi_ngoai_thanh FROM gia_van_chuyen_dn left join dev_users on ma_khach_hang=user_login where ma_van_chuyen = '$id'");
 				$ngoai_thanh = $temp1->ngoai_thanh;
+				$sau12h = $temp1->sau12h;
 				$ti_le_phu_phi = $temp1->ti_le_phu_phi;
 				$ti_le_phu_phi_ngoai_thanh = $temp1->ti_le_phu_phi_ngoai_thanh;				
-				$temp2 = $wpdb->get_row("select round((select (1+vat/100)*(1+((case when $ngoai_thanh=1 then $ti_le_phu_phi*co_phu_phi else 0 end)+($ti_le_phu_phi_ngoai_thanh*$ngoai_thanh*co_phu_phi))/100) from gia_dich_vu where ma_dich_vu='".$temp1->ma_dich_vu."') * fn_tinh_gia('".$temp1->ma_khach_hang."','".$temp1->ma_dich_vu."','".($current_user->ma_tinh_di)."','".$temp1->ma_tinh_den."',".$value.",0),0) as returnvalue");
+				$temp2 = $wpdb->get_row("select round((select (1+vat/100)*(case when $ngoai_thanh=0 then 1+$ti_le_phu_phi*co_phu_phi/100 else 1+$ti_le_phu_phi_ngoai_thanh*co_phu_phi/100 end) from gia_dich_vu where ma_dich_vu='".$temp1->ma_dich_vu."') * fn_tinh_gia('".$temp1->ma_khach_hang."','".$temp1->ma_dich_vu."','".($current_user->ma_tinh_di)."','".$temp1->ma_tinh_den."','',".$value.",$sau12h),0) as returnvalue");
 				$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET khoi_luong = '$value', cuoc_phi='".($temp2->returnvalue)."', tong=(".($temp2->returnvalue)." + phu_thu)  WHERE ma_van_chuyen = '$id'");
 			}
 		}else if ($colname=="ngay"){
@@ -64,7 +75,7 @@ $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
 		}else{
 			$result = $mysqli->query("UPDATE gia_van_chuyen_dn SET $field = '$value' WHERE ma_van_chuyen = '$id'");
 		}
-		echo $result ? (($colname=="ma_dich_vu" || $colname=="khoi_luong" || $colname=="ma_tinh_den" || $colname=="ngoai_thanh") ? ($temp2->returnvalue > 0 ? $temp2->returnvalue : 0) : "ok") : "error";
+		echo $result ? (($colname=="ma_dich_vu" || $colname=="khoi_luong" || $colname=="ma_tinh_den" || $colname=="ngoai_thanh" || $colname=="sau12h") ? ($temp2->returnvalue > 0 ? $temp2->returnvalue : 0) : "ok") : "error";
 		$mysqli->close();
 		
 	}elseif($action=="delete"){
@@ -85,9 +96,11 @@ $action = $mysqli->real_escape_string(strip_tags($_POST['action']));
 		$khoi_luong = $mysqli->real_escape_string(strip_tags($_POST['khoi_luong']));
 		$khach_hang = $mysqli->real_escape_string(strip_tags($_POST['khach_hang']));
 		$so_bill = $mysqli->real_escape_string(strip_tags($_POST['so_bill']));
+		$ngoai_thanh = $mysqli->real_escape_string(strip_tags($_POST['ngoai_thanh']));
+		$sau12h = $mysqli->real_escape_string(strip_tags($_POST['sau12h']));
 		$result =  $mysqli->query("INSERT INTO gia_van_chuyen_dn 
-			(ngay,ma_dich_vu,ma_tinh_den,ma_tinh_di,cuoc_phi,phu_thu,tong,ghi_chu,khoi_luong,ma_khach_hang,so_bill) value 
-			('$ngay','$ma_dich_vu','$ma_tinh_den','".($current_user->ma_tinh_di)."','$cuoc_phi','$phu_thu','$tong','$ghi_chu','$khoi_luong','$khach_hang','$so_bill')");
+			(ngay,ma_dich_vu,ma_tinh_den,ma_tinh_di,cuoc_phi,phu_thu,tong,ghi_chu,khoi_luong,ma_khach_hang,so_bill,ngoai_thanh,sau12h) value 
+			('$ngay','$ma_dich_vu','$ma_tinh_den','".($current_user->ma_tinh_di)."','$cuoc_phi','$phu_thu','$tong','$ghi_chu','$khoi_luong','$khach_hang','$so_bill','$ngoai_thanh','$sau12h')");
 		echo $result ? $mysqli->insert_id : "false";
 		echo $result ;
 		$mysqli->close();

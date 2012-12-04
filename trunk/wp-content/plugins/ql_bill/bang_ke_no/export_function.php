@@ -2,7 +2,7 @@
 	global $wpdb;
 	$current_user = wp_get_current_user();
 	$khach_hang=$current_user->user_login;
-
+	$ma_tinh_di=$current_user->ma_tinh_di;
 	$thang = $_GET['thang'];
 	$nam = $_GET['nam'];
 	$temp=$wpdb->get_results("
@@ -18,7 +18,7 @@
 				(select (case when count(*) then 'Đã thu' else 'Nợ' end) from gia_bang_ke_no b where b.thang=date_format(a.ngay, \"%m\") and b.nam=date_format(a.ngay, \"%Y\") and b.ma_khach_hang=a.ma_khach_hang and da_thu=1) as trang_thai,
 				(select nguoi_thu_tien from gia_bang_ke_no b where b.thang=date_format(a.ngay, \"%m\") and b.nam=date_format(a.ngay, \"%Y\") and b.ma_khach_hang=a.ma_khach_hang) as nguoi_thu_tien
 			FROM gia_van_chuyen_dn a, (SELECT @curRank := 0) r
-			WHERE date_format(a.ngay, \"%Y-%m\") = '$nam-$thang'
+			WHERE date_format(a.ngay, \"%Y-%m\") = '$nam-$thang' and ma_tinh_di='$ma_tinh_di'
 			GROUP BY a.ma_khach_hang
 			ORDER by stt,a.ma_khach_hang
 	");
@@ -51,7 +51,7 @@
 				<td width='20' align='center'>".($temp2->stt)."</td>
 				<td width='130' align='left'>".($temp2->ten_khach_hang)."</td>
 				<td width='80' align='left'>".($temp2->nguoi_lien_he)."</td>
-				<td width='80' align='left'>".($temp2->so_dien_thoai)."</td>
+				<td width='80' align='left'>".($temp2->dien_thoai)."</td>
 				<td width='120' align='left'>".($temp2->dia_chi)."</td>				
 				<td width='50' align='left'>".($temp2->ma_khach_hang)."</td>
 				<td width='60' align='right'>".number_format(($temp2->so_tien),0,'',',')."</td>

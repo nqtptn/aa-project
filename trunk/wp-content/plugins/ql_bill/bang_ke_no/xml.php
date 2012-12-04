@@ -1,6 +1,8 @@
 <?php
 global $mysqli;
 $grid = new EditableGrid();
+$current_user = wp_get_current_user();
+$ma_tinh_di=$current_user->ma_tinh_di;
 $khach_hang = $mysqli->real_escape_string(strip_tags($_GET['khach_hang']));
 $thang = $mysqli->real_escape_string(strip_tags($_GET['thang']));
 $nam = $mysqli->real_escape_string(strip_tags($_GET['nam']));
@@ -26,7 +28,7 @@ $query="
 		(select da_thu from gia_bang_ke_no b where b.thang=date_format(a.ngay, \"%m\") and b.nam=date_format(a.ngay, \"%Y\") and b.ma_khach_hang=a.ma_khach_hang limit 0,1) as da_thu_tien,
 		(select nguoi_thu_tien from gia_bang_ke_no b where b.thang=date_format(a.ngay, \"%m\") and b.nam=date_format(a.ngay, \"%Y\") and b.ma_khach_hang=a.ma_khach_hang limit 0,1) as nguoi_thu
 	FROM gia_van_chuyen_dn a, (SELECT @curRank := 0) r
-	WHERE date_format(a.ngay, \"%Y-%m\") = '$nam-$thang'
+	WHERE date_format(a.ngay, \"%Y-%m\") = '$nam-$thang' and ma_tinh_di='$ma_tinh_di'
 	GROUP BY a.ma_khach_hang
 	ORDER by stt,a.ma_khach_hang";
 $result = $mysqli->query($query);
